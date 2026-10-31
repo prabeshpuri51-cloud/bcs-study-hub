@@ -164,6 +164,13 @@ select{padding:10px;border-radius:12px;border:2px solid var(--bd);background:var
 .ncard .dot{width:12px;height:12px;border-radius:50%;margin-top:6px;flex:none;background:var(--ac)}
 .ncard .snip{white-space:pre-wrap;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
 input.search{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);font:inherit;margin-bottom:12px}
+#vframe{width:100%;aspect-ratio:16/9;border:0;border-radius:16px;background:#000}
+.vid{display:flex;gap:12px;align-items:center;padding:8px;border:2px solid var(--bd);border-radius:16px;background:var(--card2);margin:8px 0;cursor:pointer;box-shadow:0 3px 0 var(--bd)}
+.vid:active{transform:translateY(2px);box-shadow:none}
+.vid .vthumb{width:96px;height:54px;border-radius:10px;object-fit:cover;background:var(--ac2);flex:none;display:grid;place-items:center;color:var(--ac);font-weight:900}
+.vid b{display:block;font-size:14.5px;line-height:1.3}
+.vid .vbtn{border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;width:36px;height:36px;font:inherit;font-weight:900;cursor:pointer;flex:none}
+.vbadge{font-size:10.5px;font-weight:900;background:var(--ac2);color:var(--ac);padding:1px 7px;border-radius:99px;margin-left:6px}
 #fx{position:fixed;inset:0;z-index:300;pointer-events:none}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
@@ -184,14 +191,21 @@ input.search{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radi
   <button class="clear" id="nt-hl-x" onmousedown="event.preventDefault()" aria-label="Close">✕</button>
 </div>
 <button id="fab" aria-label="Quick note. Drag to move." title="Quick note (drag to move)"></button>
+<div class="sheet" id="vsheet" aria-modal="true" role="dialog"><div class="sheet-in" style="overflow:auto">
+  <div class="sheet-head"><b id="v-title">Videos</b><button class="iconbtn" id="v-x" aria-label="Close videos"></button></div>
+  <div id="vplayer" style="display:none"><iframe id="vframe" title="Video player" referrerpolicy="strict-origin-when-cross-origin" allowfullscreenallow="accelerometer; encrypted-media; gyroscope; picture-in-picture"></iframe><div class="row" style="margin-top:8px"><span class="mu grow">Blank or will not play? Some channels block playing inside apps.</span><button class="b" id="v-yt">Open in YouTube</button></div></div>
+  <div class="row"><button class="b" id="v-search">Search YouTube for this unit</button><button class="b p" id="v-addbtn">+ Pin a video</button></div>
+  <div id="v-form" style="display:none"><input class="search" id="v-url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" style="margin-bottom:8px"><input class="search" id="v-name" autocomplete="off" placeholder="Name it (optional)" style="margin-bottom:8px"><div class="mu" id="v-err" style="color:var(--bad)"></div><div class="row"><button class="b p" id="v-save">Save video</button><button class="b" id="v-cancel">Cancel</button></div></div>
+  <div id="v-list"></div>
+  <p class="mu">Suggestions were found by search. Their titles and channels are checked, but they were not watched end to end, so check each one matches your syllabus. Videos need the internet.</p>
+</div></div>
 <div class="sheet" id="sheet" aria-modal="true" role="dialog"><div class="sheet-in">
   <div class="sheet-head"><b id="sheet-title">New note</b><button class="b" id="sheet-del" style="display:none;padding:6px 12px">Delete</button><button class="iconbtn" id="sheet-x" aria-label="Save and close"></button></div>
   <div class="chips2" id="sheet-chips"></div>
   <textarea id="note-text" placeholder="Write your note here… it is saved when you close."></textarea>
   <div class="row"><button class="b p grow" id="sheet-save">Save note</button><button class="b" id="sheet-hub">All notes</button></div>
 </div></div>
-<script>
-/* Computer Networks (CNW 112) - Unit 1: Introduction to Computer Networks
+<script>/* Computer Networks (CNW 112) - Unit 1: Introduction to Computer Networks
    Content layer (separate from the engine in index.html).
    Syllabus source: schoolworkspro.com module Overview (8-unit outline), read 2026-10-27.
    Teaching sources: Cisco ITN slides Ch 1 (Networking Today), Ch 2 (Protocols and Models), Ch 3.1 (Physical Layer).
@@ -387,10 +401,8 @@ window.CNW.units[0] = {
     { id: "u1e20", type: "long", q: "Differentiate packet switching from circuit switching in detail. Explain store-and-forward, queuing delay and packet loss.", pts: ["Circuit switching: dedicated path, set-up, reserved resources, FDM or TDM sharing (3)", "Packet switching: packets, independent routing, statistical sharing (3)", "Comparison table (efficiency, delay, fault tolerance, examples) (3)", "Store-and-forward explained, with a delay calculation (3)", "Queuing delay and packet loss when buffers fill (3)"] }
   ]
 };
-
 </script>
-<script>
-/* Computer Networks (CNW 112) - Unit 2: Application Layer
+<script>/* Computer Networks (CNW 112) - Unit 2: Application Layer
    Syllabus: 2.1 Application layer principles (client-server and P2P, process communication and sockets, transport service requirements);
    2.2 Web and HTTP (versions 1.0, 1.1, 2, 3; web caching and CDNs; cookies and web security);
    2.3 Electronic mail and DNS (SMTP, POP3, IMAP; DNS hierarchy and resource records; DNSSEC);
@@ -603,10 +615,8 @@ window.CNW.units[1] = {
     { id: "u2e21", type: "long", q: "Explain peer-to-peer systems: P2P architecture, BitTorrent, distributed hash tables and blockchain. Compare with client-server.", pts: ["Client-server vs P2P comparison (3)", "BitTorrent: tracker, chunks, rarest first, tit-for-tat (4)", "DHT: how key-value pairs and lookup work (4)", "Blockchain: blocks, hash links, consensus, no central authority (4)"] }
   ]
 };
-
 </script>
-<script>
-/* Computer Networks (CNW 112) - Unit 3: Transport Layer
+<script>/* Computer Networks (CNW 112) - Unit 3: Transport Layer
    Syllabus: 3.1 Transport layer services (multiplexing/demultiplexing, UDP, reliable data transfer principles);
    3.2 TCP (segment structure, 3-way handshake, flow control and congestion control, CUBIC, BBR);
    3.3 Performance (TCP fairness, bufferbloat, QUIC overview).
@@ -843,10 +853,8 @@ Checksum = complement = <b>1011010100111101</b>.</p>
     { id: "u3e21", type: "long", q: "Explain multiplexing and demultiplexing, ports and sockets, UDP and reliable data transfer principles (stop-and-wait, Go-Back-N, Selective Repeat).", pts: ["Multiplexing and demultiplexing with ports and sockets (3)", "UDP: features, header, checksum (3)", "Reliable data transfer principles: checksum, sequence numbers, ACKs, timers (3)", "Stop-and-wait with utilisation formula and example (3)", "Go-Back-N and Selective Repeat compared (3)"] }
   ]
 };
-
 </script>
-<script>
-/* Computer Networks (CNW 112) - Unit 4: Network Layer
+<script>/* Computer Networks (CNW 112) - Unit 4: Network Layer
    Syllabus: 4.1 Network layer principles (forwarding vs routing; router architecture; IP addressing IPv4, IPv6);
    4.2 Routing algorithms (link-state OSPF and distance-vector RIP; hierarchical routing BGP; SDN and OpenFlow);
    4.3 Internet Protocol (IPv4 and IPv6 packet structure; NAT and ICMP; IP security IPsec).
@@ -1113,10 +1121,8 @@ Everything fits in 0 to 143; 192.168.30.144 to .255 is left for growth.</p>
     { id: "u4e24", type: "long", q: "Explain IPv4 and IPv6 addressing: classes, private and special addresses, subnetting formulas, address types and shortening rules of IPv6, and the transition methods.", pts: ["IPv4 classes, private and special addresses (3)", "Subnetting formulas with one worked example (4)", "IPv6 address format and shortening rules with example (3)", "IPv6 address types (2)", "Transition: dual stack, tunnelling, translation (3)"] }
   ]
 };
-
 </script>
-<script>
-/* Computer Networks (CNW 112) - Unit 5: Link Layer and LANs
+<script>/* Computer Networks (CNW 112) - Unit 5: Link Layer and LANs
    Syllabus: 5.1 Link layer services (error detection and correction (CRC), multiple access protocols, MAC addressing and ARP);
    5.2 Ethernet and switching (Ethernet frame structure, switches vs hubs, VLANs and trunking);
    5.3 Data center networking (spine-leaf architecture, network virtualization, programmable data planes).
@@ -1372,10 +1378,8 @@ Check of a second example: D = 1101011011, G = 10011 gives R = 1110.</p>
     { id: "u5e24", type: "long", q: "Explain MAC addressing and ARP, and the difference between MAC and IP addresses. Show how a frame travels from a host to a server on another network, with the MAC and IP addresses at each hop.", pts: ["MAC address format, OUI, unicast, broadcast, multicast (3)", "MAC vs IP comparison table (3)", "ARP steps (3)", "Hop-by-hop journey: IP stays, MAC changes at each router (4)", "Role of the default gateway and IPv6 ND (2)"] }
   ]
 };
-
 </script>
-<script>
-/* Computer Networks (CNW 112) - Unit 6: Wireless Networks
+<script>/* Computer Networks (CNW 112) - Unit 6: Wireless Networks
    Syllabus: 6.1 Wireless fundamentals (wireless channel characteristics; IEEE 802.11 (Wi-Fi 6/6E); cellular networks (4G LTE, 5G));
    6.2 Mobility management (Mobile IP; handoff management; location services);
    6.3 Wireless security (WPA3; rogue access points; wireless intrusion detection).
@@ -1594,10 +1598,8 @@ window.CNW.units[5] = {
     { id: "u6e20", type: "long", q: "Explain mobility management in wireless networks: handoff, Mobile IP and location services. Add notes on 4G LTE and 5G.", pts: ["Handoff types and management (3)", "Mobile IP operation with a diagram (5)", "Location services (2)", "Cellular cells and frequency reuse (2)", "4G LTE vs 5G (3)"] }
   ]
 };
-
 </script>
-<script>
-/* Computer Networks (CNW 112) - Unit 7: Network Security
+<script>/* Computer Networks (CNW 112) - Unit 7: Network Security
    Syllabus: 7.1 Security principles (CIA triad; threat models; defense mechanisms);
    7.2 Cryptographic techniques (symmetric AES and asymmetric RSA encryption; digital signatures; TLS/SSL protocols);
    7.3 Network defense (firewalls and IDS/IPS; VPN technologies; zero trust architecture).
@@ -1821,10 +1823,8 @@ window.CNW.units[6] = {
     { id: "u7e21", type: "long", q: "Explain network defense: firewall types, rules and DMZ, IDS and IPS (signature and anomaly), VPN technologies, and how to combine them in a layered design.", pts: ["Firewall types and rules, DMZ (4)", "IDS vs IPS, signature vs anomaly, false positives (4)", "VPN types and protocols (3)", "Layered design and policy (4)"] }
   ]
 };
-
 </script>
-<script>
-/* Computer Networks (CNW 112) - Unit 8: Network Management
+<script>/* Computer Networks (CNW 112) - Unit 8: Network Management
    Syllabus: 8.1 Network management framework (SNMP protocol; network monitoring tools; traffic analysis);
    8.2 Emerging trends (intent-based networking; AI/ML in network management; network automation).
    Teaching sources: the college chapters mention SNMP only as a UDP application (port 161) and name tools such as Packet Tracer in the old outline.
@@ -1974,13 +1974,39 @@ window.CNW.units[7] = {
     { id: "u8e14", type: "long", q: "Discuss the emerging trends in network management: intent-based networking, AI/ML and network automation. Compare them with traditional network management.", pts: ["Traditional approach and its limits (3)", "IBN with the three functions (4)", "AI/ML uses in performance, fault detection, security and decision-making (4)", "Automation tools and telemetry (2)", "Benefits and challenges (2)"] }
   ]
 };
-
+</script>
+<script>/* Suggested videos per unit for Computer Networks (CNW 112).
+   2026-10-30. Each title and channel was checked through YouTube's own lookup (oEmbed), and lengths come from the search listing.
+   NOT checked: whether the content fully matches the college syllabus (the videos were not watched end to end).
+   Hindi-language videos were left out. Prabesh can pin his own videos in the app too. */
+window.CNW_VIDEOS = {
+  0: [ { id: "G7n8thqwO2c", title: "Circuit Switching vs Packet Switching", ch: "PowerCert Animated Videos", len: "5:35" } ],
+  1: [ { id: "pnoWCK82apU", title: "Lec-83: HTTP, FTP, SMTP, POP | All Application Layer Protocols", ch: "Gate Smashers", len: "17:00" },
+       { id: "K8fn6ZQtCvk", title: "Domain Name System (DNS) in Computer Networks Explained", ch: "Engineering Funda", len: "20:22" } ],
+  2: [ { id: "xMtP5ZB3wSk", title: "TCP - Three-way handshake in details", ch: "Sunny Classroom", len: "4:17" },
+       { id: "r9kbjAN2788", title: "Slow Start vs Congestion Avoidance in TCP", ch: "Hussein Nasser", len: "10:08" } ],
+  3: [ { id: "nFYilGQ-p-8", title: "Subnetting Made Simple", ch: "Carl Oliver", len: "5:41" },
+       { id: "hbdT_Q9DM8w", title: "Subnetting Explained: Networking Basics", ch: "WhiteboardDoodles", len: "11:37" },
+       { id: "oF_pEiYi0TQ", title: "Link State vs Distance Vector Routing Protocols", ch: "Naj Qazi", len: "2:44" },
+       { id: "0Q3SEa9qyAI", title: "CN 20: Distance Vector VS Link State Routing | Examples", ch: "CS & IT Tutorials by Vrushali", len: "13:22" } ],
+  4: [ { id: "5Q-Yv6_0Qcw", title: "Lec-30: Cyclic Redundancy Check (CRC) for Error Detection and Correction", ch: "Gate Smashers", len: "12:00" },
+       { id: "MNZa-S4E-To", title: "VLANs, Tagging, Trunking, VxLAN, & Native VLAN", ch: "PowerCert Animated Videos", len: "9:30" },
+       { id: "6MW5P6Ci7lw", title: "Spanning Tree Protocol | CCNA - Explained", ch: "PowerCert Animated Videos", len: "11:55" } ],
+  5: [ { id: "E0Jd-sJcQnY", title: "Wireless MAC Protocols Demystified: CSMA/CA, Hidden Terminals & Collision Avoidance", ch: "Business Courses", len: "3:15" },
+       { id: "WZaIfyvERcA", title: "WiFi (Wireless) Password Security - WEP, WPA, WPA2, WPA3, WPS Explained", ch: "PowerCert Animated Videos", len: "8:40" } ],
+  6: [ { id: "j9QmMEWmcfo", title: "SSL, TLS, HTTPS Explained", ch: "ByteByteGo", len: "5:54" },
+       { id: "hm8s6FAc4pg", title: "The RSA Encryption Algorithm - How Does It Actually Work + Step-by-Step Example", ch: "BrainWave", len: "6:55" },
+       { id: "4zahvcJ9glg", title: "The RSA Encryption Algorithm (1 of 2: Computing an Example)", ch: "Eddie Woo", len: "8:40" } ],
+  7: [ { id: "w3fMajZKrCA", title: "SNMP | simple network management protocol", ch: "Easy Engineering By Neha Syed", len: "6:58" } ]
+};
+/* Whole-course playlist found earlier (title and channel checked, not watched): */
+window.CNW_PLAYLISTS = [ { id: "PLWkguCWKqN9MdQXjSM5DE17NU7_RQA_MH", title: "Computer Networking Full Course (playlist)", ch: "Bogdan Stashchuk", type: "playlist" } ];
 </script>
 <script>
 "use strict";
 /* ---------- storage (always wrapped: may be blocked) ---------- */
 var KEY="bcs_study_v1", mem=null;
-function load(){ if(mem) return mem; var o=null; try{ o=JSON.parse(localStorage.getItem(KEY)); }catch(e){} mem=o||{items:{},log:[],fmt:"new",written:{}}; if(!mem.goal) mem.goal=20; if(!mem.notes) mem.notes=[]; if(!mem.hl) mem.hl={}; if(!mem.items) mem.items={}; if(!mem.log) mem.log=[]; if(!mem.written) mem.written={}; return mem; }
+function load(){ if(mem) return mem; var o=null; try{ o=JSON.parse(localStorage.getItem(KEY)); }catch(e){} mem=o||{items:{},log:[],fmt:"new",written:{}}; if(!mem.goal) mem.goal=20; if(!mem.notes) mem.notes=[]; if(!mem.hl) mem.hl={}; if(!mem.vids) mem.vids={}; if(!mem.items) mem.items={}; if(!mem.log) mem.log=[]; if(!mem.written) mem.written={}; return mem; }
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(mem)); }catch(e){} }
 var DAY=86400000, INT=[0,1,3,7,14,30];
 function st(id){ var s=load(); return s.items[id]||(s.items[id]={box:0,due:0,r:0,w:0,seen:0}); }
@@ -2086,12 +2112,13 @@ function home(){
 /* ---------- Learn ---------- */
 function study(){
   var h='<div class="hero rise glow"><small>'+esc(window.CNW.code)+'</small><h2>'+esc(window.CNW.title)+'</h2><div class="bar" style="background:rgba(255,255,255,.3)"><i style="width:'+allMasteryPct()+'%;background:#fff"></i></div><small>'+allMasteryPct()+'% mastered · written in our own words from the college slides and syllabus. A ⚠ means the point is not in the college slides: check it.</small></div><div class="units">';
-  units().forEach(function(u,i){ var m=masteryPct(i); h+='<div class="card unit rise glow" style="--i:'+(i+1)+';--h:'+((190+i*38)%360)+'"><div class="badge">'+ic("u"+(i+1),28)+'</div><div class="grow"><div class="mu">Unit '+(i+1)+' · '+(u.quiz||[]).length+' quiz · '+(u.exam||[]).length+' written</div><h4>'+esc(u.title)+'</h4><div class="acts"><button class="b p" data-u="'+i+'">Read</button><button class="b" data-q="'+i+'">Quiz</button></div></div>'+ring(m,52,6,"var(--go)",'<span style="font-size:12px">'+m+'%</span>')+'</div>'; });
+  units().forEach(function(u,i){ var m=masteryPct(i); h+='<div class="card unit rise glow" style="--i:'+(i+1)+';--h:'+((190+i*38)%360)+'"><div class="badge">'+ic("u"+(i+1),28)+'</div><div class="grow"><div class="mu">Unit '+(i+1)+' · '+(u.quiz||[]).length+' quiz · '+(u.exam||[]).length+' written</div><h4>'+esc(u.title)+'</h4><div class="acts"><button class="b p" data-u="'+i+'">Read</button><button class="b" data-q="'+i+'">Quiz</button><button class="b" data-v="'+i+'">Videos</button></div></div>'+ring(m,52,6,"var(--go)",'<span style="font-size:12px">'+m+'%</span>')+'</div>'; });
   el(h+'</div>');
   app.querySelectorAll("[data-u]").forEach(function(b){ b.onclick=function(){ readUnit(+b.dataset.u); }; });
   app.querySelectorAll("[data-q]").forEach(function(b){ b.onclick=function(){ runQuiz(shuffle(unitQuiz(+b.dataset.q)),"Unit "+(+b.dataset.q+1)); }; });
+  app.querySelectorAll("[data-v]").forEach(function(b){ b.onclick=function(){ openVideos(+b.dataset.v); }; });
 }
-function readUnit(i){ var u=units()[i]; load().last=i; save(); ctx={unit:i}; el(topBack("back","Learn")+'<h2 class="rise">Unit '+(i+1)+': '+esc(u.title)+'</h2><div class="card rise" style="--i:1"><b>Syllabus wording</b><ul>'+u.syllabus.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul><div class="row"><button class="b p" id="qz">Quiz this unit</button><span class="mu" id="nt-hl-count"></span></div><p class="mu" style="margin:10px 0 0">Tip: select any words in the notes (or double-tap a word) and tap <b>Highlight</b>. Tap a highlight to remove it. The pencil button writes a note while you study.</p></div><div class="card notes rise" id="nt-body" style="--i:2">'+u.notes+'</div>'); document.getElementById("back").onclick=function(){ go("study"); }; document.getElementById("qz").onclick=function(){ runQuiz(shuffle(unitQuiz(i)),"Unit "+(i+1)); }; ntOpen(i); }
+function readUnit(i){ var u=units()[i]; load().last=i; save(); ctx={unit:i}; el(topBack("back","Learn")+'<h2 class="rise">Unit '+(i+1)+': '+esc(u.title)+'</h2><div class="card rise" style="--i:1"><b>Syllabus wording</b><ul>'+u.syllabus.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul><div class="row"><button class="b p" id="qz">Quiz this unit</button><button class="b" id="rv">Videos</button><span class="mu" id="nt-hl-count"></span></div><p class="mu" style="margin:10px 0 0">Tip: select any words in the notes (or double-tap a word) and tap <b>Highlight</b>. Tap a highlight to remove it. The pencil button writes a note while you study.</p></div><div class="card notes rise" id="nt-body" style="--i:2">'+u.notes+'</div>'); document.getElementById("back").onclick=function(){ go("study"); }; document.getElementById("qz").onclick=function(){ runQuiz(shuffle(unitQuiz(i)),"Unit "+(i+1)); }; document.getElementById("rv").onclick=function(){ openVideos(i); }; ntOpen(i); }
 
 /* ---------- Practise (quiz + written) ---------- */
 function practise(){
@@ -2228,7 +2255,7 @@ function progress(){
 }
 
 /* ---------- backup file (works with Save/Share sheet on phones) ---------- */
-function adopt(o){ o.items=o.items||{}; o.log=o.log||[]; o.written=o.written||{}; o.notes=o.notes||[]; o.hl=o.hl||{}; o.goal=o.goal||20; o.fmt=o.fmt||"new"; mem=o; save(); refreshStreak(); }
+function adopt(o){ o.items=o.items||{}; o.log=o.log||[]; o.written=o.written||{}; o.notes=o.notes||[]; o.hl=o.hl||{}; o.vids=o.vids||{}; o.goal=o.goal||20; o.fmt=o.fmt||"new"; mem=o; save(); refreshStreak(); }
 function saveBackupFile(){
   var d=load(); if(!d.log.length&&!d.notes.length&&!Object.keys(d.hl).length){ alert("Nothing to back up yet. Do some quizzes, highlights or notes first."); return; }
   var name="bcs-study-hub-backup-"+new Date().toISOString().slice(0,10)+".json";
@@ -2371,6 +2398,65 @@ document.getElementById("sheet-x").innerHTML=ic("close",20); document.getElement
 document.getElementById("sheet-hub").onclick=function(){ closeNote(); go("notes"); };
 document.getElementById("sheet").addEventListener("click",function(e){ if(e.target===this) closeNote(); });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeNote(); });
+
+/* ---------- videos: pinned per unit (saved in the backup) plus checked suggestions ---------- */
+var vUnit=null, vCur=null, vFormOpen=false;
+function ytRef(s){
+  s=String(s||"").trim(); if(!s) return null;
+  if(/^[A-Za-z0-9_-]{11}$/.test(s)) return {id:s,type:"video"};
+  var m=s.match(/[?&]list=([A-Za-z0-9_-]{10,})/), v=s.match(/(?:youtu\.be\/|\/embed\/|\/shorts\/|\/live\/|[?&]v=)([A-Za-z0-9_-]{11})/);
+  if(!/(^|\/\/|\.)(youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(s)) return null;
+  if(v) return {id:v[1],type:"video"};
+  if(m) return {id:m[1],type:"playlist"};
+  return null;
+}
+function vUrl(r){ return r.type==="playlist"?"https://www.youtube.com/playlist?list="+r.id:"https://www.youtube.com/watch?v="+r.id; }
+function vPinned(i){ var s=load(); return s.vids[i]||[]; }
+function vSuggested(i){ var have={}; vPinned(i).forEach(function(p){ have[p.id]=1; }); var a=((window.CNW_VIDEOS||{})[i]||[]).concat(window.CNW_PLAYLISTS||[]); return a.filter(function(x){ return !have[x.id]; }); }
+function vRow(r,k,pinned){
+  var thumb=r.type==="playlist"?'<span class="vthumb">LIST</span>':'<img class="vthumb" alt="" loading="lazy" src="https://i.ytimg.com/vi/'+esc(r.id)+'/default.jpg" onerror="this.style.visibility=\'hidden\'">';
+  var meta=[r.ch,r.len].filter(Boolean).join(" · ");
+  return '<div class="vid" data-play="'+k+'" data-src="'+(pinned?"p":"s")+'">'+thumb+'<div class="grow"><b>'+esc(r.title)+(r.type==="playlist"?'<span class="vbadge">PLAYLIST</span>':'')+'</b>'+(meta?'<div class="mu">'+esc(meta)+'</div>':'')+'</div>'+(pinned?'<button class="vbtn" data-yt="'+k+'" aria-label="Open in YouTube">↗</button><button class="vbtn" data-del="'+k+'" aria-label="Remove video">✕</button>':'<button class="vbtn" data-pin="'+k+'" aria-label="Pin this video" title="Pin to my list">+</button>')+'</div>';
+}
+function vRender(){
+  var P=vPinned(vUnit), S=vSuggested(vUnit), h="";
+  h+='<h3 class="sec" style="margin:6px 0 0">Pinned by you</h3>'+(P.length?P.map(function(r,k){ return vRow(r,k,true); }).join(""):'<div class="mu">Nothing pinned yet. Tap <b>+ Pin a video</b>, or the <b>+</b> on a suggestion.</div>');
+  h+='<h3 class="sec" style="margin:10px 0 0">Suggested <span class="vbadge">found by search · not fully watched</span></h3>'+(S.length?S.map(function(r,k){ return vRow(r,k,false); }).join(""):'<div class="mu">No more suggestions for this unit.</div>');
+  var box=document.getElementById("v-list"); box.innerHTML=h;
+  box.querySelectorAll(".vid").forEach(function(c){ c.onclick=function(e){ if(e.target.closest(".vbtn")) return; var list=c.dataset.src==="p"?P:S; vPlay(list[+c.dataset.play]); }; });
+  box.querySelectorAll("[data-yt]").forEach(function(b){ b.onclick=function(){ window.open(vUrl(P[+b.dataset.yt]),"_blank","noopener"); }; });
+  box.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ var r=P[+b.dataset.del]; if(!confirm("Remove this video from your list?\n\n"+r.title)) return; var s=load(); s.vids[vUnit]=vPinned(vUnit).filter(function(x){ return x.id!==r.id; }); save(); if(vCur&&vCur.id===r.id) vStop(); vRender(); }; });
+  box.querySelectorAll("[data-pin]").forEach(function(b){ b.onclick=function(){ var r=S[+b.dataset.pin], s=load(); (s.vids[vUnit]=s.vids[vUnit]||[]).push({id:r.id,title:r.title,ch:r.ch,len:r.len,type:r.type||"video",added:Date.now()}); save(); vRender(); }; });
+}
+function vPlay(r){
+  if(!r) return; vCur=r; var f=document.getElementById("vframe");
+  f.src=r.type==="playlist"?"https://www.youtube.com/embed/videoseries?list="+encodeURIComponent(r.id):"https://www.youtube.com/embed/"+encodeURIComponent(r.id)+"?rel=0&playsinline=1";
+  document.getElementById("vplayer").style.display="block";
+  var sh=document.querySelector("#vsheet .sheet-in"); if(sh) sh.scrollTop=0;
+}
+function vStop(){ vCur=null; var f=document.getElementById("vframe"); f.src="about:blank"; document.getElementById("vplayer").style.display="none"; }
+function vForm(on){ vFormOpen=on; document.getElementById("v-form").style.display=on?"block":"none"; document.getElementById("v-addbtn").style.display=on?"none":"inline-block"; document.getElementById("v-err").textContent=""; if(on){ document.getElementById("v-url").value=""; document.getElementById("v-name").value=""; setTimeout(function(){ document.getElementById("v-url").focus(); },100); } }
+function openVideos(i){
+  vUnit=i; vStop(); vForm(false);
+  document.getElementById("v-title").textContent="Videos · Unit "+(i+1);
+  vRender(); document.getElementById("vsheet").classList.add("active"); ntHidePill();
+}
+function closeVideos(){ var sh=document.getElementById("vsheet"); if(!sh.classList.contains("active")) return; vStop(); sh.classList.remove("active"); }
+function vSave(){
+  var url=document.getElementById("v-url").value, err=document.getElementById("v-err"), r=ytRef(url);
+  if(!r){ err.textContent="That does not look like a YouTube link. Paste the full link from the Share button."; return; }
+  var s=load(), list=s.vids[vUnit]=s.vids[vUnit]||[];
+  if(list.some(function(x){ return x.id===r.id; })){ err.textContent="This one is already in your list."; return; }
+  var name=document.getElementById("v-name").value.trim()||(r.type==="playlist"?"My playlist":"My video "+(list.length+1));
+  list.push({id:r.id,title:name,type:r.type,added:Date.now()}); save(); vForm(false); vRender();
+}
+document.getElementById("v-x").innerHTML=ic("close",20); document.getElementById("v-x").onclick=closeVideos;
+document.getElementById("v-addbtn").onclick=function(){ vForm(true); }; document.getElementById("v-cancel").onclick=function(){ vForm(false); }; document.getElementById("v-save").onclick=vSave;
+document.getElementById("v-url").addEventListener("keydown",function(e){ if(e.key==="Enter") vSave(); });
+document.getElementById("v-yt").onclick=function(){ if(vCur) window.open(vUrl(vCur),"_blank","noopener"); };
+document.getElementById("v-search").onclick=function(){ var u=units()[vUnit]; window.open("https://www.youtube.com/results?search_query="+encodeURIComponent("Computer Networks "+(u?u.title:"")),"_blank","noopener"); };
+document.getElementById("vsheet").addEventListener("click",function(e){ if(e.target===this) closeVideos(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeVideos(); });
 
 /* ---------- the pencil: drag it anywhere (mouse or finger), tap it to write a note ---------- */
 var fab=document.getElementById("fab"), fabDrag=null;
