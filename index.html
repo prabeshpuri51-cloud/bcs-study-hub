@@ -197,7 +197,7 @@ input.search{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radi
   <div class="row"><button class="b" id="v-search">Search YouTube for this unit</button><button class="b p" id="v-addbtn">+ Pin a video</button></div>
   <div id="v-form" style="display:none"><input class="search" id="v-url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" style="margin-bottom:8px"><input class="search" id="v-name" autocomplete="off" placeholder="Name it (optional)" style="margin-bottom:8px"><div class="mu" id="v-err" style="color:var(--bad)"></div><div class="row"><button class="b p" id="v-save">Save video</button><button class="b" id="v-cancel">Cancel</button></div></div>
   <div id="v-list"></div>
-  <p class="mu">Suggestions were found by search. Their titles and channels are checked, but they were not watched end to end, so check each one matches your syllabus. Videos need the internet.</p>
+  <p class="mu">Each clip was checked by reading the whole video transcript against that syllabus point. A clip starts and stops at the useful part (ads and off-syllabus parts are left out). Some points have no good video yet. Videos need the internet.</p>
 </div></div>
 <div class="sheet" id="sheet" aria-modal="true" role="dialog"><div class="sheet-in">
   <div class="sheet-head"><b id="sheet-title">New note</b><button class="b" id="sheet-del" style="display:none;padding:6px 12px">Delete</button><button class="iconbtn" id="sheet-x" aria-label="Save and close"></button></div>
@@ -1975,32 +1975,194 @@ window.CNW.units[7] = {
   ]
 };
 </script>
-<script>/* Suggested videos per unit for Computer Networks (CNW 112).
-   2026-10-30. Each title and channel was checked through YouTube's own lookup (oEmbed), and lengths come from the search listing.
-   NOT checked: whether the content fully matches the college syllabus (the videos were not watched end to end).
-   Hindi-language videos were left out. Prabesh can pin his own videos in the app too. */
+<script>/* Checked video clips for Computer Networks (CNW 112), grouped by unit (index 0-7).
+   Each video has segs: {t: syllabus point code, s: start seconds, e: stop seconds, label, note}.
+   Order inside a unit = order of teaching; the app groups clips under the unit's syllabus points (1.1, 1.2 ...).
+   How checked (2026-11-01): the WHOLE transcript of each video was read (muted, never played) and compared with the syllabus wording in data-cnw-uN.js.
+   Frames were also checked for videos with slides or numbers. Start/stop times come from the transcript timestamps.
+   Hindi-language videos were left out. Details and faults of every video: VIDEO-CHECK.md. */
 window.CNW_VIDEOS = {
-  0: [ { id: "G7n8thqwO2c", title: "Circuit Switching vs Packet Switching", ch: "PowerCert Animated Videos", len: "5:35" } ],
-  1: [ { id: "pnoWCK82apU", title: "Lec-83: HTTP, FTP, SMTP, POP | All Application Layer Protocols", ch: "Gate Smashers", len: "17:00" },
-       { id: "K8fn6ZQtCvk", title: "Domain Name System (DNS) in Computer Networks Explained", ch: "Engineering Funda", len: "20:22" } ],
-  2: [ { id: "xMtP5ZB3wSk", title: "TCP - Three-way handshake in details", ch: "Sunny Classroom", len: "4:17" },
-       { id: "r9kbjAN2788", title: "Slow Start vs Congestion Avoidance in TCP", ch: "Hussein Nasser", len: "10:08" } ],
-  3: [ { id: "nFYilGQ-p-8", title: "Subnetting Made Simple", ch: "Carl Oliver", len: "5:41" },
-       { id: "hbdT_Q9DM8w", title: "Subnetting Explained: Networking Basics", ch: "WhiteboardDoodles", len: "11:37" },
-       { id: "oF_pEiYi0TQ", title: "Link State vs Distance Vector Routing Protocols", ch: "Naj Qazi", len: "2:44" },
-       { id: "0Q3SEa9qyAI", title: "CN 20: Distance Vector VS Link State Routing | Examples", ch: "CS & IT Tutorials by Vrushali", len: "13:22" } ],
-  4: [ { id: "5Q-Yv6_0Qcw", title: "Lec-30: Cyclic Redundancy Check (CRC) for Error Detection and Correction", ch: "Gate Smashers", len: "12:00" },
-       { id: "MNZa-S4E-To", title: "VLANs, Tagging, Trunking, VxLAN, & Native VLAN", ch: "PowerCert Animated Videos", len: "9:30" },
-       { id: "6MW5P6Ci7lw", title: "Spanning Tree Protocol | CCNA - Explained", ch: "PowerCert Animated Videos", len: "11:55" } ],
-  5: [ { id: "E0Jd-sJcQnY", title: "Wireless MAC Protocols Demystified: CSMA/CA, Hidden Terminals & Collision Avoidance", ch: "Business Courses", len: "3:15" },
-       { id: "WZaIfyvERcA", title: "WiFi (Wireless) Password Security - WEP, WPA, WPA2, WPA3, WPS Explained", ch: "PowerCert Animated Videos", len: "8:40" } ],
-  6: [ { id: "j9QmMEWmcfo", title: "SSL, TLS, HTTPS Explained", ch: "ByteByteGo", len: "5:54" },
-       { id: "hm8s6FAc4pg", title: "The RSA Encryption Algorithm - How Does It Actually Work + Step-by-Step Example", ch: "BrainWave", len: "6:55" },
-       { id: "4zahvcJ9glg", title: "The RSA Encryption Algorithm (1 of 2: Computing an Example)", ch: "Eddie Woo", len: "8:40" } ],
-  7: [ { id: "w3fMajZKrCA", title: "SNMP | simple network management protocol", ch: "Easy Engineering By Neha Syed", len: "6:58" } ]
+  0: [ { id: "74sEFYBBRAY", title: "1.1 Introduction - What is the Internet", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "1.1", o: 10, s: 170, e: 795, label: "What the Internet is: hosts, routers and switches, links, networks, protocols" } ] },
+       { id: "k8NmM-hImBU", title: "1.2 The network edge", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "1.1", o: 20, s: 0, e: 955, label: "Network edge: access networks (cable, DSL, Wi-Fi, 4G/5G) and physical media" } ] },
+       { id: "hm1y4LsphQQ", title: "1.4 Performance", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "1.2", o: 30, s: 0, e: 603, label: "Delay, queueing, packet loss and traceroute" },
+                 { t: "1.1", o: 30, s: 603, e: 791, label: "Throughput: how fast data really flows" } ] },
+       { id: "G7n8thqwO2c", title: "Circuit Switching vs Packet Switching", ch: "PowerCert Animated Videos",
+         segs: [ { t: "1.2", o: 10, s: 0, e: 142, label: "Quick start: circuit switching and packet switching explained" },
+                 { t: "1.2", o: 11, s: 205, e: 319, label: "Comparing the two: quality, latency, bandwidth use, order", note: "A 1-minute advert sits between the two clips and is skipped." } ] },
+       { id: "f1nUcCdQJ8Y", title: "1.3 The network core", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "1.2", o: 20, s: 96, e: 862, label: "Network core: forwarding, packet queuing and loss, circuit switching, packet vs circuit" },
+                 { t: "1.2", o: 50, s: 862, e: 1144, label: "Internet structure: ISPs and how networks connect", note: "Watch after the layering clips if you follow the syllabus order." } ] },
+       { id: "IZ_PnVXtMeY", title: "1.5 Layering, encapsulation", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "1.2", o: 40, s: 0, e: 650, label: "Protocol layers: the 5-layer Internet stack and encapsulation", note: "It never mentions OSI: use the next clip for OSI vs TCP/IP." } ] },
+       { id: "CRdL1PcherM", title: "what is TCP/IP and OSI? // FREE CCNA // EP 3", ch: "NetworkChuck",
+         segs: [ { t: "1.2", o: 45, s: 207, e: 540, label: "OSI model vs TCP/IP model: layers and why OSI is still used", note: "Informal style. The device-layer quiz follows if you want practice." },
+                 { t: "1.2", o: 46, s: 549, e: 686, label: "Quick quiz: which device works at which layer" },
+                 { t: "1.3", o: 20, s: 40, e: 207, label: "Short history: ARPANET and why networking models were needed" } ] },
+       { id: "l4q8iuqbuiQ", title: "1.7 History of Computer Networking", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "1.3", o: 10, s: 0, e: 654, label: "History: ARPANET, 1980s, 1990s web, 2000s wireless, cloud and data centres", note: "IoT is not mentioned." } ] } ],
+  1: [ { id: "abeupgK5z48", title: "2.1 Principles of the Application Layer", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "2.1", o: 10, s: 578, e: 1468, label: "Client-server vs peer-to-peer, processes and sockets, what apps need from transport" } ] },
+       { id: "S9GEPaQ1lFs", title: "2.2 The Web and HTTP (part 1)", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "2.2", o: 10, s: 51, e: 1099, label: "HTTP: requests and responses, persistent connections, status codes, cookies, web caching", note: "HTTP/2 and HTTP/3 are not here: see the next clip." } ] },
+       { id: "UMwQjFzTQXw", title: "HTTP 1 Vs HTTP 2 Vs HTTP 3!", ch: "ByteByteGo",
+         segs: [ { t: "2.2", o: 20, s: 12, e: 454, label: "HTTP versions 1.0, 1.1, 2 and 3 (and QUIC)" } ] },
+       { id: "ak5bbb-xHLI", title: "2.6 Video Streaming and Content Distribution Networks", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "2.2", o: 30, s: 600, e: 1000, label: "Content distribution networks (CDNs): how Netflix and Akamai-style systems work" } ] },
+       { id: "D3GMrOMR2dk", title: "2.3 Email", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "2.3", o: 10, s: 0, e: 570, label: "Email: how SMTP works, mail format, IMAP", note: "POP3 is not covered here: see the next clip." } ] },
+       { id: "pnoWCK82apU", title: "Lec-83: HTTP, FTP, SMTP, POP (Gate Smashers)", ch: "Gate Smashers",
+         segs: [ { t: "2.3", o: 20, s: 764, e: 1021, label: "SMTP pushes mail, POP3 pulls it (ports 25, 110, 995)", note: "Only this part: the rest of this video has wrong explanations." } ] },
+       { id: "6lRcMh5Yphg", title: "2.4 The Domain Name System (DNS)", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "2.3", o: 30, s: 84, e: 1148, label: "DNS: hierarchy, name resolution, caching, resource records, DNS security" } ] },
+       { id: "K8fn6ZQtCvk", title: "Domain Name System (DNS) in Computer Networks Explained", ch: "Engineering Funda",
+         segs: [ { t: "2.3", o: 40, s: 60, e: 1197, label: "Second look at DNS, with a live Wireshark and nslookup demo", note: "Repeats the first one: watch only if you want a second explanation." } ] },
+       { id: "Fk2oejzgSVQ", title: "What is DNSSEC (Domain Name System Security Extensions)?", ch: "IBM Technology",
+         segs: [ { t: "2.3", o: 50, s: 17, e: 540, label: "DNSSEC: why it is needed, signatures, chain of trust, DNSKEY, RRSIG, DS" } ] },
+       { id: "23uTlbdCKbw", title: "Bittorrent & P2P - Peer-to-Peer Network Applications", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "2.4", o: 10, s: 0, e: 452, label: "Peer-to-peer and BitTorrent: trackers, chunks, tit-for-tat" } ] },
+       { id: "1wTucsUm64s", title: "Distributed Hash Tables: In a nutshell", ch: "Recessive",
+         segs: [ { t: "2.4", o: 20, s: 0, e: 215, label: "Distributed hash tables: lookup without a central index", note: "Simplified ring model; real DHTs (Chord, Kademlia) route faster." } ] },
+       { id: "SSo_EIwHSd4", title: "How does a blockchain work - Simply Explained", ch: "Simply Explained",
+         segs: [ { t: "2.4", o: 30, s: 0, e: 345, label: "Blockchain: blocks, hashes, proof-of-work, peer-to-peer consensus" } ] } ],
+  2: [ { id: "lAvhH0XJLNE", title: "3.1 Introduction and Transport-layer Services", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "3.1", o: 10, s: 0, e: 540, label: "What the transport layer does: process-to-process delivery, TCP vs UDP" } ] },
+       { id: "CekW6ipRrGA", title: "3.2 Transport layer multiplexing and demultiplexing", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "3.1", o: 20, s: 0, e: 859, label: "Multiplexing and demultiplexing: ports and sockets, UDP and TCP demultiplexing" } ] },
+       { id: "VjBDgcNno-Q", title: "3.3 Connectionless Transport: UDP", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "3.1", o: 30, s: 0, e: 739, label: "UDP: the simple segment, uses, checksum" } ] },
+       { id: "nyUHUtmxWg0", title: "3.4-1 Principles of Reliable Data Transfer (Part 1)", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "3.1", o: 40, s: 0, e: 1443, label: "Reliable data transfer principles: rdt1.0, 2.0, 2.1 (acks, naks, sequence numbers)", note: "Part 1 of 2 in his course. Slow but it is the core idea behind TCP." } ] },
+       { id: "UYJP-6mhF6E", title: "3.5-1 TCP Reliability, Flow Control, and Connection Management", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "3.2", o: 10, s: 119, e: 859, label: "TCP segment structure, timeouts and RTT, retransmission, fast retransmit, flow control" } ] },
+       { id: "xMtP5ZB3wSk", title: "TCP - Three-way handshake in details", ch: "Sunny Classroom",
+         segs: [ { t: "3.2", o: 20, s: 0, e: 245, label: "TCP three-way handshake with sequence numbers" } ] },
+       { id: "cIHiSR4j3g4", title: "3.7 TCP Congestion Control", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "3.2", o: 30, s: 113, e: 1190, label: "TCP congestion control: AIMD, slow start, CUBIC, delay-based (BBR idea)" },
+                 { t: "3.3", o: 10, s: 1190, e: 1347, label: "Fairness: must every app be fair? (TCP fairness and UDP)" } ] },
+       { id: "r9kbjAN2788", title: "Slow Start vs Congestion Avoidance in TCP", ch: "Hussein Nasser",
+         segs: [ { t: "3.2", o: 32, s: 28, e: 584, label: "Extra: slow start and congestion avoidance explained with a chart", note: "Harder to follow: the speaker assumes you know TCP basics." } ] },
+       { id: "UICh3ScfNWI", title: "Home Internet Connections Are Unfair! (Bufferbloat)", ch: "Techquickie",
+         segs: [ { t: "3.3", o: 20, s: 0, e: 113, label: "Bufferbloat: why a fast connection still lags" },
+                 { t: "3.3", o: 21, s: 140, e: 250, label: "Bufferbloat: how queue management (SQM, fq_codel) fixes it", note: "Casual home-router style. A short sponsor message sits between the two clips." } ] },
+       { id: "oRUIEmpzk0Y", title: "3.8 Evolution of Transport-layer Functionality", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "3.3", o: 30, s: 24, e: 349, label: "QUIC: building TCP-like features on UDP" } ] },
+       { id: "UMwQjFzTQXw", title: "HTTP 1 Vs HTTP 2 Vs HTTP 3!", ch: "ByteByteGo",
+         segs: [ { t: "3.3", o: 31, s: 315, e: 441, label: "HTTP/3 uses QUIC: 0-RTT and connections that survive a network change" } ] } ],
+  3: [ { id: "olbr3WZwrdU", title: "4.1 Introduction to the Network Layer", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.1", o: 10, s: 0, e: 944, label: "Forwarding vs routing: data plane and control plane, best-effort service" } ] },
+       { id: "NfHR94JAO-s", title: "4.2 What's inside a router? Part 1", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.1", o: 20, s: 55, e: 876, label: "Router architecture: input ports, longest prefix matching, switching fabric" } ] },
+       { id: "zfzzz9KQOog", title: "4.2 What's inside a router? Part 2", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.1", o: 30, s: 0, e: 918, label: "Router output ports: queueing, buffer management, packet scheduling", note: "The network neutrality sidebar after 15:18 is not in the syllabus and is left out." } ] },
+       { id: "sdIpLuIR1ZY", title: "4.3 The Internet Protocol, part 1", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.1", o: 40, s: 438, e: 1529, label: "IPv4 addressing: subnets, CIDR, DHCP, how addresses are allocated" },
+                 { t: "4.3", o: 10, s: 71, e: 438, label: "IPv4 datagram (packet) format, field by field" } ] },
+       { id: "hbdT_Q9DM8w", title: "Subnetting Explained: Networking Basics", ch: "WhiteboardDoodles",
+         segs: [ { t: "4.1", o: 45, s: 31, e: 565, label: "Subnetting ideas: masks, address classes, CIDR", note: "No calculation with several subnets: use the video after next for that." } ] },
+       { id: "nFYilGQ-p-8", title: "Subnetting Made Simple", ch: "Carl Oliver",
+         segs: [ { t: "4.1", o: 46, s: 0, e: 340, label: "One worked example: 192.168.2.64/26", note: "Handwritten and low quality, but the numbers are correct." } ] },
+       { id: "RLCd5u0sjoU", title: "VLSM Subnetting - subnetting a subnet", ch: "Sunny Classroom",
+         segs: [ { t: "4.1", o: 47, s: 0, e: 870, label: "VLSM: splitting a /24 into different-size subnets (past-paper style)", note: "He mentions an earlier FLSM video: the idea is equal-size subnets." } ] },
+       { id: "0Q3SEa9qyAI", title: "CN 20: Distance Vector VS Link State Routing | Examples", ch: "CS & IT Tutorials by Vrushali",
+         segs: [ { t: "4.2", o: 10, s: 32, e: 783, label: "Distance vector (RIP) and link state (OSPF) with worked examples", note: "She says there are 'four types' of routing: ignore that, DV and LS are two kinds of dynamic routing." } ] },
+       { id: "iUQmn3nNjaI", title: "5.3 Open Shortest Path First (OSPF)", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.2", o: 20, s: 80, e: 645, label: "OSPF and hierarchical routing inside an autonomous system" } ] },
+       { id: "2rV4tJkP-CQ", title: "5.4 BGP: the Border Gateway Protocol", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.2", o: 30, s: 74, e: 880, label: "BGP: routing between autonomous systems, messages, policy, hot potato routing" } ] },
+       { id: "DKP54Ed9ovo", title: "Software Defined Networks & OpenFlow", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "4.2", o: 40, s: 0, e: 832, label: "SDN and OpenFlow: the controller, flow tables, messages" } ] },
+       { id: "H9DivCEFuUg", title: "4.3 The Internet Protocol, part 2", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.3", o: 20, s: 471, e: 1249, label: "IPv6: why it was needed, the IPv6 datagram format, tunneling during the move" },
+                 { t: "4.3", o: 30, s: 51, e: 471, label: "NAT: how many devices share one public address" } ] },
+       { id: "EHV0Q0R--Ns", title: "5.6 ICMP: Internet Control Message Protocol", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "4.3", o: 40, s: 0, e: 293, label: "ICMP: error messages, ping and traceroute" } ] },
+       { id: "xTH1ZA_qUvA", title: "IPsec Explained", ch: "PowerCert Animated Videos",
+         segs: [ { t: "4.3", o: 50, s: 0, e: 155, label: "IPsec: what it is, IKE phases, AH and ESP" },
+                 { t: "4.3", o: 51, s: 224, e: 325, label: "IPsec transport mode vs tunnel mode", note: "A 1-minute advert sits between the two clips and is skipped." } ] } ],
+  4: [ { id: "lMGWJZLTulY", title: "6.1 Introduction to the Link Layer", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "5.1", o: 5, s: 0, e: 673, label: "Link layer: terminology, services, where it runs" } ] },
+       { id: "x-rQ3RiI7I0", title: "6.2 Error detection and correction", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "5.1", o: 10, s: 65, e: 490, label: "Error detection: parity, Internet checksum, CRC (and simple correction)" } ] },
+       { id: "5Q-Yv6_0Qcw", title: "Lec-30: Cyclic Redundancy Check (CRC) for Error Detection and Correction", ch: "Gate Smashers",
+         segs: [ { t: "5.1", o: 20, s: 0, e: 750, label: "CRC step by step with a division example (exam-style calculation)", note: "Watch the screen, the division is hard to follow by sound alone. CRC only detects errors." } ] },
+       { id: "X2cLpzFRMT4", title: "6.3 Multiple Access links and protocols", ch: "Jim Kurose (author of the textbook)",
+         segs: [ { t: "5.1", o: 30, s: 83, e: 1670, label: "Multiple access: channel partitioning, ALOHA, CSMA, Ethernet CSMA/CD, taking turns" } ] },
+       { id: "w_2l9bsN4cE", title: "MAC Addresses, ARP, and Ethernet", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "5.1", o: 40, s: 0, e: 480, label: "MAC addresses and ARP: how a host finds the next hop's address" },
+                 { t: "5.2", o: 10, s: 480, e: 770, label: "Ethernet frame: preamble, addresses, type, data, CRC" } ] },
+       { id: "7SjUycd63PY", title: "Ethernet Switches and VLANs", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "5.2", o: 20, s: 0, e: 730, label: "Switches: self-learning, forwarding and flooding, switches vs routers, VLANs, trunking", note: "It does not compare switches with hubs: the OSI/TCP-IP quiz clip in 1.2 does." } ] },
+       { id: "MNZa-S4E-To", title: "VLANs, Tagging, Trunking, VxLAN, & Native VLAN", ch: "PowerCert Animated Videos",
+         segs: [ { t: "5.2", o: 30, s: 0, e: 372, label: "VLANs, 802.1Q tagging, trunk ports, native VLAN (animated)" },
+                 { t: "5.3", o: 30, s: 372, e: 558, label: "VXLAN: virtual networks across data centres" } ] },
+       { id: "6MW5P6Ci7lw", title: "Spanning Tree Protocol | CCNA - Explained", ch: "PowerCert Animated Videos",
+         segs: [ { t: "5.2", o: 40, s: 0, e: 590, label: "Spanning tree: stops switch loops", note: "Not named in the syllabus list, but asked in the 2024 and 2025 model papers." } ] },
+       { id: "9wPCQNE0Xx4", title: "Data Center Networks", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "5.3", o: 10, s: 0, e: 358, label: "Data centre networks: tiers, top-of-rack switches, load balancers" } ] },
+       { id: "xjc7WLBb-nI", title: "Spine and Leaf network architecture explained", ch: "NETWORKING WITH H",
+         segs: [ { t: "5.3", o: 20, s: 0, e: 235, label: "Spine-leaf architecture: two layers, east-west traffic, how it scales" } ] },
+       { id: "UEMAvXXNWsY", title: "P4 programming language - introduction to network programming with P4", ch: "CodiLime",
+         segs: [ { t: "5.3", o: 40, s: 8, e: 720, label: "Programmable data planes: fixed chips vs P4, parser, match-action tables", note: "Only the first 12 minutes. After that it is a company demo." } ] } ],
+  5: [ { id: "DbCUbRBTa8I", title: "Wireless & Mobile Link Challenges - Wireless Networks", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "6.1", o: 10, s: 0, e: 746, label: "Wireless channel: signal fading, interference, SNR, hidden terminals, infrastructure vs ad hoc" } ] },
+       { id: "vvhEnr52UOU", title: "802.11 How WiFi Works - Wireless Networks", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "6.1", o: 20, s: 0, e: 917, label: "IEEE 802.11 Wi-Fi: access points, SSIDs and scanning, association, CSMA/CA with RTS/ACK, frames" } ] },
+       { id: "E0Jd-sJcQnY", title: "Wireless MAC Protocols Demystified: CSMA/CA, Hidden Terminals & Collision Avoidance", ch: "Business Courses",
+         segs: [ { t: "6.1", o: 21, s: 0, e: 190, label: "Short recap: hidden terminals and CSMA/CA", note: "Short and simple; it treats RTS/CTS as all of CSMA/CA." } ] },
+       { id: "m_qTs_FQ_jU", title: "What is 802.11ax Wi-Fi?", ch: "Techquickie",
+         segs: [ { t: "6.1", o: 30, s: 62, e: 284, label: "Wi-Fi 6 (802.11ax): OFDMA, MU-MIMO, BSS color, target wake time", note: "Made in 2018, before Wi-Fi 6E existed: 6E (adds the 6 GHz band) is not covered." } ] },
+       { id: "2sJOEJxCbi0", title: "How Cellular 4G/5G Networks Work", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "6.1", o: 40, s: 0, e: 664, label: "4G LTE and 5G cellular networks: cells, base stations, core network, SIM authentication, mobility" } ] },
+       { id: "5yp3Ti47ZZc", title: "L41: Mobile IP (Internet Protocol) Introduction, Design Goals, Requirements, IP Packet Delivery", ch: "Easy Engineering Classes",
+         segs: [ { t: "6.2", o: 10, s: 0, e: 878, label: "Mobile IP (Hindi + English terms): why it is needed, design goals, mobile node, home and foreign network, care-of address, home agent, packet delivery", note: "Hindi. Its auto-captions are garbled, so I checked it from the transcript and it follows the standard Mobile IP explanation." } ] },
+       { id: "lrm0U8OL3eA", title: "L42: Mobile IP Working | Agent Discovery, Registration, Tunneling, Encapsulation", ch: "Easy Engineering Classes",
+         segs: [ { t: "6.2", o: 20, s: 0, e: 590, label: "Mobile IP working (Hindi + English terms): agent discovery, registration with the home agent, tunneling and encapsulation", note: "Hindi. Captions garbled; the steps match the standard Mobile IP explanation." } ] },
+       { id: "lSwRfjgUYqQ", title: "Mobile Communication 3 - What is a Handoff Procedure?", ch: "EzEd Channel",
+         segs: [ { t: "6.2", o: 30, s: 0, e: 124, label: "Handoff: how a phone moves from one cell to the next (English, very short)" } ] },
+       { id: "GzFM2XzdpCo", title: "L11: Handoffs in Mobile Computing | Types - Inter, Intra Cell, Hard and Soft Handoff", ch: "Easy Engineering Classes",
+         segs: [ { t: "6.2", o: 40, s: 0, e: 580, label: "Handoff in detail (Hindi + English terms): why it happens, inter-cell and intra-cell, hard handoff (break before make) vs soft handoff (make before break)", note: "Hindi. Location services (the third part of 6.2) still have no checked video." } ] },
+       { id: "WZaIfyvERcA", title: "WiFi (Wireless) Password Security - WEP, WPA, WPA2, WPA3, WPS Explained", ch: "PowerCert Animated Videos",
+         segs: [ { t: "6.3", o: 10, s: 46, e: 343, label: "Background: WEP, WPA, WPA2 (and a minute on WPA3)" } ] },
+       { id: "l71GBlds0Rs", title: "Wi-Fi Security Compared: WPA2 vs. WPA3", ch: "Eye on Tech",
+         segs: [ { t: "6.3", o: 20, s: 15, e: 210, label: "WPA3: why it is stronger (SAE handshake, forward secrecy, protected management frames)", note: "It calls CCMP an 'authentication mechanism'; CCMP is really the encryption/integrity mode." } ] },
+       { id: "Oauw8LASY1s", title: "Your WiFi Isn't Safe Without This: Wireless IDS Explained", ch: "SimplyExplained",
+         segs: [ { t: "6.3", o: 30, s: 0, e: 460, label: "Wireless intrusion detection and prevention (WIDPS): rogue access points, scanning, triangulation, blind spots", note: "Very small channel (71 subscribers) with a computer voice, but I checked the content and it is correct." } ] } ],
+  6: [ { id: "rg3O48TDrnc", title: "What is Network Security?", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "7.1", o: 10, s: 0, e: 517, label: "Security properties (confidentiality, integrity, availability, authentication) and the attacks that break them" } ] },
+       { id: "dhNgcz8fEd4", title: "Principles of Cryptography", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "7.2", o: 10, s: 0, e: 1115, label: "Cryptography: symmetric keys (DES, AES, block ciphers), public keys, RSA" } ] },
+       { id: "4zahvcJ9glg", title: "The RSA Encryption Algorithm (1 of 2: Computing an Example)", ch: "Eddie Woo",
+         segs: [ { t: "7.2", o: 20, s: 0, e: 519, label: "RSA with tiny numbers: encrypt and decrypt one letter", note: "Part 1 of 2. How the keys are chosen is in part 2." } ] },
+       { id: "hm8s6FAc4pg", title: "The RSA Encryption Algorithm - How Does It Actually Work", ch: "BrainWave",
+         segs: [ { t: "7.2", o: 30, s: 0, e: 414, label: "RSA maths: key generation, encryption, decryption", note: "Fast and maths-heavy. The title promises an example, but there is no worked one." } ] },
+       { id: "SHEviXk8Rws", title: "Digital Signatures, Message Integrity, and Authentication", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "7.2", o: 40, s: 0, e: 877, label: "Digital signatures: hashes, signing with a private key, certificates" } ] },
+       { id: "j9QmMEWmcfo", title: "SSL, TLS, HTTPS Explained", ch: "ByteByteGo",
+         segs: [ { t: "7.2", o: 50, s: 0, e: 340, label: "How the TLS handshake gives HTTPS its security", note: "It does not explain how a certificate is checked." } ] },
+       { id: "msBV_TGLRDQ", title: "Firewalls and Intrusion Detection Systems (IDS)", ch: "Epic Networks Lab (Kurose & Ross series)",
+         segs: [ { t: "7.3", o: 10, s: 0, e: 833, label: "Firewalls (stateless, stateful, application gateways) and IDS/IPS" } ] },
+       { id: "CWy3x3Wux6o", title: "VPNs Explained | Site-to-Site + Remote Access", ch: "CertBros",
+         segs: [ { t: "7.3", o: 20, s: 0, e: 474, label: "VPNs: site-to-site and remote access, IPsec and TLS, full vs split tunnel" } ] },
+       { id: "xTH1ZA_qUvA", title: "IPsec Explained", ch: "PowerCert Animated Videos",
+         segs: [ { t: "7.3", o: 30, s: 0, e: 155, label: "IPsec: IKE phases, AH and ESP (how many VPNs work)" },
+                 { t: "7.3", o: 31, s: 224, e: 325, label: "IPsec transport mode vs tunnel mode", note: "A 1-minute advert sits between the two clips and is skipped." } ] },
+       { id: "Y3DjoTiOiOU", title: "Zero Trust Explained | Real World Example", ch: "CertBros",
+         segs: [ { t: "7.3", o: 40, s: 20, e: 552, label: "Zero trust: why perimeter security fails, never trust always verify, least privilege, assume breach", note: "Stop at 9:12: the rest is a demo of a sponsor's product." } ] } ],
+  7: [ { id: "w3fMajZKrCA", title: "SNMP | simple network management protocol", ch: "Easy Engineering By Neha Syed",
+         segs: [ { t: "8.1", o: 10, s: 0, e: 400, label: "SNMP basics: manager, agent, MIB", note: "It says TCP, but SNMP normally uses UDP: see the next clip for ports and versions." } ] },
+       { id: "2IXP0TkwNJU", title: "How SNMP Works - a quick guide", ch: "Nagios",
+         segs: [ { t: "8.1", o: 20, s: 0, e: 335, label: "SNMP in practice: OIDs and MIBs, polling (port 161) vs traps (port 162), versions 1, 2c and 3" } ] },
+       { id: "qTaOZrDnMzQ", title: "Wireshark Tutorial for Beginners | Network Scanning Made Easy", ch: "Anson Alexander",
+         segs: [ { t: "8.1", o: 30, s: 0, e: 720, label: "Traffic analysis with Wireshark: capture, packets, conversations, filters, HTTP streams", note: "Hands-on tutorial. The first 12 minutes are enough; the rest is more filtering." } ] },
+       { id: "Ejn7BgqJavk", title: "What is Intent Based Networking?", ch: "Phil Gervasi",
+         segs: [ { t: "8.2", o: 5, s: 65, e: 190, label: "Network automation: scripts (Python, Ansible) instead of typing into every device" },
+                 { t: "8.2", o: 10, s: 190, e: 370, label: "Intent-based networking: you state the goal, the network configures itself", note: "Small channel (184 subscribers) but the explanation is correct and clear." } ] },
+       { id: "DD2r52EmcCg", title: "AI NetOps: How AI and Machine Learning Transform Network Operations", ch: "Kentik",
+         segs: [ { t: "8.2", o: 20, s: 0, e: 447, label: "AI and machine learning in network operations: anomaly detection, incident triage, LLM assistants", note: "Uses terms like LLM and RAG. Made by a network-monitoring company." } ] } ]
 };
-/* Whole-course playlist found earlier (title and channel checked, not watched): */
-window.CNW_PLAYLISTS = [ { id: "PLWkguCWKqN9MdQXjSM5DE17NU7_RQA_MH", title: "Computer Networking Full Course (playlist)", ch: "Bogdan Stashchuk", type: "playlist" } ];
 </script>
 <script>
 "use strict";
@@ -2399,38 +2561,47 @@ document.getElementById("sheet-hub").onclick=function(){ closeNote(); go("notes"
 document.getElementById("sheet").addEventListener("click",function(e){ if(e.target===this) closeNote(); });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeNote(); });
 
-/* ---------- videos: pinned per unit (saved in the backup) plus checked suggestions ---------- */
+/* ---------- videos: checked clips grouped by syllabus point (in syllabus order), plus your own pins ---------- */
 var vUnit=null, vCur=null, vFormOpen=false;
+function tSec(x){ x=String(x||"").trim(); if(!x) return 0; if(/^\d+$/.test(x)) return +x; if(/^\d+:\d+(:\d+)?$/.test(x)){ var p=x.split(":").map(Number); return p.length===3?p[0]*3600+p[1]*60+p[2]:p[0]*60+p[1]; } var m=x.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?$/); return m?((+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0)):0; }
+function fmtT(s){ s=Math.max(0,Math.round(s)); var m=Math.floor(s/60), r=s%60; return m+":"+(r<10?"0":"")+r; }
 function ytRef(s){
   s=String(s||"").trim(); if(!s) return null;
-  if(/^[A-Za-z0-9_-]{11}$/.test(s)) return {id:s,type:"video"};
-  var m=s.match(/[?&]list=([A-Za-z0-9_-]{10,})/), v=s.match(/(?:youtu\.be\/|\/embed\/|\/shorts\/|\/live\/|[?&]v=)([A-Za-z0-9_-]{11})/);
+  if(/^[A-Za-z0-9_-]{11}$/.test(s)) return {id:s,type:"video",s:0};
   if(!/(^|\/\/|\.)(youtube\.com|youtu\.be|youtube-nocookie\.com)/i.test(s)) return null;
-  if(v) return {id:v[1],type:"video"};
-  if(m) return {id:m[1],type:"playlist"};
+  var m=s.match(/[?&]list=([A-Za-z0-9_-]{10,})/), v=s.match(/(?:youtu\.be\/|\/embed\/|\/shorts\/|\/live\/|[?&]v=)([A-Za-z0-9_-]{11})/), t=s.match(/[?&#](?:t|start)=([0-9hms:]+)/);
+  if(v) return {id:v[1],type:"video",s:t?tSec(t[1]):0};
+  if(m) return {id:m[1],type:"playlist",s:0};
   return null;
 }
-function vUrl(r){ return r.type==="playlist"?"https://www.youtube.com/playlist?list="+r.id:"https://www.youtube.com/watch?v="+r.id; }
-function vPinned(i){ var s=load(); return s.vids[i]||[]; }
-function vSuggested(i){ var have={}; vPinned(i).forEach(function(p){ have[p.id]=1; }); var a=((window.CNW_VIDEOS||{})[i]||[]).concat(window.CNW_PLAYLISTS||[]); return a.filter(function(x){ return !have[x.id]; }); }
-function vRow(r,k,pinned){
+function vUrl(r){ return r.type==="playlist"?"https://www.youtube.com/playlist?list="+r.id:"https://www.youtube.com/watch?v="+r.id+(r.s?"&t="+r.s:""); }
+function vPinned(i){ return load().vids[i]||[]; }
+function vTopics(i){ var u=units()[i]; return ((u&&u.syllabus)||[]).map(function(x){ var m=x.match(/^(\d+\.\d+)\s+([^:]+):?\s*(.*)$/); return m?{code:m[1],name:m[2],rest:m[3]}:{code:"",name:x,rest:""}; }); }
+function vClips(i){ var out=[]; ((window.CNW_VIDEOS||{})[i]||[]).forEach(function(v){ (v.segs||[]).forEach(function(g){ out.push({id:v.id,title:v.title,ch:v.ch,type:"video",s:g.s||0,e:g.e||0,t:g.t,o:(typeof g.o==="number"?g.o:out.length*10),label:g.label||"",note:g.note||""}); }); }); out.sort(function(a,b){ return a.o-b.o; }); return out; }
+function vRow(r,key,pinned){
   var thumb=r.type==="playlist"?'<span class="vthumb">LIST</span>':'<img class="vthumb" alt="" loading="lazy" src="https://i.ytimg.com/vi/'+esc(r.id)+'/default.jpg" onerror="this.style.visibility=\'hidden\'">';
-  var meta=[r.ch,r.len].filter(Boolean).join(" · ");
-  return '<div class="vid" data-play="'+k+'" data-src="'+(pinned?"p":"s")+'">'+thumb+'<div class="grow"><b>'+esc(r.title)+(r.type==="playlist"?'<span class="vbadge">PLAYLIST</span>':'')+'</b>'+(meta?'<div class="mu">'+esc(meta)+'</div>':'')+'</div>'+(pinned?'<button class="vbtn" data-yt="'+k+'" aria-label="Open in YouTube">↗</button><button class="vbtn" data-del="'+k+'" aria-label="Remove video">✕</button>':'<button class="vbtn" data-pin="'+k+'" aria-label="Pin this video" title="Pin to my list">+</button>')+'</div>';
+  var span=r.type==="playlist"?"":(r.s||r.e)?fmtT(r.s||0)+(r.e?" to "+fmtT(r.e):" to the end"):"";
+  var meta=[r.ch,span?"watch "+span:""].filter(Boolean).join(" · ");
+  return '<div class="vid" data-play="'+key+'">'+thumb+'<div class="grow"><b>'+esc(r.label||r.title)+'</b>'+(r.label?'<div class="mu">'+esc(r.title)+'</div>':'')+(meta?'<div class="mu">'+esc(meta)+'</div>':'')+(r.note?'<div class="mu" style="color:var(--wa,#d98e04)">'+esc(r.note)+'</div>':'')+'</div>'+(pinned?'<button class="vbtn" data-yt="'+key+'" aria-label="Open in YouTube">↗</button><button class="vbtn" data-del="'+key+'" aria-label="Remove video">✕</button>':'<button class="vbtn" data-pin="'+key+'" aria-label="Pin this clip" title="Pin to my list">+</button>')+'</div>';
 }
 function vRender(){
-  var P=vPinned(vUnit), S=vSuggested(vUnit), h="";
-  h+='<h3 class="sec" style="margin:6px 0 0">Pinned by you</h3>'+(P.length?P.map(function(r,k){ return vRow(r,k,true); }).join(""):'<div class="mu">Nothing pinned yet. Tap <b>+ Pin a video</b>, or the <b>+</b> on a suggestion.</div>');
-  h+='<h3 class="sec" style="margin:10px 0 0">Suggested <span class="vbadge">found by search · not fully watched</span></h3>'+(S.length?S.map(function(r,k){ return vRow(r,k,false); }).join(""):'<div class="mu">No more suggestions for this unit.</div>');
+  var P=vPinned(vUnit), C=vClips(vUnit), T=vTopics(vUnit), all={}, h="", n=0;
+  h+='<h3 class="sec" style="margin:6px 0 0">Pinned by you</h3>'+(P.length?P.map(function(r,k){ all["p"+k]=r; return vRow(r,"p"+k,true); }).join(""):'<div class="mu">Nothing pinned yet. Tap <b>+ Pin a video</b>, or the <b>+</b> on a clip below.</div>');
+  T.forEach(function(tp){
+    var L=C.filter(function(c){ return c.t===tp.code; });
+    h+='<h3 class="sec" style="margin:14px 0 0">'+esc(tp.code)+' '+esc(tp.name)+'</h3>'+(tp.rest?'<div class="mu">'+esc(tp.rest)+'</div>':'');
+    if(!L.length) h+='<div class="mu" style="margin-top:6px">No checked video for this point yet.</div>';
+    L.forEach(function(c){ var key="c"+(n++); all[key]=c; h+=vRow(c,key,false); });
+  });
   var box=document.getElementById("v-list"); box.innerHTML=h;
-  box.querySelectorAll(".vid").forEach(function(c){ c.onclick=function(e){ if(e.target.closest(".vbtn")) return; var list=c.dataset.src==="p"?P:S; vPlay(list[+c.dataset.play]); }; });
-  box.querySelectorAll("[data-yt]").forEach(function(b){ b.onclick=function(){ window.open(vUrl(P[+b.dataset.yt]),"_blank","noopener"); }; });
-  box.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ var r=P[+b.dataset.del]; if(!confirm("Remove this video from your list?\n\n"+r.title)) return; var s=load(); s.vids[vUnit]=vPinned(vUnit).filter(function(x){ return x.id!==r.id; }); save(); if(vCur&&vCur.id===r.id) vStop(); vRender(); }; });
-  box.querySelectorAll("[data-pin]").forEach(function(b){ b.onclick=function(){ var r=S[+b.dataset.pin], s=load(); (s.vids[vUnit]=s.vids[vUnit]||[]).push({id:r.id,title:r.title,ch:r.ch,len:r.len,type:r.type||"video",added:Date.now()}); save(); vRender(); }; });
+  box.querySelectorAll(".vid").forEach(function(c){ c.onclick=function(e){ if(e.target.closest(".vbtn")) return; vPlay(all[c.dataset.play]); }; });
+  box.querySelectorAll("[data-yt]").forEach(function(b){ b.onclick=function(){ window.open(vUrl(all[b.dataset.yt]),"_blank","noopener"); }; });
+  box.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ var r=all[b.dataset.del]; if(!confirm("Remove this video from your list?\n\n"+(r.label||r.title))) return; var s=load(); s.vids[vUnit]=vPinned(vUnit).filter(function(x){ return !(x.id===r.id&&(x.s||0)===(r.s||0)); }); save(); if(vCur&&vCur.id===r.id) vStop(); vRender(); }; });
+  box.querySelectorAll("[data-pin]").forEach(function(b){ b.onclick=function(){ var r=all[b.dataset.pin], s=load(), list=(s.vids[vUnit]=s.vids[vUnit]||[]); if(!list.some(function(x){ return x.id===r.id&&(x.s||0)===(r.s||0); })) list.push({id:r.id,title:r.title,label:r.label,ch:r.ch,type:r.type||"video",s:r.s||0,e:r.e||0,added:Date.now()}); save(); vRender(); }; });
 }
 function vPlay(r){
   if(!r) return; vCur=r; var f=document.getElementById("vframe");
-  f.src=r.type==="playlist"?"https://www.youtube.com/embed/videoseries?list="+encodeURIComponent(r.id):"https://www.youtube.com/embed/"+encodeURIComponent(r.id)+"?rel=0&playsinline=1";
+  f.src=r.type==="playlist"?"https://www.youtube.com/embed/videoseries?list="+encodeURIComponent(r.id):"https://www.youtube.com/embed/"+encodeURIComponent(r.id)+"?rel=0&playsinline=1"+(r.s?"&start="+r.s:"")+(r.e?"&end="+r.e:"");
   document.getElementById("vplayer").style.display="block";
   var sh=document.querySelector("#vsheet .sheet-in"); if(sh) sh.scrollTop=0;
 }
@@ -2446,9 +2617,9 @@ function vSave(){
   var url=document.getElementById("v-url").value, err=document.getElementById("v-err"), r=ytRef(url);
   if(!r){ err.textContent="That does not look like a YouTube link. Paste the full link from the Share button."; return; }
   var s=load(), list=s.vids[vUnit]=s.vids[vUnit]||[];
-  if(list.some(function(x){ return x.id===r.id; })){ err.textContent="This one is already in your list."; return; }
+  if(list.some(function(x){ return x.id===r.id&&(x.s||0)===(r.s||0); })){ err.textContent="This one is already in your list."; return; }
   var name=document.getElementById("v-name").value.trim()||(r.type==="playlist"?"My playlist":"My video "+(list.length+1));
-  list.push({id:r.id,title:name,type:r.type,added:Date.now()}); save(); vForm(false); vRender();
+  list.push({id:r.id,title:name,type:r.type,s:r.s||0,e:0,added:Date.now()}); save(); vForm(false); vRender();
 }
 document.getElementById("v-x").innerHTML=ic("close",20); document.getElementById("v-x").onclick=closeVideos;
 document.getElementById("v-addbtn").onclick=function(){ vForm(true); }; document.getElementById("v-cancel").onclick=function(){ vForm(false); }; document.getElementById("v-save").onclick=vSave;
