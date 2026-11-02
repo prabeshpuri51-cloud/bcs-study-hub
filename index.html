@@ -181,6 +181,32 @@ input.search{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radi
 .vid b{display:block;font-size:14.5px;line-height:1.3}
 .vid .vbtn{border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;width:36px;height:36px;font:inherit;font-weight:900;cursor:pointer;flex:none}
 .vbadge{font-size:10.5px;font-weight:900;background:var(--ac2);color:var(--ac);padding:1px 7px;border-radius:99px;margin-left:6px}
+#tsheet{align-items:center}
+.tdlg{width:min(1100px,96vw);max-width:none;height:min(92vh,860px);max-height:92vh;border-radius:24px;overflow:hidden;padding:14px 16px;gap:10px}
+.tbody{flex:1;min-height:0;display:flex;gap:16px}
+.tchat{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;gap:8px}
+#tsheet:not(.lessonon) .tchat{max-width:780px;margin:0 auto;width:100%}
+.tboard{flex:1.15;min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:var(--card2);border:2px solid var(--bd)}
+#l-stage{flex:1;min-height:0;overflow:auto}
+.tboard .ccap{font-size:19px}
+.tboard .cshow{font-size:22px}
+.tctl{display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px}
+.tctl .b{padding:12px 10px}
+#t-msgs{flex:1;min-height:0;max-height:none;overflow:auto;padding:6px 4px}
+.tcomp{display:flex;gap:8px;align-items:stretch}
+.tcomp textarea{flex:1;min-height:0;height:78px;max-height:140px;resize:none;font-size:16px}
+.tbtns{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:190px;flex:none}
+.tbtns .b{padding:8px 10px}
+.tbtns #t-send{grid-column:1/3}
+.tbtns select{padding:8px 6px}
+#t-chips{flex-wrap:nowrap;overflow-x:auto;padding:2px 2px 6px}
+#t-chips .chip{white-space:nowrap;flex:none}
+#t-msgs,#l-stage,.tcomp textarea,#t-chips{scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.tset summary{cursor:pointer;color:var(--mu);font-weight:800;font-size:14px;padding:4px 2px}
+.tset .row{margin:8px 0}
+.tstatus{min-height:18px;margin:0;font-size:13px}
+@media (max-width:1000px){.tcomp{flex-direction:column}.tbtns{width:auto;grid-template-columns:1.5fr 1fr 1fr}.tbtns #t-send{grid-column:auto}.tcomp textarea{height:64px}}
+@media (max-width:760px){.tdlg{width:100vw;height:100dvh;max-height:100dvh;border-radius:0;border:0}.tbody{flex-direction:column;gap:10px}.tboard{flex:none;max-height:50%}#tsheet:not(.lessonon) .tchat{max-width:none}.tbtns{width:180px}}
 #fx{position:fixed;inset:0;z-index:300;pointer-events:none}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
@@ -209,21 +235,26 @@ input.search{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radi
   <div id="v-list"></div>
   <p class="mu">Each clip was checked by reading the whole video transcript against that syllabus point. A clip starts and stops at the useful part (ads and off-syllabus parts are left out). Some points have no good video yet. Videos need the internet.</p>
 </div></div>
-<div class="sheet" id="tsheet" aria-modal="true" role="dialog"><div class="sheet-in" style="overflow:auto">
+<div class="sheet" id="tsheet" aria-modal="true" role="dialog"><div class="sheet-in tdlg">
   <div class="sheet-head"><b id="t-title">Tutor</b><select id="t-model" aria-label="Model" style="max-width:42%"></select><button class="iconbtn" id="t-x" aria-label="Close tutor"></button></div>
-  <div id="l-panel" style="display:none">
-    <div class="row"><span class="mu grow" id="l-count"></span><button class="b" id="l-stop">Stop lesson</button></div>
-    <div class="bar"><i id="l-bar" style="width:0%"></i></div>
-    <div id="l-stage"></div>
-    <div class="row"><button class="b" id="l-prev" aria-label="Previous step">Back</button><button class="b p grow" id="l-play">Pause</button><button class="b" id="l-next" aria-label="Next step">Next</button></div>
+  <div class="tbody">
+    <section class="tboard" id="l-panel" style="display:none">
+      <div class="row"><span class="mu grow" id="l-count"></span><button class="b" id="l-stop" style="padding:6px 12px">Stop lesson</button></div>
+      <div class="bar"><i id="l-bar" style="width:0%"></i></div>
+      <div id="l-stage"></div>
+      <div class="tctl"><button class="b" id="l-prev" aria-label="Previous step">Back</button><button class="b p" id="l-play">Pause</button><button class="b" id="l-next" aria-label="Next step">Next</button></div>
+    </section>
+    <section class="tchat">
+      <div id="t-msgs"></div>
+      <div class="chips" id="t-chips" style="display:none"><button class="chip" id="t-startlesson" style="display:none">Start lesson</button><button class="chip ai" id="t-aistart" data-say="Start the lesson. Teach me the first idea of this unit.">Start</button><button class="chip ai" data-say="Next idea, please.">Next idea</button><button class="chip ai" data-say="Please explain that again in simpler words.">Simpler</button><button class="chip ai" data-say="Test me with one question.">Test me</button><button class="chip ai" data-say="Please explain the last idea in simple Nepali.">Nepali</button></div>
+      <p class="mu tstatus" id="t-status"></p>
+      <div class="tcomp"><textarea id="t-in" rows="2" placeholder="Type your answer or question here. Typing stops the teacher." style="min-height:0"></textarea><div class="tbtns"><button class="b p" id="t-send">Send</button><button class="b" id="t-mic">Speak</button><select id="t-lang" aria-label="Speech language"><option value="en-IN">English</option><option value="ne-NP">Nepali</option></select></div></div>
+      <details class="tset"><summary>Voice and settings</summary>
+        <div class="row"><label class="mu"><input type="checkbox" id="t-speak" checked> Teacher speaks</label><label class="mu">Speed <select id="l-rate"><option value="0.8">Slow</option><option value="1" selected>Normal</option><option value="1.2">Fast</option></select></label><label class="mu grow">Voice <select id="l-voice" style="max-width:100%"></select></label></div>
+        <p class="mu">The AI runs on your own laptop, so nothing is sent to a company. The voice is your computer's own voice. The AI can make mistakes: check important facts and numbers against the notes.</p>
+      </details>
+    </section>
   </div>
-  <div id="t-msgs"></div>
-  <div class="chips" id="t-chips" style="display:none"><button class="chip" id="t-startlesson" style="display:none">Start lesson</button><button class="chip ai" id="t-aistart" data-say="Start the lesson. Teach me the first idea of this unit.">Start</button><button class="chip ai" data-say="Next idea, please.">Next idea</button><button class="chip ai" data-say="Please explain that again in simpler words.">Simpler</button><button class="chip ai" data-say="Test me with one question.">Test me</button><button class="chip ai" data-say="Please explain the last idea in simple Nepali.">Nepali</button></div>
-  <textarea id="t-in" rows="2" placeholder="Type your answer or question, or press Speak. During a lesson this stops the teacher so you can ask." style="min-height:0"></textarea>
-  <div class="row"><button class="b p grow" id="t-send">Send</button><button class="b" id="t-mic">Speak</button><select id="t-lang" aria-label="Speech language"><option value="en-IN">English</option><option value="ne-NP">Nepali</option></select></div>
-  <div class="row"><label class="mu"><input type="checkbox" id="t-speak" checked> Teacher speaks</label><label class="mu">Speed <select id="l-rate"><option value="0.8">Slow</option><option value="1" selected>Normal</option><option value="1.2">Fast</option></select></label><label class="mu grow">Voice <select id="l-voice" style="max-width:100%"></select></label></div>
-  <p class="mu" id="t-status"></p>
-  <p class="mu">The AI runs on your own laptop, so nothing is sent to a company. The voice is your computer's own voice. The AI can make mistakes: check important facts and numbers against the notes.</p>
 </div></div><div class="sheet" id="sheet" aria-modal="true" role="dialog"><div class="sheet-in">
   <div class="sheet-head"><b id="sheet-title">New note</b><button class="b" id="sheet-del" style="display:none;padding:6px 12px">Delete</button><button class="iconbtn" id="sheet-x" aria-label="Save and close"></button></div>
   <div class="chips2" id="sheet-chips"></div>
@@ -2961,14 +2992,38 @@ if(cCanSpeak()) speechSynthesis.onvoiceschanged=cFillVoices;
 function cStopSpeech(){ CL.tok++; if(cCanSpeak()) speechSynthesis.cancel(); }
 function cMkUtter(text){ var u=new SpeechSynthesisUtterance(text); if(CL.voice){ u.voice=CL.voice; u.lang=CL.voice.lang; } else u.lang="en-IN"; u.rate=CL.rate; return u; }
 /* The lesson voice remembers the sentence it was on, so it can go on from there after a question. */
+/* One short piece of speech that cannot get stuck: it waits a moment after any cancel, keeps a reference to the utterance
+   (Chrome can drop it and never fire onend), retries, switches from an online voice to a laptop voice, and always calls done(). */
+var TQ={q:[],busy:false,tok:0};
+function cSay(txt,alive,done){
+  var tries=0;
+  (function go(){
+    if(!alive()) return;
+    if(tries===2){ var lv=cVoiceList().filter(function(v){ return v.localService&&/^en/i.test(v.lang); })[0]; if(lv&&lv!==CL.voice){ CL.voice=lv; var sel=document.getElementById("l-voice"); if(sel) sel.value=lv.name; tStatus("The online voice stopped, so I switched to a voice on this laptop."); } else CL.voice=null; }
+    var u=cMkUtter(txt), started=false, over=false, t1=null, t2=null;
+    function stop(){ over=true; clearTimeout(t1); clearTimeout(t2); }
+    function ok(){ if(over) return; stop(); done(); }
+    function bad(){ if(over) return; stop(); try{ speechSynthesis.cancel(); }catch(e){} if(!alive()) return; if(++tries>=4){ tStatus("The voice did not answer. Try another voice under Voice and settings."); done(); return; } setTimeout(go,250); }
+    u.onstart=function(){ started=true; clearTimeout(t1); };
+    u.onend=ok;
+    u.onerror=function(){ if(!alive()){ stop(); return; } bad(); };
+    t1=setTimeout(function(){ if(!started) bad(); },3500);
+    t2=setTimeout(function(){ if(over) return; if(started){ try{ speechSynthesis.cancel(); }catch(e){} ok(); } else bad(); },6000+Math.round(txt.length*100/(CL.rate||1)));
+    CL.keep=u;
+    try{ speechSynthesis.resume(); }catch(e){}
+    setTimeout(function(){ if(over||!alive()) return; try{ speechSynthesis.speak(u); }catch(e){ bad(); } },120);
+  })();
+}
+/* The lesson voice remembers the sentence it was on, so it can go on from there after a question. */
 function cSpeak(text,done,from){
   CL.text=text; CL.done=done; CL.k=from||0;
   if(!cCanSpeak()||!TU.speak){ var ms=Math.max(1500,text.split(/\s+/).length*380); var t=++CL.tok; setTimeout(function(){ if(t===CL.tok&&CL.playing) done(); },ms); return; }
-  speechSynthesis.cancel(); var tok=++CL.tok, parts=text.match(/[^.?!]+[.?!]*/g)||[text], k=from||0;
-  function next(){ if(tok!==CL.tok||!CL.playing) return; if(k>=parts.length){ done(); return; } CL.k=k; var u=cMkUtter(parts[k++].trim()); u.onend=next; u.onerror=function(){ if(tok===CL.tok&&CL.playing) setTimeout(next,50); }; speechSynthesis.speak(u); }
+  try{ if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel(); }catch(e){}
+  var tok=++CL.tok, parts=text.match(/[^.?!]+[.?!]*/g)||[text], k=from||0;
+  function alive(){ return tok===CL.tok&&CL.playing; }
+  function next(){ if(!alive()) return; if(k>=parts.length){ done(); return; } CL.k=k; var s=parts[k++].trim(); if(!s){ next(); return; } cSay(s,alive,next); }
   next();
-}
-/* --- the spoken lesson --- */
+}/* --- the spoken lesson --- */
 function cRender(){
   var s=CL.steps[CL.i], st=document.getElementById("l-stage"), pct=Math.round(100*CL.i/Math.max(1,CL.steps.length-1)); document.getElementById("l-bar").style.width=pct+"%";
   document.getElementById("l-count").textContent="Lesson · step "+(CL.i+1)+" of "+CL.steps.length;
@@ -2995,15 +3050,15 @@ function cResume(){ CL.playing=true; document.getElementById("l-play").textConte
 function cToggle(){ if(CL.playing){ CL.playing=false; cStopSpeech(); document.getElementById("l-play").textContent="Resume"; } else { cAskAbort(); cResume(); } }
 function cStart(){
   var u=units()[TU.u]; if(!u||!u.lesson) return; CL.steps=u.lesson.concat([{end:true,say:"That is the end of the lesson. Well done. Now go and practise the quiz for this unit."}]); CL.right=0; CL.asked=0; CL.active=true;
-  document.getElementById("l-panel").style.display="block"; document.getElementById("t-chips").style.display="none"; cGo(0);
+  document.getElementById("l-panel").style.display="flex"; document.getElementById("tsheet").classList.add("lessonon"); document.getElementById("t-chips").style.display="none"; cGo(0);
 }
-function cStop(){ CL.active=false; CL.playing=false; cStopSpeech(); cAskAbort(); document.getElementById("l-panel").style.display="none"; var ch=document.getElementById("t-chips"); ch.style.display="flex"; tStatus(""); }
+function cStop(){ CL.active=false; CL.playing=false; cStopSpeech(); cAskAbort(); document.getElementById("l-panel").style.display="none"; document.getElementById("tsheet").classList.remove("lessonon"); var ch=document.getElementById("t-chips"); ch.style.display="flex"; tStatus(""); }
 /* --- interrupting the teacher: the lesson pauses, the AI answers from the notes, then the lesson goes on --- */
 function cAskAbort(){ if(CL.ask){ CL.ask.stop(); CL.ask=null; } if(TU.ctrl&&CL.active){ try{ TU.ctrl.abort(); }catch(e){} } }
 function cAskOpen(){ if(!CL.active) return; cAskAbort(); CL.playing=false; cStopSpeech(); document.getElementById("l-play").textContent="Resume"; tStatus("The teacher is paused. Type or press Speak to ask, or press Resume to go on."); document.getElementById("t-in").focus(); }
 function cMakeSpeaker(onAllDone){
   var q=[], busy=false, ended=false, dead=false;
-  function pump(){ if(dead||busy) return; if(!cCanSpeak()||!TU.speak){ q=[]; } if(!q.length){ if(ended){ dead=true; onAllDone(); } return; } busy=true; var u=cMkUtter(q.shift()); u.onend=u.onerror=function(){ busy=false; pump(); }; speechSynthesis.speak(u); }
+  function pump(){ if(dead||busy) return; if(!cCanSpeak()||!TU.speak){ q=[]; } if(!q.length){ if(ended){ dead=true; onAllDone(); } return; } busy=true; cSay(q.shift(),function(){ return !dead; },function(){ busy=false; pump(); }); }
   return { add:function(t){ if(t&&t.trim()){ q.push(t.trim()); pump(); } }, end:function(){ ended=true; pump(); }, stop:function(){ dead=true; q=[]; if(cCanSpeak()) speechSynthesis.cancel(); } };
 }
 function cAsk(question){
@@ -3020,8 +3075,9 @@ function cAsk(question){
   .catch(function(e){ if(e.name==="AbortError") return; bot.textContent="Sorry, I could not reach the AI ("+e.message+"). The lesson goes on."; if(CL.ask){ CL.ask.stop(); CL.ask=null; } tStatus(""); setTimeout(cResume,1500); });
 }
 /* --- free chat with the AI teacher --- */
-function tSay(text){ if(!TU.speak||!cCanSpeak()) return; speechSynthesis.speak(cMkUtter(text)); }
-function tStopSpeech(){ if(cCanSpeak()) speechSynthesis.cancel(); }
+function tSay(text){ if(!TU.speak||!cCanSpeak()) return; TQ.q.push(text); tPump(); }
+function tPump(){ if(TQ.busy||!TQ.q.length) return; TQ.busy=true; var tk=TQ.tok; cSay(TQ.q.shift(),function(){ return tk===TQ.tok; },function(){ TQ.busy=false; if(tk===TQ.tok) tPump(); }); }
+function tStopSpeech(){ TQ.tok++; TQ.q=[]; TQ.busy=false; if(cCanSpeak()) speechSynthesis.cancel(); }
 function tFlush(force){ var m; while((m=TU.pend.match(/^[\s\S]*?[.?!\n](\s|$)/))){ var s=m[0]; TU.pend=TU.pend.slice(s.length); if(s.trim()) tSay(s.trim()); } if(force&&TU.pend.trim()){ tSay(TU.pend.trim()); TU.pend=""; } }
 function tSend(text,retry){
   text=(text||"").trim(); if(!text) return; if(CL.active){ cAsk(text); return; } if(TU.busy) return;
@@ -3038,7 +3094,7 @@ function tMic(){
   r.onerror=function(e){ tStatus("Microphone problem: "+e.error); }; r.onend=function(){ TU.rec=null; btn.textContent="Speak"; if(document.getElementById("t-status").textContent==="Listening…") tStatus(""); }; r.start();
 }
 function openTutor(i){
-  var u=units()[i]; if(!u) return; TU.u=i; TU.sys=tSystem(u,SD()); TU.msgs=[]; CL.active=false; CL.playing=false; document.getElementById("t-msgs").innerHTML=""; document.getElementById("l-panel").style.display="none";
+  var u=units()[i]; if(!u) return; TU.u=i; TU.sys=tSystem(u,SD()); TU.msgs=[]; CL.active=false; CL.playing=false; document.getElementById("t-msgs").innerHTML=""; document.getElementById("l-panel").style.display="none"; document.getElementById("tsheet").classList.remove("lessonon");
   document.getElementById("t-title").textContent="Tutor · Unit "+(i+1); document.getElementById("tsheet").classList.add("active"); ntHidePill(); cFillVoices();
   var chips=document.getElementById("t-chips"); chips.style.display="none"; chips.querySelectorAll(".ai").forEach(function(c){ c.style.display="none"; }); var sl=document.getElementById("t-startlesson"); sl.style.display=u.lesson?"inline-flex":"none";
   tStatus("Checking the laptop's AI (Ollama)…");
