@@ -164,6 +164,16 @@ select{padding:10px;border-radius:12px;border:2px solid var(--bd);background:var
 .ncard .dot{width:12px;height:12px;border-radius:50%;margin-top:6px;flex:none;background:var(--ac)}
 .ncard .snip{white-space:pre-wrap;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
 input.search{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);font:inherit;margin-bottom:12px}
+.cshow{background:var(--ac2);border-radius:16px;padding:14px;font-size:18px;font-weight:700;line-height:1.5;margin:10px 0;text-align:center;word-break:break-word}
+.ccap{font-size:17px;line-height:1.55;margin:10px 0}
+#c-stage{min-height:200px}
+#c-stage .opt{margin:6px 0}
+#t-msgs{min-height:200px;max-height:42vh;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px}
+.tmsg{padding:10px 12px;border-radius:14px;max-width:88%;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.tmsg.bot{background:var(--ac2);align-self:flex-start}
+.tmsg.user{background:var(--ac);color:#fff;align-self:flex-end}
+.subjbar{margin:0 0 12px}
+.subjbar .chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 #vframe{width:100%;aspect-ratio:16/9;border:0;border-radius:16px;background:#000}
 .vid{display:flex;gap:12px;align-items:center;padding:8px;border:2px solid var(--bd);border-radius:16px;background:var(--card2);margin:8px 0;cursor:pointer;box-shadow:0 3px 0 var(--bd)}
 .vid:active{transform:translateY(2px);box-shadow:none}
@@ -198,6 +208,26 @@ input.search{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radi
   <div id="v-form" style="display:none"><input class="search" id="v-url" inputmode="url" autocomplete="off" placeholder="Paste a YouTube link" style="margin-bottom:8px"><input class="search" id="v-name" autocomplete="off" placeholder="Name it (optional)" style="margin-bottom:8px"><div class="mu" id="v-err" style="color:var(--bad)"></div><div class="row"><button class="b p" id="v-save">Save video</button><button class="b" id="v-cancel">Cancel</button></div></div>
   <div id="v-list"></div>
   <p class="mu">Each clip was checked by reading the whole video transcript against that syllabus point. A clip starts and stops at the useful part (ads and off-syllabus parts are left out). Some points have no good video yet. Videos need the internet.</p>
+</div></div>
+<div class="sheet" id="csheet" aria-modal="true" role="dialog"><div class="sheet-in" style="overflow:auto">
+  <div class="sheet-head"><b id="c-title">Class</b><span class="mu" id="c-count"></span><button class="iconbtn" id="c-x" aria-label="Close class"></button></div>
+  <div class="bar"><i id="c-bar" style="width:0%"></i></div>
+  <div id="c-stage"></div>
+  <div class="ccap" id="c-ans" style="display:none"></div>
+  <div id="c-askbox" style="display:none"><textarea id="c-q" rows="2" placeholder="Type your question…" style="min-height:0"></textarea><div class="row"><button class="b p grow" id="c-qsend">Ask</button><button class="b" id="c-qmic">Speak</button><select id="c-lang" aria-label="Language"><option value="en-IN">English</option><option value="ne-NP">Nepali</option></select><button class="b" id="c-qcancel">Cancel</button></div></div>
+  <div class="row"><button class="b" id="c-prev" aria-label="Previous step">Back</button><button class="b p grow" id="c-play">Pause</button><button class="b" id="c-next" aria-label="Next step">Next</button><button class="b" id="c-ask" style="display:none" title="Interrupt the teacher with a question (Space)">Ask</button></div>
+  <div class="row"><label class="mu">Speed <select id="c-rate"><option value="0.8">Slow</option><option value="1" selected>Normal</option><option value="1.2">Fast</option></select></label><label class="mu grow">Voice <select id="c-voice" style="max-width:100%"></select></label></div>
+  <p class="mu" id="c-warn"></p>
+</div></div>
+<div class="sheet" id="tsheet" aria-modal="true" role="dialog"><div class="sheet-in" style="overflow:auto">
+  <div class="sheet-head"><b id="t-title">Tutor</b><select id="t-model" aria-label="Model" style="max-width:42%"></select><button class="iconbtn" id="t-x" aria-label="Close tutor"></button></div>
+  <div id="t-msgs"></div>
+  <div class="chips" id="t-chips" style="display:none"><button class="chip" data-say="Start the lesson. Teach me the first idea of this unit.">Start</button><button class="chip" data-say="Next idea, please.">Next idea</button><button class="chip" data-say="Please explain that again in simpler words.">Simpler</button><button class="chip" data-say="Test me with one question.">Test me</button><button class="chip" data-say="Please explain the last idea in simple Nepali.">Nepali</button></div>
+  <textarea id="t-in" rows="2" placeholder="Type your answer or question, or press Speak…" style="min-height:0"></textarea>
+  <div class="row"><button class="b p grow" id="t-send">Send</button><button class="b" id="t-mic">Speak</button><select id="t-lang" aria-label="Speech language"><option value="en-IN">English</option><option value="ne-NP">Nepali</option></select></div>
+  <label class="mu"><input type="checkbox" id="t-speak" checked> Teacher speaks the replies</label>
+  <p class="mu" id="t-status"></p>
+  <p class="mu">The AI runs on your own laptop, so nothing is sent to a company. It can make mistakes: check important facts and numbers against the notes.</p>
 </div></div>
 <div class="sheet" id="sheet" aria-modal="true" role="dialog"><div class="sheet-in">
   <div class="sheet-head"><b id="sheet-title">New note</b><button class="b" id="sheet-del" style="display:none;padding:6px 12px">Delete</button><button class="iconbtn" id="sheet-x" aria-label="Save and close"></button></div>
@@ -2164,6 +2194,263 @@ window.CNW_VIDEOS = {
          segs: [ { t: "8.2", o: 20, s: 0, e: 447, label: "AI and machine learning in network operations: anomaly detection, incident triage, LLM assistants", note: "Uses terms like LLM and RAG. Made by a network-monitoring company." } ] } ]
 };
 </script>
+<script>/* Discrete Mathematics and Probability (BCSNT 6023; the public course list calls it DSM-114) - Unit 1: Introduction to Discrete Structures
+   Content layer (separate from the engine in index.html).
+   Syllabus source: schoolworkspro.com module Overview (10-unit outline), read 2026-10-27.
+   Teaching source: college slides "1. Introduction to Discrete Structures" (19 slides). Exam format source: the college model paper (docx) in source-of-truth\dmp\incoming.
+   Notes are original wording. A "⚠" marks content NOT in the college slides (added from general knowledge, check before relying on it).
+   Items tagged real:"..." are close to a question in the college model paper. */
+window.DMP = window.DMP || { code: "BCSNT 6023", title: "Discrete Mathematics and Probability", units: [] };
+
+window.DMP.units[0] = {
+  id: "d1",
+  title: "Introduction to Discrete Structures",
+  syllabus: [
+    "1.1 Sets: subsets, power set, Cartesian product, set operations, Venn diagram, inclusion-exclusion, computer representation of sets",
+    "1.2 Functions: injective, bijective, inverse, composite, graph of functions; ceiling, floor, Boolean and exponential functions",
+    "1.3 Sequences and summations: arithmetic and geometric progression, single and double summation"
+  ],
+  notes: `
+<h3>1.1 Sets</h3>
+<p><b>Set:</b> a well-defined collection of <b>distinct</b> objects, called elements. Order does not matter and repeats do not count: {1, 2, 3} = {3, 2, 1} = {1, 1, 2, 3}. We write <b>x ∈ A</b> for "x is an element of A".</p>
+<table>
+<tr><th>Word</th><th>Meaning</th><th>Example</th></tr>
+<tr><td>Subset A ⊆ B</td><td>every element of A is also in B</td><td>{1, 2} ⊆ {1, 2, 3}</td></tr>
+<tr><td>Proper subset A ⊂ B</td><td>A ⊆ B and A ≠ B</td><td>{1, 2} ⊂ {1, 2, 3}</td></tr>
+<tr><td>Empty set ∅ (or { })</td><td>no elements; it is a subset of every set</td><td>∅ ⊆ {7}</td></tr>
+<tr><td>Cardinality |A|</td><td>number of elements</td><td>|{a, b, c}| = 3</td></tr>
+</table>
+<h4>Power set</h4>
+<p>The <b>power set</b> P(A) is the set of <b>all subsets</b> of A (including ∅ and A itself). If |A| = n then <b>|P(A)| = 2<sup>n</sup></b>, because each element is either in a subset or not (2 choices per element).</p>
+<p class="ex"><b>Example.</b> A = {1, 2}: P(A) = { ∅, {1}, {2}, {1, 2} }, so 2² = 4 subsets. For A = {a, b, c} there are 2³ = <b>8</b> subsets.</p>
+<h4>Cartesian product</h4>
+<p>A × B is the set of all <b>ordered pairs</b> (a, b) with a ∈ A and b ∈ B. So <b>|A × B| = |A| · |B|</b>. Order matters: (1, x) is not the same as (x, 1), so in general A × B ≠ B × A (they are equal only if A = B or one set is empty).</p>
+<p class="ex"><b>Example.</b> A = {1, 2}, B = {x, y}: A × B = {(1, x), (1, y), (2, x), (2, y)}, that is 2 × 2 = 4 pairs.</p>
+<h4>Set operations</h4>
+<table>
+<tr><th>Operation</th><th>Symbol</th><th>Elements</th></tr>
+<tr><td>Union</td><td>A ∪ B</td><td>in A, or in B, or in both</td></tr>
+<tr><td>Intersection</td><td>A ∩ B</td><td>in both A and B</td></tr>
+<tr><td>Difference</td><td>A − B</td><td>in A but not in B</td></tr>
+<tr><td>Complement</td><td>A′</td><td>in the universal set U but not in A</td></tr>
+</table>
+<p class="ex"><b>Example.</b> A = {1, 2, 3}, B = {2, 3, 4, 5}. A ∪ B = {1, 2, 3, 4, 5}; A ∩ B = {2, 3}; A − B = {1}; B − A = {4, 5}. Notice A − B ≠ B − A.</p>
+<p class="tip">⚠ Two laws worth knowing (not in the slides): De Morgan: (A ∪ B)′ = A′ ∩ B′ and (A ∩ B)′ = A′ ∪ B′.</p>
+<h4>Venn diagram</h4>
+<p>A <b>Venn diagram</b> draws each set as a circle inside a box for the universal set U. Overlaps show intersections. It is the easiest way to count with unions and intersections.</p>
+<svg viewBox="0 0 300 170" class="dg" role="img" aria-label="Venn diagram of two sets">
+<rect x="6" y="6" width="288" height="158" rx="8" class="box"/><text x="36" y="24" class="ts">U = 60</text>
+<circle cx="115" cy="88" r="55" style="fill:var(--ac);fill-opacity:.22;stroke:var(--ac);stroke-width:1.6"/>
+<circle cx="185" cy="88" r="55" style="fill:var(--go);fill-opacity:.22;stroke:var(--go);stroke-width:1.6"/>
+<text x="88" y="92" class="t">20</text><text x="150" y="92" class="t">10</text><text x="212" y="92" class="t">15</text>
+<text x="88" y="38" class="ts">A only</text><text x="212" y="38" class="ts">B only</text><text x="150" y="38" class="ts">both</text><text x="270" y="150" class="t">15</text><text x="248" y="150" class="ts">none</text>
+</svg>
+<p class="mu">|A| = 30, |B| = 25, |A ∩ B| = 10, and 15 elements of U are in neither set.</p>
+<h4>Inclusion-exclusion principle</h4>
+<p>When sets overlap, adding their sizes counts the overlap twice. The principle corrects that:</p>
+<ul>
+<li><b>Two sets:</b> |A ∪ B| = |A| + |B| − |A ∩ B|</li>
+<li><b>Three sets:</b> |A ∪ B ∪ C| = |A| + |B| + |C| − |A ∩ B| − |A ∩ C| − |B ∩ C| + |A ∩ B ∩ C|</li>
+</ul>
+<p>Why: add the sizes, subtract each pair (they were counted twice), then add back the triple overlap (it was added three times and subtracted three times, so it had vanished).</p>
+<p class="ex"><b>Two sets.</b> |A| = 30, |B| = 25, |A ∩ B| = 10: |A ∪ B| = 30 + 25 − 10 = <b>45</b>. If U has 60 elements, 60 − 45 = <b>15</b> are in neither set.</p>
+<p class="ex"><b>Three sets (slide example).</b> In a class of 50 students, 20 know Python (P), 18 Linux (L), 12 Networking (N); 8 know P and L, 5 know P and N, 4 know L and N; 2 know all three. At least one skill: 20 + 18 + 12 − 8 − 5 − 4 + 2 = <b>35</b> students. None of the skills: 50 − 35 = <b>15</b>.</p>
+<svg viewBox="0 0 300 190" class="dg" role="img" aria-label="Venn diagram of three sets with the class example">
+<rect x="6" y="6" width="288" height="178" rx="8" class="box"/><text x="44" y="22" class="ts">50 students</text>
+<circle cx="115" cy="75" r="50" style="fill:var(--ac);fill-opacity:.2;stroke:var(--ac);stroke-width:1.6"/>
+<circle cx="185" cy="75" r="50" style="fill:var(--go);fill-opacity:.2;stroke:var(--go);stroke-width:1.6"/>
+<circle cx="150" cy="125" r="50" style="fill:#fb923c;fill-opacity:.2;stroke:#fb923c;stroke-width:1.6"/>
+<text x="76" y="52" class="ts">Python</text><text x="224" y="52" class="ts">Linux</text><text x="62" y="160" class="ts">Networking</text>
+<text x="92" y="68" class="t">9</text><text x="208" y="68" class="t">8</text><text x="150" y="156" class="t">5</text>
+<text x="150" y="62" class="t">6</text><text x="122" y="110" class="t">3</text><text x="178" y="110" class="t">2</text><text x="150" y="92" class="t">2</text>
+<text x="268" y="170" class="t">15</text><text x="244" y="170" class="ts">none</text>
+</svg>
+<p class="mu">Fill the middle first (2), then the pairs without the middle (8 − 2 = 6, 5 − 2 = 3, 4 − 2 = 2), then each set alone (20 − 6 − 3 − 2 = 9, and so on).</p>
+<h4>Computer representation of sets</h4>
+<p>Fix an ordering of the universal set. A set is then a <b>bit string</b>: bit = 1 if the element is in the set, 0 if not. Set operations become fast bit operations: <b>union = OR</b>, <b>intersection = AND</b>, <b>complement = NOT</b>, difference = A AND (NOT B).</p>
+<p class="ex"><b>Example.</b> U = {1, 2, 3, 4, 5, 6, 7, 8}. A = {1, 3, 5, 7} → 10101010. B = {1, 2, 3, 4} → 11110000. A ∪ B = 10101010 OR 11110000 = <b>11111010</b> = {1, 2, 3, 4, 5, 7}. A ∩ B = <b>10100000</b> = {1, 3}. A′ = <b>01010101</b> = {2, 4, 6, 8}.</p>
+<p class="mu">Used in firewalls, access-control lists and Bloom filters. Fast and small for a fixed universe, but wasteful if the universe is huge and the sets are tiny.</p>
+<h4>Boolean matrix (for relations)</h4>
+<p>A relation between elements of a set can be stored as a <b>Boolean (0-1) matrix</b>: the entry in row i, column j is 1 if i is related to j, otherwise 0. For example, adjacency matrices of networks use this idea.</p>
+<table>
+<tr><th></th><th>1</th><th>2</th><th>3</th></tr>
+<tr><th>1</th><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>2</th><td>1</td><td>0</td><td>1</td></tr>
+<tr><th>3</th><td>0</td><td>0</td><td>1</td></tr>
+</table>
+<p class="mu">Here 1 is related to 2, 2 is related to 1 and 3, and 3 is related to itself.</p>
+
+<h3>1.2 Functions</h3>
+<p>A <b>function</b> f: A → B gives <b>each element of A exactly one element of B</b>. A is the <b>domain</b>, B the <b>codomain</b>, and the set of values actually produced is the <b>range</b>.</p>
+<table>
+<tr><th>Type</th><th>Meaning</th><th>Example</th></tr>
+<tr><td>Injective (one-to-one)</td><td>different inputs give different outputs: f(a) = f(b) ⇒ a = b</td><td>f(x) = x + 1 on the integers. Not injective: f(x) = x² (f(2) = f(−2) = 4)</td></tr>
+<tr><td>Surjective (onto)</td><td>every element of the codomain is an output of something</td><td>f(x) = x + 1 on the integers. Not onto: f(x) = 2x into the integers (odd numbers are never hit)</td></tr>
+<tr><td>Bijective</td><td>both injective and onto</td><td>f(x) = x + 1 on the integers</td></tr>
+</table>
+<p class="tip">Only a <b>bijective</b> function has an inverse.</p>
+<h4>Inverse function</h4>
+<p>If f is bijective and f(x) = y, then <b>f⁻¹(y) = x</b>. To find it, write y = f(x), solve for x, then swap names.</p>
+<p class="ex"><b>Example.</b> f(x) = 2x + 3. Let y = 2x + 3, so x = (y − 3)/2. Hence <b>f⁻¹(y) = (y − 3)/2</b>. Check: f(f⁻¹(y)) = 2 · (y − 3)/2 + 3 = y.</p>
+<h4>Composite function</h4>
+<p><b>(f ∘ g)(x) = f(g(x))</b>: apply g first, then f. In general f ∘ g ≠ g ∘ f.</p>
+<p class="ex"><b>Example (from the model paper).</b> f(x) = 2x + 3, g(x) = x² − 1.<br>(f ∘ g)(x) = f(x² − 1) = 2(x² − 1) + 3 = <b>2x² + 1</b>.<br>(g ∘ f)(x) = g(2x + 3) = (2x + 3)² − 1 = 4x² + 12x + 9 − 1 = <b>4x² + 12x + 8</b>.<br>They are not equal: at x = 0 they give 1 and 8.</p>
+<h4>Graph of a function</h4>
+<p>The graph is the set of points (x, f(x)). For discrete functions it is a set of separate points. A vertical line must meet the graph at most once (that is the "exactly one output" rule).</p>
+<h4>Floor and ceiling</h4>
+<ul>
+<li><b>Floor ⌊x⌋:</b> the <b>greatest integer ≤ x</b>. Rounds <b>down</b>: ⌊4.7⌋ = 4, ⌊−2.3⌋ = <b>−3</b>.</li>
+<li><b>Ceiling ⌈x⌉:</b> the <b>smallest integer ≥ x</b>. Rounds <b>up</b>: ⌈4.7⌉ = 5, ⌈−2.3⌉ = <b>−2</b>.</li>
+<li>For an integer n: ⌊n⌋ = ⌈n⌉ = n.</li>
+</ul>
+<table>
+<tr><th>x</th><th>⌊x⌋</th><th>⌈x⌉</th></tr>
+<tr><td>6.2</td><td>6</td><td>7</td></tr>
+<tr><td>9.0</td><td>9</td><td>9</td></tr>
+<tr><td>−1.4</td><td>−2</td><td>−1</td></tr>
+<tr><td>−5.0</td><td>−5</td><td>−5</td></tr>
+</table>
+<p class="ex"><b>Solve ⌈x/4⌉ = 3 (model paper).</b> The ceiling is 3 exactly when 2 &lt; x/4 ≤ 3. Multiply by 4: <b>8 &lt; x ≤ 12</b>. If x must be an integer, x ∈ {9, 10, 11, 12}.</p>
+<p class="tip">⚠ Use ceiling to answer "how many boxes of size 4 do I need for x items?": ⌈x/4⌉.</p>
+<h4>Boolean and exponential functions</h4>
+<ul>
+<li><b>Boolean function:</b> output is only 0 or 1 (false or true), for example "is x even?". Used in logic, circuits and conditions.</li>
+<li><b>Exponential function:</b> f(x) = aˣ (a &gt; 0, a ≠ 1). It grows very fast: 2ⁿ doubles every step, which is why O(2ⁿ) algorithms are slow for large n.</li>
+</ul>
+<p class="tip">⚠ Counting functions: from a set with m elements to a set with n elements there are <b>nᵐ</b> functions. Example: 3 elements into 2 gives 2³ = 8.</p>
+
+<h3>1.3 Sequences and summations</h3>
+<p>A <b>sequence</b> is an ordered list of terms a₁, a₂, a₃, … (unlike a set, order matters and repeats are allowed).</p>
+<h4>Arithmetic progression (AP)</h4>
+<p>Each term is the previous one plus a fixed <b>common difference d</b>.</p>
+<ul>
+<li><b>nth term:</b> aₙ = a₁ + (n − 1)d</li>
+<li><b>Sum of first n terms:</b> Sₙ = n/2 · (a₁ + aₙ) = n/2 · [2a₁ + (n − 1)d]</li>
+</ul>
+<p class="ex"><b>Example.</b> 3, 7, 11, … has a₁ = 3, d = 4. a₁₀ = 3 + 9 · 4 = <b>39</b>. S₁₀ = 10/2 · (3 + 39) = 5 · 42 = <b>210</b>.</p>
+<h4>Geometric progression (GP)</h4>
+<p>Each term is the previous one times a fixed <b>common ratio r</b>.</p>
+<ul>
+<li><b>nth term:</b> aₙ = a₁ · rⁿ⁻¹</li>
+<li><b>Sum of first n terms (r ≠ 1):</b> Sₙ = a₁ (rⁿ − 1) / (r − 1)</li>
+<li>⚠ If |r| &lt; 1 the infinite sum exists: S = a₁ / (1 − r).</li>
+</ul>
+<p class="ex"><b>Example.</b> 2, 6, 18, … has a₁ = 2, r = 3. a₅ = 2 · 3⁴ = <b>162</b>. S₅ = 2 (3⁵ − 1)/(3 − 1) = 2 · 242 / 2 = <b>242</b>. Check by adding: 2 + 6 + 18 + 54 + 162 = 242.</p>
+<h4>Summation notation</h4>
+<p>Σ<sub>i=1</sub><sup>n</sup> aᵢ means a₁ + a₂ + … + aₙ. The letter i is the <b>index</b>, 1 is the lower limit, n the upper limit.</p>
+<ul>
+<li>Σ<sub>i=1</sub><sup>n</sup> i = <b>n(n + 1)/2</b>. For n = 100 this is 100 · 101 / 2 = <b>5050</b>.</li>
+<li>⚠ Σ<sub>i=1</sub><sup>n</sup> i² = n(n + 1)(2n + 1)/6. For n = 5 this is 5 · 6 · 11 / 6 = 55.</li>
+<li>Constants come out: Σ c · aᵢ = c · Σ aᵢ. Sums can be split: Σ (aᵢ + bᵢ) = Σ aᵢ + Σ bᵢ.</li>
+</ul>
+<h4>Double summation</h4>
+<p>Two nested sums: work from the inside out. Σ<sub>i=1</sub><sup>m</sup> Σ<sub>j=1</sub><sup>n</sup> aᵢⱼ means: for each i, add the aᵢⱼ over j, then add those results. Used for loops inside loops and for matrix sums.</p>
+<p class="ex"><b>Example.</b> Σ<sub>i=1</sub><sup>3</sup> Σ<sub>j=1</sub><sup>2</sup> (i + j).<br>i = 1: (1+1) + (1+2) = 5. i = 2: (2+1) + (2+2) = 7. i = 3: (3+1) + (3+2) = 9.<br>Total = 5 + 7 + 9 = <b>21</b>.</p>
+<h4>Revision list</h4>
+<ul>
+<li>|P(A)| = 2ⁿ and |A × B| = |A| · |B|.</li>
+<li>|A ∪ B| = |A| + |B| − |A ∩ B|, and the three-set version.</li>
+<li>Bit strings: union OR, intersection AND, complement NOT.</li>
+<li>Injective, onto, bijective; only bijective functions have inverses.</li>
+<li>(f ∘ g)(x) = f(g(x)); floor goes down, ceiling goes up (careful with negatives).</li>
+<li>AP: aₙ = a₁ + (n−1)d; GP: aₙ = a₁rⁿ⁻¹ and the two sum formulas.</li>
+</ul>
+`,
+  quiz: [
+    { id: "d1q01", q: "A set is best described as", o: ["A well-defined collection of distinct objects", "An ordered list that may repeat items", "A rule that gives one output per input", "A table of numbers only"], a: 0, why: "A set is a well-defined collection of distinct objects. Order and repeats do not matter.", w: 2 },
+    { id: "d1q02", q: "If A = {1, 2, 3, 4} and B = {3, 4, 5}, then A ∩ B is", o: ["{1, 2, 3, 4, 5}", "{3, 4}", "{1, 2}", "{5}"], a: 1, why: "The intersection holds the elements in both sets: 3 and 4.", w: 2 },
+    { id: "d1q03", q: "For A = {1, 2, 3, 4} and B = {3, 4, 5}, A ∪ B is", o: ["{3, 4}", "{1, 2, 5}", "{1, 2, 3, 4, 5}", "{1, 2, 3, 4}"], a: 2, why: "The union holds every element that is in A, in B or in both.", w: 2 },
+    { id: "d1q04", q: "For A = {1, 2, 3, 4} and B = {3, 4, 5}, A − B is", o: ["{5}", "{1, 2}", "{3, 4}", "{1, 2, 5}"], a: 1, why: "A − B keeps the elements of A that are not in B: 1 and 2.", w: 2 },
+    { id: "d1q05", q: "How many subsets does a set with 4 elements have?", o: ["8", "16", "4", "32"], a: 1, why: "A set with n elements has 2^n subsets, so 2^4 = 16.", w: 2 },
+    { id: "d1q06", q: "How many elements does the power set of {a, b, c} have?", o: ["3", "6", "8", "9"], a: 2, why: "|P(A)| = 2^3 = 8.", w: 2 },
+    { id: "d1q07", q: "Which statement is always true?", o: ["The empty set is a subset of every set", "The empty set has exactly one element", "The empty set is not a subset of {1}", "The empty set is a proper subset of itself"], a: 0, why: "There is no element of the empty set that could be missing from another set, so ∅ ⊆ A for every set A.", w: 3 },
+    { id: "d1q08", q: "If |A| = 3 and |B| = 4, then |A × B| is", o: ["7", "12", "81", "64"], a: 1, why: "The Cartesian product has |A| · |B| = 3 · 4 = 12 ordered pairs.", w: 2 },
+    { id: "d1q09", q: "Is A × B always equal to B × A?", o: ["No: they are equal only if A = B or one set is empty", "Yes, always", "Yes, whenever both sets are finite", "Only when |A| = |B|"], a: 0, why: "Ordered pairs (a, b) and (b, a) are different, so the products differ in general.", w: 3 },
+    { id: "d1q10", q: "(1, x) ∈ A × B means", o: ["1 ∈ A and x ∈ B", "1 ∈ B and x ∈ A", "1 and x are both in A ∩ B", "A and B are equal"], a: 0, why: "The first coordinate comes from A and the second from B.", w: 2 },
+    { id: "d1q11", q: "The complement A′ of A (with universal set U) is", o: ["The elements of U that are not in A", "The elements of A that are not in U", "The elements common to A and U", "The empty set"], a: 0, why: "A′ = U − A.", w: 2 },
+    { id: "d1q12", q: "|A| = 30, |B| = 25 and |A ∩ B| = 10. Then |A ∪ B| is", o: ["55", "45", "65", "35"], a: 1, why: "|A ∪ B| = 30 + 25 − 10 = 45.", w: 3 },
+    { id: "d1q13", q: "In a class of 50: 20 know Python, 18 Linux, 12 Networking; 8 know P and L, 5 know P and N, 4 know L and N; 2 know all three. How many know none of the three?", o: ["35", "15", "10", "5"], a: 1, why: "At least one: 20 + 18 + 12 − 8 − 5 − 4 + 2 = 35. None: 50 − 35 = 15.", w: 3 },
+    { id: "d1q14", q: "In the three-set formula, the term |A ∩ B ∩ C| is", o: ["Added back at the end", "Subtracted twice", "Left out", "Multiplied by 3"], a: 0, why: "Subtracting the three pairs removes the triple overlap completely, so it is added back once.", w: 3 },
+    { id: "d1q15", q: "U = {a, b, c, d} and A = {b, d}. The bit string of A is", o: ["1010", "0101", "0110", "1111"], a: 1, why: "a → 0, b → 1, c → 0, d → 1, so 0101.", w: 2 },
+    { id: "d1q16", q: "Which bit operation gives the union of two sets stored as bit strings?", o: ["OR", "AND", "NOT", "XOR"], a: 0, why: "A bit is 1 in the union if it is 1 in either string: OR.", w: 2 },
+    { id: "d1q17", q: "Over U = {1, ..., 8}, A = 10101010 and B = 11110000. The bit string of A ∩ B is", o: ["11111010", "10100000", "01010000", "00000000"], a: 1, why: "AND: 1010 1010 AND 1111 0000 = 1010 0000, the set {1, 3}.", w: 3 },
+    { id: "d1q18", q: "The complement of the bit string 0101 (4-element universe) is", o: ["1010", "0101", "1111", "0000"], a: 0, why: "NOT flips every bit.", w: 2 },
+    { id: "d1q19", q: "In a Boolean matrix for a relation, an entry 1 in row i and column j means", o: ["i is related to j", "i equals j", "j is a subset of i", "There is no relation"], a: 0, why: "1 means the pair (i, j) belongs to the relation, 0 means it does not.", w: 2 },
+    { id: "d1q20", q: "A function f: A → B assigns", o: ["Each element of A exactly one element of B", "Each element of A one or more elements of B", "Each element of B exactly one element of A", "Elements of A to the same element only"], a: 0, why: "Exactly one output for every input.", w: 2 },
+    { id: "d1q21", q: "An injective function is one where", o: ["Different inputs give different outputs", "Every output is used", "Every input gives the same output", "The function has no domain"], a: 0, why: "Injective means one-to-one: f(a) = f(b) implies a = b.", w: 2 },
+    { id: "d1q22", q: "f(x) = x² on the integers is", o: ["Injective", "Not injective, because f(2) = f(−2)", "Bijective", "Not a function"], a: 1, why: "Two different inputs, 2 and −2, give the same output 4.", w: 3 },
+    { id: "d1q23", q: "A function that is both injective and onto is called", o: ["Bijective", "Composite", "Boolean", "Exponential"], a: 0, why: "One-to-one and onto together is bijective.", w: 2 },
+    { id: "d1q24", q: "Which functions have an inverse function?", o: ["Bijective functions", "Every function", "Only constant functions", "Only injective functions that are not onto"], a: 0, why: "The inverse must send each output back to exactly one input, which needs a bijection.", w: 3 },
+    { id: "d1q25", q: "The inverse of f(x) = 2x + 3 is", o: ["(y + 3)/2", "(y − 3)/2", "2y − 3", "1/(2y + 3)"], a: 1, why: "y = 2x + 3 gives x = (y − 3)/2.", w: 3 },
+    { id: "d1q26", q: "With f(x) = 2x + 3 and g(x) = x² − 1, (f ∘ g)(x) equals", o: ["2x² + 1", "4x² + 12x + 8", "2x² + 2", "x² + 2x + 2"], a: 0, why: "f(g(x)) = 2(x² − 1) + 3 = 2x² + 1.", w: 3 },
+    { id: "d1q27", q: "With f(x) = 2x + 3 and g(x) = x² − 1, (g ∘ f)(x) equals", o: ["2x² + 1", "4x² + 12x + 8", "4x² + 9", "2x² + 2"], a: 1, why: "g(f(x)) = (2x + 3)² − 1 = 4x² + 12x + 8.", w: 3 },
+    { id: "d1q28", q: "(f ∘ g)(x) means", o: ["f(g(x))", "g(f(x))", "f(x) · g(x)", "f(x) + g(x)"], a: 0, why: "Apply g first, then f.", w: 2 },
+    { id: "d1q29", q: "⌊−2.3⌋ equals", o: ["−2", "−3", "2", "−2.3"], a: 1, why: "The floor is the greatest integer ≤ −2.3, which is −3.", w: 3 },
+    { id: "d1q30", q: "⌈−2.3⌉ equals", o: ["−3", "−2", "−2.3", "2"], a: 1, why: "The ceiling is the smallest integer ≥ −2.3, which is −2.", w: 3 },
+    { id: "d1q31", q: "⌈4.1⌉ + ⌊4.9⌋ equals", o: ["8", "9", "10", "4"], a: 1, why: "⌈4.1⌉ = 5 and ⌊4.9⌋ = 4, so 9.", w: 2 },
+    { id: "d1q32", q: "For real x, ⌈x/4⌉ = 3 exactly when", o: ["8 ≤ x < 12", "8 < x ≤ 12", "12 ≤ x < 16", "9 < x ≤ 13"], a: 1, why: "⌈t⌉ = 3 means 2 < t ≤ 3. With t = x/4: 8 < x ≤ 12.", w: 3 },
+    { id: "d1q33", q: "In the arithmetic progression 3, 7, 11, ... the 10th term is", o: ["43", "39", "36", "40"], a: 1, why: "a10 = 3 + 9 · 4 = 39.", w: 2 },
+    { id: "d1q34", q: "The sum of the first 10 terms of 3, 7, 11, ... is", o: ["195", "210", "420", "390"], a: 1, why: "S10 = 10/2 · (3 + 39) = 5 · 42 = 210.", w: 3 },
+    { id: "d1q35", q: "The sum of the first 5 terms of the geometric progression 2, 6, 18, ... is", o: ["162", "242", "486", "121"], a: 1, why: "S5 = 2(3^5 − 1)/(3 − 1) = 2 · 242 / 2 = 242.", w: 3 },
+    { id: "d1q36", q: "Σ (i = 1 to 100) i equals", o: ["5000", "5050", "5100", "10100"], a: 1, why: "n(n + 1)/2 = 100 · 101 / 2 = 5050.", w: 3 },
+    { id: "d1q37", q: "The value of the double sum Σ (i = 1 to 3) Σ (j = 1 to 2) (i + j) is", o: ["18", "21", "24", "15"], a: 1, why: "i = 1 gives 5, i = 2 gives 7, i = 3 gives 9: total 21.", w: 3 },
+    { id: "d1q38", q: "⚠ How many functions are there from a 3-element set to a 2-element set?", o: ["6", "8", "9", "5"], a: 1, why: "Each of the 3 inputs has 2 choices: 2^3 = 8. (Not in the college slides.)", w: 3 },
+    { id: "d1q39", q: "⚠ Σ (i = 1 to 5) i² equals", o: ["15", "30", "55", "225"], a: 2, why: "1 + 4 + 9 + 16 + 25 = 55, and n(n + 1)(2n + 1)/6 = 5 · 6 · 11 / 6 = 55. (Not in the college slides.)", w: 3 },
+    { id: "d1q40", q: "For an integer n, which is true?", o: ["⌊n⌋ = ⌈n⌉ = n", "⌊n⌋ = n − 1", "⌈n⌉ = n + 1", "⌊n⌋ and ⌈n⌉ are both 0"], a: 0, why: "An integer is already a whole number, so rounding down or up leaves it unchanged.", w: 2 }
+  ],
+  exam: [
+    { id: "d1e01", type: "brief", q: "Define a set. Give one example.", pts: ["A set is a well-defined collection of distinct objects (1)", "Example: A = {1, 2, 3} (1)"] },
+    { id: "d1e02", type: "brief", q: "Write the power set of A = {1, 2}. How many elements does the power set of an n-element set have?", pts: ["P(A) = { ∅, {1}, {2}, {1, 2} } (1)", "2^n elements (1)"] },
+    { id: "d1e03", type: "brief", q: "State the inclusion-exclusion principle for two sets.", pts: ["|A ∪ B| = |A| + |B| − |A ∩ B| (1)", "The overlap is counted twice when adding |A| and |B|, so it is subtracted once (1)"] },
+    { id: "d1e04", type: "brief", q: "What is a bijective function?", pts: ["Injective (one-to-one): different inputs give different outputs (1)", "Surjective (onto): every element of the codomain is an output; a bijection therefore has an inverse (1)"] },
+    { id: "d1e05", type: "brief", q: "Define the Cartesian product A × B and find it for A = {1, 2} and B = {x, y}.", pts: ["A × B is the set of all ordered pairs (a, b) with a ∈ A and b ∈ B (1)", "{(1, x), (1, y), (2, x), (2, y)} (1)"] },
+    { id: "d1e06", type: "brief", q: "Let f(x) = 2x + 3 and g(x) = x² − 1. Compute (f ∘ g)(x) and (g ∘ f)(x). Are these functions equal? If not, explain why.", pts: ["(f ∘ g)(x) = f(g(x)) = 2(x² − 1) + 3 = 2x² + 1 (0.5)", "(g ∘ f)(x) = g(f(x)) = (2x + 3)² − 1 = 4x² + 12x + 8 (0.5)", "Not equal (for example at x = 0 they give 1 and 8): function composition is not commutative (1)"], real: "DMP model paper, Section A Q1" },
+    { id: "d1e07", type: "brief", q: "Find ⌊−3.4⌋ and ⌈−3.4⌉.", pts: ["⌊−3.4⌋ = −4 (floor rounds down) (1)", "⌈−3.4⌉ = −3 (ceiling rounds up) (1)"] },
+    { id: "d1e08", type: "brief", q: "Over U = {1, 2, ..., 8}, write the bit string of A = {2, 4, 6} and of its complement.", pts: ["A = 01010100 (1)", "A′ = 10101011 (1)"] },
+    { id: "d1e09", type: "brief", q: "Find the sum of the first 20 natural numbers.", pts: ["Σ i = n(n + 1)/2 (1)", "20 · 21 / 2 = 210 (1)"] },
+    { id: "d1e10", type: "short", q: "Define the ceiling and floor functions. Solve for x in the equation ⌈x/4⌉ = 3.", pts: ["Floor ⌊x⌋ is the greatest integer less than or equal to x (1)", "Ceiling ⌈x⌉ is the smallest integer greater than or equal to x (1)", "⌈x/4⌉ = 3 means 2 < x/4 ≤ 3 (2)", "Multiply by 4: 8 < x ≤ 12 (2)", "If x is an integer: x = 9, 10, 11 or 12 (1)"], real: "DMP model paper, Section B Q1" },
+    { id: "d1e11", type: "short", q: "State the inclusion-exclusion principle for three sets. In a class of 50, 20 know Python, 18 Linux, 12 Networking; 8 know Python and Linux, 5 Python and Networking, 4 Linux and Networking; 2 know all three. How many know none?", pts: ["|A ∪ B ∪ C| = |A| + |B| + |C| − |A ∩ B| − |A ∩ C| − |B ∩ C| + |A ∩ B ∩ C| (2)", "Pairs are subtracted because they were counted twice; the triple overlap is added back (1)", "Substitute: 20 + 18 + 12 − 8 − 5 − 4 + 2 (2)", "At least one skill: 35 (1)", "None: 50 − 35 = 15 (1)"] },
+    { id: "d1e12", type: "short", q: "Explain injective, surjective and bijective functions with an example for each.", pts: ["Injective: different inputs give different outputs (1); example f(x) = x + 1 on the integers (1)", "Surjective (onto): every element of the codomain is hit (1); example f(x) = x + 1 on the integers, while f(x) = 2x into the integers is not onto (1)", "Bijective: injective and onto (1); only bijective functions have an inverse (1)", "Counter-example: f(x) = x² on the integers is not injective because the inputs 2 and −2 both give 4 (1)"] },
+    { id: "d1e13", type: "short", q: "Describe how sets are represented in a computer using bit strings. Show union, intersection and complement for U = {1, ..., 8}, A = {1, 3, 5, 7}, B = {1, 2, 3, 4}.", pts: ["Order the universal set; bit = 1 if the element is in the set, else 0 (2)", "A = 10101010, B = 11110000 (1)", "Union = OR = 11111010 = {1, 2, 3, 4, 5, 7} (1)", "Intersection = AND = 10100000 = {1, 3} (1)", "Complement of A = NOT = 01010101 = {2, 4, 6, 8} (1)", "Advantage: fast bitwise operations, compact for a fixed universe (1)"] },
+    { id: "d1e14", type: "short", q: "Explain arithmetic and geometric progressions and give the formulas for the nth term and the sum of the first n terms. Find the sum of the first 8 terms of 5, 8, 11, ...", pts: ["AP: constant common difference d; aₙ = a₁ + (n − 1)d (2)", "AP sum: Sₙ = n/2 (a₁ + aₙ) (1)", "GP: constant common ratio r; aₙ = a₁ rⁿ⁻¹ (2)", "GP sum: Sₙ = a₁ (rⁿ − 1)/(r − 1), r ≠ 1 (1)", "Example: a₈ = 5 + 7 · 3 = 26, S₈ = 8/2 · (5 + 26) = 124 (1)"] },
+    { id: "d1e15", type: "short", q: "Define composite and inverse functions. For f(x) = 3x − 2 and g(x) = x + 5 find f ∘ g, g ∘ f and f⁻¹.", pts: ["(f ∘ g)(x) = f(g(x)): apply g first, then f (1)", "The inverse exists only for a bijective function and undoes it: f⁻¹(f(x)) = x (1)", "(f ∘ g)(x) = 3(x + 5) − 2 = 3x + 13 (2)", "(g ∘ f)(x) = (3x − 2) + 5 = 3x + 3 (1)", "y = 3x − 2, so f⁻¹(y) = (y + 2)/3 (2)"] },
+    { id: "d1e16", type: "long", q: "Sets. (a) Define the power set and the Cartesian product with an example of each. (b) State the inclusion-exclusion principle for two and three sets. (c) In a survey of 100 people, 60 like tea, 50 like coffee and 20 like both. How many like tea or coffee, and how many like neither? (d) Show how sets are stored as bit strings.", pts: ["Power set: all subsets of A, with example; |P(A)| = 2^n (3)", "Cartesian product: ordered pairs, with example; |A × B| = |A||B| (3)", "Two-set formula |A ∪ B| = |A| + |B| − |A ∩ B| (1)", "Three-set formula with the added-back triple term (2)", "Tea or coffee: 60 + 50 − 20 = 90 (2)", "Neither: 100 − 90 = 10 (1)", "Bit-string representation with a worked union or intersection example (3)"] },
+    { id: "d1e17", type: "long", q: "Functions. (a) Define injective, surjective and bijective functions with examples. (b) For f(x) = 2x + 3 and g(x) = x² − 1 find f ∘ g and g ∘ f and show they are not equal. (c) Find f⁻¹ and verify it. (d) Solve ⌈x/4⌉ = 3.", pts: ["Definitions of injective, surjective, bijective (3)", "Examples and a counter-example (3)", "(f ∘ g)(x) = 2x² + 1 (1)", "(g ∘ f)(x) = 4x² + 12x + 8 (1)", "Not equal: at x = 0 they are 1 and 8, so composition is not commutative (2)", "f⁻¹(y) = (y − 3)/2 (2)", "Verification: f(f⁻¹(y)) = 2 · (y − 3)/2 + 3 = y (1)", "⌈x/4⌉ = 3 gives 8 < x ≤ 12 (2)"] },
+    { id: "d1e18", type: "long", q: "Sequences and summations. (a) Define AP and GP and give the formulas for the nth term and the sum. (b) Find the 10th term and the sum of the first 10 terms of 3, 7, 11, ... (c) Find the 5th term and the sum of the first 5 terms of 2, 6, 18, ... (d) Evaluate Σ (i = 1 to 3) Σ (j = 1 to 2) (i + j).", pts: ["AP definition and formulas aₙ and Sₙ (3)", "GP definition and formulas aₙ and Sₙ (3)", "AP: a₁₀ = 39 (1), S₁₀ = 210 (2)", "GP: a₅ = 162 (1), S₅ = 242 (2)", "Double sum worked from the inside out: 5 + 7 + 9 (2)", "Result 21 (1)"] }
+  ],
+  /* Class mode: a spoken lesson. "say" is written to be heard (no symbols); "show" is what appears on screen.
+     ask = a check question (spoken, then the student taps); try = "your turn" (the teacher gives the answer when the student asks). */
+  lesson: [
+    { say: "Hello Prabesh. Welcome to Discrete Maths, Unit 1. In about ten minutes we will learn three things: sets, functions, and sequences. I will explain, and then I will ask you small questions. You can pause any time. Ready? Let us begin.", show: "Unit 1<br>Sets · Functions · Sequences" },
+    { say: "First, sets. A set is a collection of different things. For example, the set A with the numbers one, two and three. The order does not matter, and repeating does not count. So one, two, three is the same set as three, two, one.", show: "A = {1, 2, 3}" },
+    { say: "Each thing inside is called an element. If every element of A is also in B, then A is a subset of B. The empty set, with nothing inside, is a subset of every set.", show: "{1, 2} ⊆ {1, 2, 3}<br>∅ ⊆ every set" },
+    { say: "Now the power set. The power set of A is the set of all the subsets of A. If A has n elements, the power set has two to the power n elements. Example: A is the set one, two. Its subsets are: the empty set, one, two, and one-two together. That is four subsets, which is two squared.", show: "P({1, 2}) = { ∅, {1}, {2}, {1, 2} }<br>2² = 4" },
+    { say: "Your turn. How many subsets does a set with five elements have? Take a few seconds to think.", show: "|A| = 5<br>number of subsets = ?", try: "The answer is two to the power five, which is thirty-two." },
+    { say: "Next, the Cartesian product. A cross B is the set of all ordered pairs, with the first thing from A and the second thing from B. For A equal to one, two, and B equal to x, y, we get one-x, one-y, two-x, and two-y. That is four pairs. The size is the size of A times the size of B. And remember, order matters, so A cross B is usually not equal to B cross A.", show: "A × B = {(1,x), (1,y), (2,x), (2,y)}<br>|A × B| = |A| · |B|" },
+    { say: "Now four set operations. Union means in A, or in B, or in both. Intersection means in both. Difference, A minus B, means in A but not in B. And the complement of A means everything in the universal set that is not in A. For example, A is one, two, three, and B is two, three, four, five. The union is one to five. The intersection is two and three. A minus B is just one.", show: "A = {1,2,3} &nbsp; B = {2,3,4,5}<br>A ∪ B = {1,2,3,4,5}<br>A ∩ B = {2,3}<br>A − B = {1}" },
+    { say: "Quick check. For the same A and B, what is B minus A?", ask: { q: "A = {1, 2, 3}, B = {2, 3, 4, 5}. What is B − A?", o: ["{1}", "{4, 5}", "{2, 3}", "{1, 4, 5}"], a: 1, ok: "Yes. B minus A is the elements of B that are not in A: four and five. Notice that it is different from A minus B.", no: "Not quite. B minus A means the elements of B that are not in A. Two and three are in A, so we remove them. Only four and five are left." } },
+    { say: "Now a very important idea: inclusion and exclusion. If you add the size of A and the size of B, the common part is counted twice. So we subtract it once. The size of A union B is the size of A, plus the size of B, minus the size of A intersection B.", show: "|A ∪ B| = |A| + |B| − |A ∩ B|" },
+    { say: "Example for you. Thirty students play cricket, twenty-five play football, and ten play both. How many play at least one game?", show: "30 + 25 − 10 = ?", try: "Thirty plus twenty-five is fifty-five. Subtract the ten who were counted twice. The answer is forty-five." },
+    { say: "For three sets we add the three sizes, subtract the three pairs, and add back the triple overlap. Why add back? Because when we subtract the three pairs, the middle part, the one in all three sets, gets removed completely. So we put it back once.", show: "|A ∪ B ∪ C| = |A| + |B| + |C|<br>− |A ∩ B| − |A ∩ C| − |B ∩ C|<br>+ |A ∩ B ∩ C|" },
+    { say: "Let us use it. In a class of fifty students, twenty know Python, eighteen know Linux, and twelve know Networking. Eight know Python and Linux, five know Python and Networking, four know Linux and Networking, and two know all three. How many students know none of the three?", ask: { q: "Class of 50: P = 20, L = 18, N = 12, P∩L = 8, P∩N = 5, L∩N = 4, all three = 2. How many know none?", o: ["35", "15", "10", "5"], a: 1, ok: "Correct. Twenty plus eighteen plus twelve is fifty. Subtract eight, five and four, which is seventeen, and we get thirty-three. Add two, and we get thirty-five students who know at least one. Fifty minus thirty-five leaves fifteen.", no: "Let us do it step by step. Twenty plus eighteen plus twelve is fifty. Subtract eight, five and four, and we get thirty-three. Add back two, and we get thirty-five students who know at least one skill. So fifty minus thirty-five leaves fifteen who know none." } },
+    { say: "Computers store sets as bit strings. Each element has a position. A one means the element is in the set, and a zero means it is not. Take the numbers one to eight. The set A, with one, three, five and seven, is one-zero-one-zero-one-zero-one-zero. Union uses OR, intersection uses AND, and complement uses NOT.", show: "A = {1,3,5,7} → 10101010<br>OR = union · AND = intersection · NOT = complement" },
+    { say: "Your turn. B is the set one, two, three, four, which is one-one-one-one-zero-zero-zero-zero. What is A AND B?", show: "10101010 AND 11110000 = ?", try: "Compare each position. Both have a one only in positions one and three. So the answer is one-zero-one-zero-zero-zero-zero-zero, which is the set one and three." },
+    { say: "Now functions. A function takes each input from set A and gives exactly one output in set B. There are three special types. Injective means different inputs always give different outputs. Surjective, or onto, means every element of B is used. Bijective means both. And remember: only a bijective function has an inverse.", show: "injective = one-to-one<br>surjective = onto<br>bijective = both → has an inverse" },
+    { say: "Check. Look at f of x equals x squared, on the integers. Is it injective?", ask: { q: "Is f(x) = x² on the integers injective?", o: ["Yes", "No, because 2 and −2 both give 4", "It is bijective", "It is not a function"], a: 1, ok: "Right. Two and minus two are different inputs, but both give four. So it is not injective.", no: "Think about two inputs. Two squared is four, and minus two squared is also four. Two different inputs gave the same output, so it is not injective." } },
+    { say: "Composite functions. f after g means we do g first, and then f. We write f of g of x. Example: f of x is two x plus three, and g of x is x squared minus one. Then f of g of x is two times, x squared minus one, plus three. That is two x squared plus one. But g of f of x is two x plus three, all squared, minus one. That is four x squared, plus twelve x, plus eight. They are different, so the order matters.", show: "f(x) = 2x + 3 &nbsp; g(x) = x² − 1<br>(f∘g)(x) = 2x² + 1<br>(g∘f)(x) = 4x² + 12x + 8" },
+    { say: "Inverse functions. For f of x equals two x plus three, write y equals two x plus three. Now solve for x. x is y minus three, divided by two. So the inverse function is y minus three, over two.", show: "y = 2x + 3<br>f⁻¹(y) = (y − 3) / 2" },
+    { say: "Floor and ceiling. The floor of x is the greatest integer that is less than or equal to x, so it rounds down. The ceiling of x is the smallest integer that is greater than or equal to x, so it rounds up. Be careful with negative numbers. The floor of minus two point three is minus three. The ceiling of minus two point three is minus two.", show: "⌊4.7⌋ = 4 &nbsp; ⌈4.7⌉ = 5<br>⌊−2.3⌋ = −3 &nbsp; ⌈−2.3⌉ = −2" },
+    { say: "Check. What is the floor of minus two point three?", ask: { q: "What is ⌊−2.3⌋ ?", o: ["−2", "−3", "2", "−2.3"], a: 1, ok: "Yes. Floor goes down. Minus two point three is between minus three and minus two, and going down gives minus three.", no: "Remember, floor goes down. Minus two point three lies between minus three and minus two. Going down gives minus three." } },
+    { say: "This one came in the college model paper. Solve: the ceiling of x over four equals three. Try it.", show: "⌈x/4⌉ = 3", try: "The ceiling is three exactly when x over four is more than two, and at most three. Multiply everything by four. So x is more than eight, and at most twelve." },
+    { say: "Two more kinds of functions. A Boolean function gives only true or false. An exponential function, like two to the power x, grows very fast. That is why algorithms with running time two to the power n are slow when n is big." },
+    { say: "Last part: sequences and sums. In an arithmetic progression, we add the same difference d every time. The nth term is the first term, plus n minus one, times d. The sum of n terms is n over two, times the first term plus the last term. Example: three, seven, eleven. Here d is four. The tenth term is thirty-nine, and the sum of ten terms is two hundred and ten.", show: "aₙ = a₁ + (n − 1)d<br>Sₙ = n/2 · (a₁ + aₙ)<br>3, 7, 11, … → a₁₀ = 39, S₁₀ = 210" },
+    { say: "In a geometric progression we multiply by the same ratio r every time. The nth term is the first term times r to the power n minus one. The sum of n terms is the first term, times r to the power n minus one, divided by r minus one. Example: two, six, eighteen. The ratio is three. The fifth term is one hundred sixty-two, and the sum of five terms is two hundred forty-two.", show: "aₙ = a₁ · rⁿ⁻¹<br>Sₙ = a₁ (rⁿ − 1) / (r − 1)<br>2, 6, 18, … → a₅ = 162, S₅ = 242" },
+    { say: "Check. In the sequence two, six, eighteen, what is the common ratio?", ask: { q: "2, 6, 18, … What is the common ratio?", o: ["3", "4", "6", "9"], a: 0, ok: "Yes. Six divided by two is three, and eighteen divided by six is three.", no: "Divide each term by the one before it. Six divided by two is three, and eighteen divided by six is three. So the ratio is three." } },
+    { say: "Finally, the summation sign, sigma. It means add up. The sum of i, from one to n, is n times n plus one, over two. For n equal to one hundred, that is five thousand and fifty. For a double sum, work from the inside out. Try this one: for i from one to three, and j from one to two, add i plus j.", show: "Σ i = n(n + 1) / 2<br>Σ(i=1..3) Σ(j=1..2) (i + j) = ?", try: "For i equal to one, we get two plus three, which is five. For i equal to two, three plus four, which is seven. For i equal to three, four plus five, which is nine. Total: five plus seven plus nine, which is twenty-one." },
+    { say: "Let us recap. The power set has two to the power n elements. The Cartesian product multiplies the sizes. Inclusion and exclusion subtracts the overlap. Union is OR, intersection is AND. Only bijective functions have inverses. Floor goes down and ceiling goes up. And remember the formulas for arithmetic and geometric progressions.", show: "|P(A)| = 2ⁿ · |A×B| = |A||B|<br>|A∪B| = |A| + |B| − |A∩B|" }
+  ]
+};
+</script>
 <script>
 "use strict";
 /* ---------- storage (always wrapped: may be blocked) ---------- */
@@ -2175,7 +2462,16 @@ function st(id){ var s=load(); return s.items[id]||(s.items[id]={box:0,due:0,r:0
 function record(id,ok,unit){ var s=st(id); s.seen++; if(ok){s.r++; s.box=Math.min(5,s.box+1);} else {s.w++; s.box=0;} s.due=Date.now()+(ok?INT[s.box]:INT[1])*DAY; load().log.push({t:Date.now(),id:id,ok:ok,u:unit}); if(load().log.length>3000) load().log.shift(); save(); refreshStreak(); }
 
 /* ---------- content access ---------- */
-function units(){ return (window.CNW.units||[]).filter(Boolean); }
+/* ---------- subjects: "cnw" (Computer Networks) and "dmp" (Discrete Maths and Probability) ---------- */
+var SUBJ="cnw";
+function subjData(k){ return (k==="dmp"?window.DMP:window.CNW)||{code:"",title:"",units:[]}; }
+function SD(){ return subjData(SUBJ); }
+function subjUnits(k){ return (subjData(k).units||[]).filter(Boolean); }
+function subjVideos(){ return (SUBJ==="dmp"?window.DMP_VIDEOS:window.CNW_VIDEOS)||{}; }
+function uk(i){ return SUBJ==="cnw"?String(i):SUBJ+":"+i; }
+function uic(i){ return (SUBJ==="dmp"?"d":"u")+(i+1); }
+function subjMastery(k){ var s=load(), t=0, m=0; subjUnits(k).forEach(function(u){ (u.quiz||[]).forEach(function(q){ t++; var x=s.items[q.id]; if(x&&x.box>=3) m++; }); }); return t?Math.round(100*m/t):0; }
+function units(){ return subjUnits(SUBJ); }
 function allQuiz(){ var a=[]; units().forEach(function(u,i){ (u.quiz||[]).forEach(function(q){ a.push(Object.assign({unit:i},q)); }); }); return a; }
 function allExam(type){ var a=[]; units().forEach(function(u,i){ (u.exam||[]).forEach(function(q){ if(!type||q.type===type) a.push(Object.assign({unit:i},q)); }); }); return a; }
 function unitQuiz(i){ return (units()[i].quiz||[]).map(function(q){return Object.assign({unit:i},q);}); }
@@ -2209,7 +2505,17 @@ var ICONS={
   u5:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
   u6:'<path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><path d="M12 19.5h.01"/>',
   u7:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
-  u8:'<path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/>'
+  u8:'<path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/>',
+  d1:'<circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/>',
+  d2:'<path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/>',
+  d3:'<path d="M4 20h4v-4H4zM10 20h4v-8h-4zM16 20h4V8h-4z"/><path d="M5 12l5-5 4 3 6-6"/>',
+  d4:'<rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1.5"/><rect x="10" y="10" width="4" height="4"/>',
+  d5:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 8.5h.01M15.5 8.5h.01M12 12h.01M8.5 15.5h.01M15.5 15.5h.01"/>',
+  d6:'<path d="M12 3L3 20h18z"/><path d="M12 11l-3 5.5h6z"/>',
+  d7:'<path d="M3 19h18"/><path d="M3 19c3 0 4-14 9-14s6 14 9 14"/>',
+  d8:'<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.5 6h7M7.5 8l3 8M16.5 8l-3 8"/>',
+  d9:'<circle cx="5" cy="19" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M6.5 17.5l4-11M13.5 6.5l4 11M7 19h10"/>',
+  d10:'<circle cx="12" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="19" r="2.5"/><circle cx="12" cy="13" r="2"/><path d="M12 7.5v3.5M11 14.5l-4 3M13 14.5l4 3"/>'
 };
 function ic(n,s){ s=s||24; return '<svg class="ic" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICONS[n]||"")+'</svg>'; }
 function flame(s){ s=s||22; return '<svg class="flame" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1.3 3.3 5.4 5.7 5.4 10.4a5.4 5.4 0 0 1-10.8 0c0-2.2.9-3.7 2.2-5 .2 2 1 3 2.2 3.2.4-3.2-.8-5.4 1-8.6z" fill="#ff7a18"/><path d="M12 12.5c.8 1.2 2.4 2.1 2.4 4a2.4 2.4 0 0 1-4.8 0c0-1.4.8-2 1.4-2.8.3.5.6.8 1 .8z" fill="#ffd23f"/></svg>'; }
@@ -2244,13 +2550,14 @@ var cur="home", app=document.getElementById("app");
 function nav(){ var n=document.getElementById("nav"); var h='<div class="tb">'; TABS.forEach(function(t){ h+='<button data-t="'+t[0]+'" class="'+(t[0]===cur?"on":"")+'" aria-label="'+t[1]+'">'+ic(t[2],22)+'<span>'+t[1]+'</span></button>'; }); n.innerHTML=h+'</div>'; n.querySelectorAll("button").forEach(function(b){ b.onclick=function(){ go(b.dataset.t); }; }); }
 var ctx={}, readerUnit=null;
 function go(t){ if(t==="quiz"||t==="written") t="practise"; cur=t; ctx={}; readerUnit=null; if(window.ntHidePill) ntHidePill(); nav(); window.scrollTo(0,0); ({home:home,study:study,practise:practise,mock:mockMenu,progress:progress,notes:notesHub})[t](); }
-function el(html){ app.innerHTML=html; post(); }
+function subjBar(){ var L=SUBJECTS.filter(function(x){ return x.live; }); if(L.length<2) return ""; return '<div class="chips subjbar">'+L.map(function(x){ return '<button class="chip'+(x.k===SUBJ?" on":"")+'" data-sw="'+x.k+'">'+esc(x.short)+'</button>'; }).join("")+'</div>'; }
+function el(html){ app.innerHTML=html; post(); app.querySelectorAll("[data-sw]").forEach(function(b){ b.onclick=function(){ if(b.dataset.sw===SUBJ) return; SUBJ=b.dataset.sw; load().subj=SUBJ; save(); go(cur); }; }); }
 function topBack(id,label){ return '<div class="row" style="margin-bottom:6px"><button class="b" id="'+id+'">← '+label+'</button></div>'; }
 
 /* ---------- Home ---------- */
 var SUBJECTS=[
-  {code:"CNW 112",title:"Computer Networks",live:true,col:"linear-gradient(135deg,#2dd4bf,#3b6cff)",icon:"net"},
-  {code:"BCSNT 6023",title:"Discrete Maths and Probability",col:"linear-gradient(135deg,#a78bfa,#6d5dfc)",icon:"disc"},
+  {k:"cnw",short:"Networks",code:"CNW 112",title:"Computer Networks",live:true,col:"linear-gradient(135deg,#2dd4bf,#3b6cff)",icon:"net"},
+  {k:"dmp",short:"Discrete Maths",code:"BCSNT 6023",title:"Discrete Maths and Probability",live:!!(window.DMP&&window.DMP.units&&window.DMP.units.length),col:"linear-gradient(135deg,#a78bfa,#6d5dfc)",icon:"disc"},
   {code:"BCSNT 6013",title:"Principle of Programming",col:"linear-gradient(135deg,#fb923c,#ef4444)",icon:"code"},
   {code:"BCSNT 6033",title:"Computer System",col:"linear-gradient(135deg,#34d399,#0ea5e9)",icon:"chip"}
 ];
@@ -2259,36 +2566,39 @@ function greeting(){ var h=new Date().getHours(); return h<12?"Good morning":h<1
 function home(){
   var s=load(), due=dueItems().length, nw=newItems().length, tc=todayCount(), goal=s.goal||20, pct=Math.round(100*Math.min(1,tc/goal));
   var h='<div class="hello rise"><small>'+greeting()+'</small><b>Hi Prabesh</b></div>';
-  h+='<div class="card goal rise glow" style="--i:1">'+ring(pct,104,11,"var(--go)",'<div><span class="big" data-count="'+tc+'">0</span><small>of '+goal+' today</small></div>')+'<div class="grow"><div style="font-weight:900;font-size:18px">'+(tc>=goal?"Goal reached. Great work!":"Today\'s goal")+'</div><div class="mu">'+due+' to review · '+nw+' new</div><div class="row" style="margin-top:10px"><button class="b p" id="go">'+(due+nw?"Start session":"Nothing due")+'</button></div></div></div>';
-  if(s.last!=null&&units()[s.last]){ var u=units()[s.last]; h+='<button class="cont rise" id="cont" style="--i:2">'+ic("book",26)+'<span class="grow"><small>Continue reading</small><b>Unit '+(s.last+1)+': '+esc(u.title)+'</b></span>'+ic("arrow",22)+'</button>'; }
+  h+='<div class="card goal rise glow" style="--i:1">'+ring(pct,104,11,"var(--go)",'<div><span class="big" data-count="'+tc+'">0</span><small>of '+goal+' today</small></div>')+'<div class="grow"><div style="font-weight:900;font-size:18px">'+(tc>=goal?"Goal reached. Great work!":"Today\'s goal")+'</div><div class="mu">'+esc(SD().title)+': '+due+' to review · '+nw+' new</div><div class="row" style="margin-top:10px"><button class="b p" id="go">'+(due+nw?"Start session":"Nothing due")+'</button></div></div></div>';
+  var LS=s.lastS||"cnw", LU=subjUnits(LS);
+  if(s.last!=null&&LU[s.last]){ var u=LU[s.last]; h+='<button class="cont rise" id="cont" style="--i:2">'+ic("book",26)+'<span class="grow"><small>Continue reading · '+esc(subjData(LS).title)+'</small><b>Unit '+(s.last+1)+': '+esc(u.title)+'</b></span>'+ic("arrow",22)+'</button>'; }
   h+='<h3 class="sec rise" style="--i:3">Your subjects</h3><div class="subs">';
-  SUBJECTS.forEach(function(x,i){ var live=!!x.live; h+='<button class="sub rise glow'+(live?"":" soon")+'" data-s="'+i+'" style="--i:'+(4+i)+';background:'+x.col+'"'+(live?"":" disabled")+'><span class="code">'+x.code+'</span><span><span class="big">'+esc(x.title)+'</span>'+(live?'<span class="mu" style="color:#fff;opacity:.9;display:block">'+units().length+' units · '+allMasteryPct()+'% mastered</span>':'')+'</span><span class="deco">'+ic(x.icon,110)+'</span></button>'; });
+  SUBJECTS.forEach(function(x,i){ var live=!!x.live; h+='<button class="sub rise glow'+(live?"":" soon")+'" data-s="'+i+'" style="--i:'+(4+i)+';background:'+x.col+'"'+(live?"":" disabled")+'><span class="code">'+x.code+'</span><span><span class="big">'+esc(x.title)+'</span>'+(live?'<span class="mu" style="color:#fff;opacity:.9;display:block">'+subjUnits(x.k).length+' units · '+subjMastery(x.k)+'% mastered</span>':'')+'</span><span class="deco">'+ic(x.icon,110)+'</span></button>'; });
   var nn=s.notes.length; h+='</div><button class="card rise glow ncard" id="hubbtn" style="--i:8;margin-top:14px;width:100%;text-align:left;font:inherit;color:inherit"><span class="dot" style="background:#fbbf24"></span><span class="grow"><b>My notes</b><span class="mu" style="display:block">'+(nn?nn+' note'+(nn===1?"":"s")+' · latest: '+esc((s.notes.slice().sort(function(a,b){return b.updated-a.updated;})[0].text||"(empty)").slice(0,40)):"Write notes while you study with the pencil button")+'</span></span>'+ic("arrow",20)+'</button><div class="tip rise" style="--i:9;margin-top:6px">'+ic("bulb",22)+'<span>'+TIPS[Math.floor(Date.now()/DAY)%TIPS.length]+'</span></div>';
   el(h);
   var g=document.getElementById("go"); if(g) g.onclick=function(){ var l=todaySession(); if(!l.length){ return; } runQuiz(l,"Today's session"); };
-  var c=document.getElementById("cont"); if(c) c.onclick=function(){ cur="study"; nav(); readUnit(load().last); };
+  var c=document.getElementById("cont"); if(c) c.onclick=function(){ SUBJ=load().lastS||"cnw"; load().subj=SUBJ; save(); cur="study"; nav(); readUnit(load().last); };
   document.getElementById("hubbtn").onclick=function(){ go("notes"); };
-  app.querySelectorAll(".sub:not(.soon)").forEach(function(b){ b.onclick=function(){ go("study"); }; });
+  app.querySelectorAll(".sub:not(.soon)").forEach(function(b){ b.onclick=function(){ SUBJ=SUBJECTS[+b.dataset.s].k; load().subj=SUBJ; save(); go("study"); }; });
 }
 
 /* ---------- Learn ---------- */
 function study(){
-  var h='<div class="hero rise glow"><small>'+esc(window.CNW.code)+'</small><h2>'+esc(window.CNW.title)+'</h2><div class="bar" style="background:rgba(255,255,255,.3)"><i style="width:'+allMasteryPct()+'%;background:#fff"></i></div><small>'+allMasteryPct()+'% mastered · written in our own words from the college slides and syllabus. A ⚠ means the point is not in the college slides: check it.</small></div><div class="units">';
-  units().forEach(function(u,i){ var m=masteryPct(i); h+='<div class="card unit rise glow" style="--i:'+(i+1)+';--h:'+((190+i*38)%360)+'"><div class="badge">'+ic("u"+(i+1),28)+'</div><div class="grow"><div class="mu">Unit '+(i+1)+' · '+(u.quiz||[]).length+' quiz · '+(u.exam||[]).length+' written</div><h4>'+esc(u.title)+'</h4><div class="acts"><button class="b p" data-u="'+i+'">Read</button><button class="b" data-q="'+i+'">Quiz</button><button class="b" data-v="'+i+'">Videos</button></div></div>'+ring(m,52,6,"var(--go)",'<span style="font-size:12px">'+m+'%</span>')+'</div>'; });
+  var h=subjBar()+'<div class="hero rise glow"><small>'+esc(SD().code)+'</small><h2>'+esc(SD().title)+'</h2><div class="bar" style="background:rgba(255,255,255,.3)"><i style="width:'+allMasteryPct()+'%;background:#fff"></i></div><small>'+allMasteryPct()+'% mastered · written in our own words from the college slides and syllabus. A ⚠ means the point is not in the college slides: check it.</small></div><div class="units">';
+  units().forEach(function(u,i){ var m=masteryPct(i); h+='<div class="card unit rise glow" style="--i:'+(i+1)+';--h:'+((190+i*38)%360)+'"><div class="badge">'+ic(uic(i),28)+'</div><div class="grow"><div class="mu">Unit '+(i+1)+' · '+(u.quiz||[]).length+' quiz · '+(u.exam||[]).length+' written</div><h4>'+esc(u.title)+'</h4><div class="acts"><button class="b p" data-u="'+i+'">Read</button>'+(u.lesson?'<button class="b" data-c="'+i+'">Class</button>':'')+'<button class="b" data-q="'+i+'">Quiz</button><button class="b" data-v="'+i+'">Videos</button>'+(tutorOK()?'<button class="b" data-tu="'+i+'">Tutor</button>':'')+'</div></div>'+ring(m,52,6,"var(--go)",'<span style="font-size:12px">'+m+'%</span>')+'</div>'; });
   el(h+'</div>');
   app.querySelectorAll("[data-u]").forEach(function(b){ b.onclick=function(){ readUnit(+b.dataset.u); }; });
   app.querySelectorAll("[data-q]").forEach(function(b){ b.onclick=function(){ runQuiz(shuffle(unitQuiz(+b.dataset.q)),"Unit "+(+b.dataset.q+1)); }; });
   app.querySelectorAll("[data-v]").forEach(function(b){ b.onclick=function(){ openVideos(+b.dataset.v); }; });
+  app.querySelectorAll("[data-c]").forEach(function(b){ b.onclick=function(){ openClass(+b.dataset.c); }; });
+  app.querySelectorAll("[data-tu]").forEach(function(b){ b.onclick=function(){ openTutor(+b.dataset.tu); }; });
 }
-function readUnit(i){ var u=units()[i]; load().last=i; save(); ctx={unit:i}; el(topBack("back","Learn")+'<h2 class="rise">Unit '+(i+1)+': '+esc(u.title)+'</h2><div class="card rise" style="--i:1"><b>Syllabus wording</b><ul>'+u.syllabus.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul><div class="row"><button class="b p" id="qz">Quiz this unit</button><button class="b" id="rv">Videos</button><span class="mu" id="nt-hl-count"></span></div><p class="mu" style="margin:10px 0 0">Tip: select any words in the notes (or double-tap a word) and tap <b>Highlight</b>. Tap a highlight to remove it. The pencil button writes a note while you study.</p></div><div class="card notes rise" id="nt-body" style="--i:2">'+u.notes+'</div>'); document.getElementById("back").onclick=function(){ go("study"); }; document.getElementById("qz").onclick=function(){ runQuiz(shuffle(unitQuiz(i)),"Unit "+(i+1)); }; document.getElementById("rv").onclick=function(){ openVideos(i); }; ntOpen(i); }
+function readUnit(i){ var u=units()[i]; load().last=i; load().lastS=SUBJ; save(); ctx={unit:i}; el(topBack("back","Learn")+'<h2 class="rise">Unit '+(i+1)+': '+esc(u.title)+'</h2><div class="card rise" style="--i:1"><b>Syllabus wording</b><ul>'+u.syllabus.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul><div class="row"><button class="b p" id="qz">Quiz this unit</button>'+(u.lesson?'<button class="b" id="cls">Start class</button>':'')+'<button class="b" id="rv">Videos</button>'+(tutorOK()?'<button class="b" id="tut">Tutor</button>':'')+'<span class="mu" id="nt-hl-count"></span></div><p class="mu" style="margin:10px 0 0">Tip: select any words in the notes (or double-tap a word) and tap <b>Highlight</b>. Tap a highlight to remove it. The pencil button writes a note while you study.</p></div><div class="card notes rise" id="nt-body" style="--i:2">'+u.notes+'</div>'); document.getElementById("back").onclick=function(){ go("study"); }; document.getElementById("qz").onclick=function(){ runQuiz(shuffle(unitQuiz(i)),"Unit "+(i+1)); }; document.getElementById("rv").onclick=function(){ openVideos(i); }; var cl=document.getElementById("cls"); if(cl) cl.onclick=function(){ openClass(i); }; var tt=document.getElementById("tut"); if(tt) tt.onclick=function(){ openTutor(i); }; ntOpen(i); }
 
 /* ---------- Practise (quiz + written) ---------- */
 function practise(){
   var due=dueItems().length, nw=newItems().length;
-  var h='<h2 class="rise">Practise</h2><div class="card rise glow" style="--i:1"><div class="row"><div class="grow"><b>Today\'s session</b><div class="mu">'+due+' to review · '+nw+' new</div></div><button class="b p" id="gos">Start</button></div></div>';
+  var h=subjBar()+'<h2 class="rise">Practise</h2><div class="card rise glow" style="--i:1"><div class="row"><div class="grow"><b>Today\'s session</b><div class="mu">'+due+' to review · '+nw+' new</div></div><button class="b p" id="gos">Start</button></div></div>';
   h+='<div class="card rise glow" style="--i:2"><div class="row"><div class="grow"><b>Mixed: all units</b><div class="mu">20 random questions from '+allQuiz().length+'</div></div><button class="b p" id="mix">Start</button></div></div>';
   h+='<div class="card rise glow" style="--i:3"><div class="row"><div class="grow"><b>Weak spots</b><div class="mu">Questions you got wrong more than right</div></div><button class="b" id="weak">Start</button></div></div>';
-  h+='<h3 class="sec rise" style="--i:4">Quiz by unit</h3><div class="chips rise" style="--i:5">'; units().forEach(function(u,i){ h+='<button class="chip" data-q="'+i+'">'+ic("u"+(i+1),18)+' Unit '+(i+1)+'</button>'; }); h+='</div>';
+  h+='<h3 class="sec rise" style="--i:4">Quiz by unit</h3><div class="chips rise" style="--i:5">'; units().forEach(function(u,i){ h+='<button class="chip" data-q="'+i+'">'+ic(uic(i),18)+' Unit '+(i+1)+'</button>'; }); h+='</div>';
   h+='<h3 class="sec rise" style="--i:6">Written practice</h3><p class="mu rise" style="--i:6">Write your answer from memory first, then tick the marking points you covered. This is what earns marks in a written exam.</p>';
   ["brief","short","long"].forEach(function(t,k){ var L=allExam(t); h+='<div class="card rise glow" style="--i:'+(7+k)+'"><div class="row"><div class="grow"><b>'+({brief:"Very short answers",short:"Short answers",long:"Long answers"}[t])+'</b><div class="mu">'+L.length+' questions</div></div><button class="b p" data-t="'+t+'">Practise</button></div></div>'; });
   el(h);
@@ -2360,8 +2670,8 @@ var FMT={
 };
 function mockMenu(){
   var f=load().fmt;
-  el('<h2 class="rise">Mock exam</h2><div class="card rise glow" style="--i:1"><b>Format</b><p class="mu">Both formats exist in the college papers. Which one the Semester 1 exam uses is not confirmed yet. Ask the lecturer.</p><select id="fmt"><option value="new">'+FMT["new"].name+'</option><option value="old">'+FMT.old.name+'</option></select><p class="mu" id="fd"></p><div class="row"><button class="b p" id="start" style="width:100%">Build a mock paper</button></div></div><div id="res"></div>');
-  var sel=document.getElementById("fmt"); sel.value=f;
+  el(subjBar()+'<h2 class="rise">Mock exam</h2><div class="card rise glow" style="--i:1"><b>Format</b><p class="mu">'+(SUBJ==="cnw"?"Both formats exist in the college papers. Which one the Semester 1 exam uses is not confirmed yet. Ask the lecturer.":"This is the format of the college model paper for this subject (20 + 35 + 45 = 100 marks).")+'</p><select id="fmt"><option value="new">'+FMT["new"].name+'</option>'+(SUBJ==="cnw"?'<option value="old">'+FMT.old.name+'</option>':'')+'</select><p class="mu" id="fd"></p><div class="row"><button class="b p" id="start" style="width:100%">Build a mock paper</button></div></div><div id="res"></div>');
+  var sel=document.getElementById("fmt"); sel.value=(SUBJ==="cnw"?f:"new");
   function desc(){ var F=FMT[sel.value]; document.getElementById("fd").textContent=F.secs.map(function(s){return "Section "+s.n+": "+s.l+" ("+s.pick+" × "+s.m+" = "+(s.pick*s.m)+")";}).join(" · "); }
   sel.onchange=function(){ load().fmt=sel.value; save(); desc(); }; desc();
   document.getElementById("start").onclick=function(){ runMock(FMT[sel.value]); };
@@ -2396,11 +2706,11 @@ function runMock(F){
 
 /* ---------- Progress ---------- */
 function progress(){
-  var s=load(), h='<h2 class="rise">Progress</h2>';
+  var s=load(), h=subjBar()+'<h2 class="rise">Progress</h2>';
   var all=allQuiz(), seen=all.filter(function(q){return s.items[q.id];}).length;
   h+='<div class="card goal rise glow" style="--i:1">'+ring(allMasteryPct(),104,11,"var(--go)",'<div><span class="big" data-count="'+allMasteryPct()+'">0</span><span class="big">%</span><small>mastered</small></div>')+'<div class="grow"><div style="font-weight:900;font-size:18px">'+seen+' of '+all.length+' questions seen</div><div class="mu">Streak: '+streak()+' day'+(streak()===1?"":"s")+'. A question counts as mastered after 3 correct answers in a row.</div></div></div>';
   units().forEach(function(u,i){ var qs=u.quiz||[], se=0,r=0,w=0; qs.forEach(function(q){ var x=s.items[q.id]; if(x){ se++; r+=x.r; w+=x.w; } }); var pct=qs.length?Math.round(100*se/qs.length):0;
-    h+='<div class="card unit rise" style="--i:'+(i+2)+';--h:'+((190+i*38)%360)+'"><div class="badge">'+ic("u"+(i+1),26)+'</div><div class="grow"><b>Unit '+(i+1)+': '+esc(u.title)+'</b><div class="mu">Seen '+se+' / '+qs.length+' · '+(r+w?Math.round(100*r/(r+w))+'% correct':'no answers yet')+'</div><div class="bar" style="margin-top:8px"><i style="width:'+pct+'%"></i></div></div></div>'; });
+    h+='<div class="card unit rise" style="--i:'+(i+2)+';--h:'+((190+i*38)%360)+'"><div class="badge">'+ic(uic(i),26)+'</div><div class="grow"><b>Unit '+(i+1)+': '+esc(u.title)+'</b><div class="mu">Seen '+se+' / '+qs.length+' · '+(r+w?Math.round(100*r/(r+w))+'% correct':'no answers yet')+'</div><div class="bar" style="margin-top:8px"><i style="width:'+pct+'%"></i></div></div></div>'; });
   var weak=all.filter(function(q){ var x=s.items[q.id]; return x&&x.w>x.r; });
   h+='<div class="card rise"><b>Weak questions ('+weak.length+')</b>'+(weak.length?'<ul>'+weak.slice(0,12).map(function(q){return '<li>'+esc(q.q)+'</li>';}).join("")+'</ul>':'<p class="mu">None yet.</p>')+'</div>';
   var wr=Object.keys(s.written), ws=wr.reduce(function(a,k){return a+s.written[k].s;},0), wm=wr.reduce(function(a,k){return a+s.written[k].max;},0);
@@ -2433,8 +2743,8 @@ function restoreBackupFile(ev){
 
 /* ---------- highlighter in the notes (ported from the BBM app) ----------
    Positions are stored as character offsets inside numbered blocks (data-nb), because a unit's notes never change, so offsets survive reloads. */
-function hlArr(){ return load().hl[readerUnit]||[]; }
-function hlSet(a){ load().hl[readerUnit]=a; save(); hlCount(a); }
+function hlArr(){ return load().hl[uk(readerUnit)]||[]; }
+function hlSet(a){ load().hl[uk(readerUnit)]=a; save(); hlCount(a); }
 function hlCount(a){ var e=document.getElementById("nt-hl-count"); if(e) e.textContent=(a&&a.length)?a.length+" highlight"+(a.length===1?"":"s"):""; }
 function ntTextNodes(root){ var out=[], w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null), n; while((n=w.nextNode())) out.push(n); return out; }
 function ntCharOffset(block,node,off){
@@ -2525,31 +2835,32 @@ function relDate(t){ var d=Date.now()-t, m=Math.floor(d/60000), h=Math.floor(d/3
 function unitHue(i){ return (190+i*38)%360; }
 function openNote(id){
   var s=load(), n=id?s.notes.filter(function(x){return x.id===id;})[0]:null; editingId=n?n.id:null;
-  var unit=n?n.unit:(ctx&&ctx.unit!=null?ctx.unit:null);
+  var ns=n?(n.subj||"cnw"):SUBJ, NU=subjUnits(ns), unit=n?n.unit:(ctx&&ctx.unit!=null?ctx.unit:null);
   document.getElementById("sheet-title").textContent=n?"Edit note":"New note";
   document.getElementById("note-text").value=n?n.text:(ctx&&ctx.q?"Q: "+ctx.q+"\n\n":"");
-  var chips='<span class="chip2">'+esc(window.CNW.code)+'</span>'; if(unit!=null&&units()[unit]) chips+='<span class="chip2">Unit '+(unit+1)+': '+esc(units()[unit].title)+'</span>'; chips+='<span class="chip2">'+(n?"Edited "+relDate(n.updated):"New")+'</span>';
+  var chips='<span class="chip2">'+esc(subjData(ns).code)+'</span>'; if(unit!=null&&NU[unit]) chips+='<span class="chip2">Unit '+(unit+1)+': '+esc(NU[unit].title)+'</span>'; chips+='<span class="chip2">'+(n?"Edited "+relDate(n.updated):"New")+'</span>';
   document.getElementById("sheet-chips").innerHTML=chips; document.getElementById("sheet-del").style.display=n?"inline-block":"none";
-  document.getElementById("sheet").dataset.unit=unit==null?"":unit; document.getElementById("sheet").classList.add("active"); ntHidePill();
+  document.getElementById("sheet").dataset.unit=unit==null?"":unit; document.getElementById("sheet").dataset.subj=ns; document.getElementById("sheet").classList.add("active"); ntHidePill();
   setTimeout(function(){ var t=document.getElementById("note-text"); t.focus(); t.setSelectionRange(t.value.length,t.value.length); },200);
 }
 function closeNote(){
   var sh=document.getElementById("sheet"); if(!sh.classList.contains("active")) return; var s=load(), text=document.getElementById("note-text").value.trim(), unit=sh.dataset.unit===""?null:+sh.dataset.unit;
   if(editingId){ var n=s.notes.filter(function(x){return x.id===editingId;})[0]; if(n){ if(text){ n.text=text; n.updated=Date.now(); } else s.notes=s.notes.filter(function(x){return x.id!==editingId;}); } }
-  else if(text){ s.notes.push({id:"n"+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36),text:text,unit:unit,created:Date.now(),updated:Date.now()}); }
+  else if(text){ s.notes.push({id:"n"+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36),text:text,unit:unit,subj:(sh.dataset.subj||SUBJ),created:Date.now(),updated:Date.now()}); }
   save(); sh.classList.remove("active"); editingId=null; if(cur==="notes") notesHub();
 }
 function deleteNote(){ if(!editingId) return; if(!confirm("Delete this note?")) return; var s=load(); s.notes=s.notes.filter(function(x){return x.id!==editingId;}); save(); document.getElementById("sheet").classList.remove("active"); editingId=null; if(cur==="notes") notesHub(); }
 function notesHub(){
   var s=load(), notes=s.notes.slice().sort(function(a,b){return b.updated-a.updated;});
-  var hlUnits=Object.keys(s.hl).filter(function(k){ return s.hl[k]&&s.hl[k].length&&units()[k]; });
+  var pre=SUBJ==="cnw"?"":SUBJ+":";
+  var hlUnits=Object.keys(s.hl).filter(function(k){ if(SUBJ==="cnw"?!/^\d+$/.test(k):k.indexOf(pre)!==0) return false; return s.hl[k]&&s.hl[k].length&&units()[+k.slice(pre.length)]; });
   var h=topBack("hb","Home")+'<h2 class="rise">My notes</h2><div class="row rise" style="--i:1;margin-bottom:12px"><button class="b p grow" id="newn" style="flex:1">+ New note</button></div><input class="search rise" id="nq" style="--i:2" placeholder="Search your notes" aria-label="Search notes"><div id="nl"></div>';
-  if(hlUnits.length){ h+='<h3 class="sec">Your highlights</h3>'; hlUnits.forEach(function(k){ h+='<div class="card unit" style="--h:'+unitHue(+k)+'"><div class="badge">'+ic("u"+(+k+1),26)+'</div><div class="grow"><b>Unit '+(+k+1)+': '+esc(units()[k].title)+'</b><div class="mu">'+s.hl[k].length+' highlight'+(s.hl[k].length===1?"":"s")+'</div></div><button class="b" data-hu="'+k+'">Open</button></div>'; }); }
+  if(hlUnits.length){ h+='<h3 class="sec">Your highlights</h3>'; hlUnits.forEach(function(k){ var ix=+k.slice(pre.length); h+='<div class="card unit" style="--h:'+unitHue(ix)+'"><div class="badge">'+ic(uic(ix),26)+'</div><div class="grow"><b>Unit '+(ix+1)+': '+esc(units()[ix].title)+'</b><div class="mu">'+s.hl[k].length+' highlight'+(s.hl[k].length===1?"":"s")+'</div></div><button class="b" data-hu="'+ix+'">Open</button></div>'; }); }
   h+='<div class="card" style="margin-top:18px"><b>Backup</b><p class="mu">Notes and highlights live only on this device. Save a backup file now and then.</p><div class="row"><button class="b p" id="bkf2">Save backup file</button></div></div>';
   el(h);
-  function paint(f){ var q=(f||"").toLowerCase(), list=notes.filter(function(n){ return !q||n.text.toLowerCase().indexOf(q)>=0||(n.unit!=null&&units()[n.unit]&&units()[n.unit].title.toLowerCase().indexOf(q)>=0); }); var x="";
+  function paint(f){ var q=(f||"").toLowerCase(), list=notes.filter(function(n){ return !q||n.text.toLowerCase().indexOf(q)>=0||(n.unit!=null&&subjUnits(n.subj||"cnw")[n.unit]&&subjUnits(n.subj||"cnw")[n.unit].title.toLowerCase().indexOf(q)>=0); }); var x="";
     if(!list.length) x='<div class="card mu" style="text-align:center">'+(notes.length?"No notes match.":"No notes yet. Tap New note, or use the pencil button while you study.")+'</div>';
-    list.forEach(function(n,k){ x+='<div class="card ncard rise glow" data-nid="'+n.id+'" style="--i:'+Math.min(k+3,9)+'"><span class="dot" style="background:hsl('+(n.unit!=null?unitHue(n.unit):45)+' 80% 55%)"></span><div class="grow"><div class="mu">'+esc(window.CNW.code)+(n.unit!=null&&units()[n.unit]?' · Unit '+(n.unit+1):'')+' · '+relDate(n.updated)+'</div><div class="snip">'+esc(n.text)+'</div></div></div>'; });
+    list.forEach(function(n,k){ x+='<div class="card ncard rise glow" data-nid="'+n.id+'" style="--i:'+Math.min(k+3,9)+'"><span class="dot" style="background:hsl('+(n.unit!=null?unitHue(n.unit):45)+' 80% 55%)"></span><div class="grow"><div class="mu">'+esc(subjData(n.subj||"cnw").code)+(n.unit!=null&&subjUnits(n.subj||"cnw")[n.unit]?' · Unit '+(n.unit+1):'')+' · '+relDate(n.updated)+'</div><div class="snip">'+esc(n.text)+'</div></div></div>'; });
     document.getElementById("nl").innerHTML=x; document.querySelectorAll("[data-nid]").forEach(function(c){ c.onclick=function(){ openNote(c.dataset.nid); }; }); }
   paint("");
   document.getElementById("hb").onclick=function(){ go("home"); }; document.getElementById("newn").onclick=function(){ openNote(null); };
@@ -2575,9 +2886,9 @@ function ytRef(s){
   return null;
 }
 function vUrl(r){ return r.type==="playlist"?"https://www.youtube.com/playlist?list="+r.id:"https://www.youtube.com/watch?v="+r.id+(r.s?"&t="+r.s:""); }
-function vPinned(i){ return load().vids[i]||[]; }
+function vPinned(i){ return load().vids[uk(i)]||[]; }
 function vTopics(i){ var u=units()[i]; return ((u&&u.syllabus)||[]).map(function(x){ var m=x.match(/^(\d+\.\d+)\s+([^:]+):?\s*(.*)$/); return m?{code:m[1],name:m[2],rest:m[3]}:{code:"",name:x,rest:""}; }); }
-function vClips(i){ var out=[]; ((window.CNW_VIDEOS||{})[i]||[]).forEach(function(v){ (v.segs||[]).forEach(function(g){ out.push({id:v.id,title:v.title,ch:v.ch,type:"video",s:g.s||0,e:g.e||0,t:g.t,o:(typeof g.o==="number"?g.o:out.length*10),label:g.label||"",note:g.note||""}); }); }); out.sort(function(a,b){ return a.o-b.o; }); return out; }
+function vClips(i){ var out=[]; (subjVideos()[i]||[]).forEach(function(v){ (v.segs||[]).forEach(function(g){ out.push({id:v.id,title:v.title,ch:v.ch,type:"video",s:g.s||0,e:g.e||0,t:g.t,o:(typeof g.o==="number"?g.o:out.length*10),label:g.label||"",note:g.note||""}); }); }); out.sort(function(a,b){ return a.o-b.o; }); return out; }
 function vRow(r,key,pinned){
   var thumb=r.type==="playlist"?'<span class="vthumb">LIST</span>':'<img class="vthumb" alt="" loading="lazy" src="https://i.ytimg.com/vi/'+esc(r.id)+'/default.jpg" onerror="this.style.visibility=\'hidden\'">';
   var span=r.type==="playlist"?"":(r.s||r.e)?fmtT(r.s||0)+(r.e?" to "+fmtT(r.e):" to the end"):"";
@@ -2596,8 +2907,8 @@ function vRender(){
   var box=document.getElementById("v-list"); box.innerHTML=h;
   box.querySelectorAll(".vid").forEach(function(c){ c.onclick=function(e){ if(e.target.closest(".vbtn")) return; vPlay(all[c.dataset.play]); }; });
   box.querySelectorAll("[data-yt]").forEach(function(b){ b.onclick=function(){ window.open(vUrl(all[b.dataset.yt]),"_blank","noopener"); }; });
-  box.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ var r=all[b.dataset.del]; if(!confirm("Remove this video from your list?\n\n"+(r.label||r.title))) return; var s=load(); s.vids[vUnit]=vPinned(vUnit).filter(function(x){ return !(x.id===r.id&&(x.s||0)===(r.s||0)); }); save(); if(vCur&&vCur.id===r.id) vStop(); vRender(); }; });
-  box.querySelectorAll("[data-pin]").forEach(function(b){ b.onclick=function(){ var r=all[b.dataset.pin], s=load(), list=(s.vids[vUnit]=s.vids[vUnit]||[]); if(!list.some(function(x){ return x.id===r.id&&(x.s||0)===(r.s||0); })) list.push({id:r.id,title:r.title,label:r.label,ch:r.ch,type:r.type||"video",s:r.s||0,e:r.e||0,added:Date.now()}); save(); vRender(); }; });
+  box.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ var r=all[b.dataset.del]; if(!confirm("Remove this video from your list?\n\n"+(r.label||r.title))) return; var s=load(); s.vids[uk(vUnit)]=vPinned(vUnit).filter(function(x){ return !(x.id===r.id&&(x.s||0)===(r.s||0)); }); save(); if(vCur&&vCur.id===r.id) vStop(); vRender(); }; });
+  box.querySelectorAll("[data-pin]").forEach(function(b){ b.onclick=function(){ var r=all[b.dataset.pin], s=load(), list=(s.vids[uk(vUnit)]=s.vids[uk(vUnit)]||[]); if(!list.some(function(x){ return x.id===r.id&&(x.s||0)===(r.s||0); })) list.push({id:r.id,title:r.title,label:r.label,ch:r.ch,type:r.type||"video",s:r.s||0,e:r.e||0,added:Date.now()}); save(); vRender(); }; });
 }
 function vPlay(r){
   if(!r) return; vCur=r; var f=document.getElementById("vframe");
@@ -2616,7 +2927,7 @@ function closeVideos(){ var sh=document.getElementById("vsheet"); if(!sh.classLi
 function vSave(){
   var url=document.getElementById("v-url").value, err=document.getElementById("v-err"), r=ytRef(url);
   if(!r){ err.textContent="That does not look like a YouTube link. Paste the full link from the Share button."; return; }
-  var s=load(), list=s.vids[vUnit]=s.vids[vUnit]||[];
+  var s=load(), list=s.vids[uk(vUnit)]=s.vids[uk(vUnit)]||[];
   if(list.some(function(x){ return x.id===r.id&&(x.s||0)===(r.s||0); })){ err.textContent="This one is already in your list."; return; }
   var name=document.getElementById("v-name").value.trim()||(r.type==="playlist"?"My playlist":"My video "+(list.length+1));
   list.push({id:r.id,title:name,type:r.type,s:r.s||0,e:0,added:Date.now()}); save(); vForm(false); vRender();
@@ -2625,9 +2936,163 @@ document.getElementById("v-x").innerHTML=ic("close",20); document.getElementById
 document.getElementById("v-addbtn").onclick=function(){ vForm(true); }; document.getElementById("v-cancel").onclick=function(){ vForm(false); }; document.getElementById("v-save").onclick=vSave;
 document.getElementById("v-url").addEventListener("keydown",function(e){ if(e.key==="Enter") vSave(); });
 document.getElementById("v-yt").onclick=function(){ if(vCur) window.open(vUrl(vCur),"_blank","noopener"); };
-document.getElementById("v-search").onclick=function(){ var u=units()[vUnit]; window.open("https://www.youtube.com/results?search_query="+encodeURIComponent("Computer Networks "+(u?u.title:"")),"_blank","noopener"); };
+document.getElementById("v-search").onclick=function(){ var u=units()[vUnit]; window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(SD().title+" "+(u?u.title:"")),"_blank","noopener"); };
 document.getElementById("vsheet").addEventListener("click",function(e){ if(e.target===this) closeVideos(); });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeVideos(); });
+
+/* ---------- Class mode: a spoken lesson (your phone's own voice) with check questions ---------- */
+var CL={u:null,i:0,steps:[],playing:false,tok:0,right:0,asked:0,voice:null,rate:1,lock:false};
+function cCanSpeak(){ return !!(window.speechSynthesis&&window.SpeechSynthesisUtterance); }
+function cVoiceList(){ return cCanSpeak()?speechSynthesis.getVoices().filter(function(v){ return /^(en|hi|ne)/i.test(v.lang); }):[]; }
+function cPickVoice(){
+  var L=cVoiceList(), want=null; try{ want=localStorage.getItem("bcs_voice"); }catch(e){}
+  var v=L.filter(function(x){ return x.name===want; })[0];
+  if(!v){ var order=["en-IN","en-GB","en-US","en"]; for(var k=0;k<order.length&&!v;k++){ var m=L.filter(function(x){ return x.lang.replace("_","-").indexOf(order[k])===0; }); v=m.filter(function(x){ return /google|natural|online|neural/i.test(x.name); })[0]||m[0]; } }
+  CL.voice=v||null; return L;
+}
+function cFillVoices(){ var sel=document.getElementById("c-voice"); if(!sel) return; var L=cPickVoice(); sel.innerHTML=L.length?L.map(function(v){ return '<option value="'+esc(v.name)+'"'+(CL.voice&&CL.voice.name===v.name?" selected":"")+'>'+esc(v.name)+' ('+esc(v.lang)+')</option>'; }).join(""):'<option>Default voice</option>'; }
+if(cCanSpeak()) speechSynthesis.onvoiceschanged=cFillVoices;
+function cStopSpeech(){ CL.tok++; if(cCanSpeak()) speechSynthesis.cancel(); }
+function cSpeak(text,done,from){
+  CL.text=text; CL.done=done; CL.k=from||0;
+  if(!cCanSpeak()){ var ms=Math.max(1500,text.split(/\s+/).length*380); var t=++CL.tok; setTimeout(function(){ if(t===CL.tok&&CL.playing) done(); },ms); return; }
+  speechSynthesis.cancel(); var tok=++CL.tok, parts=text.match(/[^.?!]+[.?!]*/g)||[text], k=from||0;
+  function next(){ if(tok!==CL.tok||!CL.playing) return; if(k>=parts.length){ done(); return; } CL.k=k; var u=new SpeechSynthesisUtterance(parts[k++].trim()); if(CL.voice){ u.voice=CL.voice; u.lang=CL.voice.lang; } else u.lang="en-IN"; u.rate=CL.rate; u.onend=next; u.onerror=function(){ if(tok===CL.tok&&CL.playing) setTimeout(next,50); }; speechSynthesis.speak(u); }
+  next();
+}
+function cRender(){
+  var an=document.getElementById("c-ans"); an.style.display="none"; document.getElementById("c-askbox").style.display="none"; var s=CL.steps[CL.i], st=document.getElementById("c-stage"), pct=Math.round(100*CL.i/Math.max(1,CL.steps.length-1)); document.getElementById("c-bar").style.width=pct+"%";
+  document.getElementById("c-count").textContent="Step "+(CL.i+1)+" of "+CL.steps.length;
+  var h='';
+  if(s.show) h+='<div class="cshow">'+s.show+'</div>';
+  if(s.end){ h+='<div class="ccap"><b>Class finished.</b> You answered '+CL.right+' of '+CL.asked+' check question'+(CL.asked===1?"":"s")+' correctly.</div><div class="row"><button class="b p" id="c-again">Hear it again</button><button class="b" id="c-prac">Practise this unit</button></div>'; }
+  else if(s.ask){ h+='<div class="ccap"><span class="mu">Check question</span><br>'+esc(s.ask.q)+'</div><div id="c-opts">'+s.ask.o.map(function(t,k){ return '<button class="opt" data-k="'+k+'"><span class="lt">'+"ABCD".charAt(k)+'</span><span>'+esc(t)+'</span></button>'; }).join("")+'</div><div class="ccap" id="c-fb" style="display:none"></div>'; }
+  else if(s.try){ h+='<div class="ccap"><span class="mu">Your turn</span><br>'+esc(s.say)+'</div><div class="row"><button class="b p" id="c-show">I tried it: tell me the answer</button></div>'; }
+  else h+='<div class="ccap">'+esc(s.say)+'</div>';
+  st.innerHTML=h;
+  var ag=document.getElementById("c-again"); if(ag) ag.onclick=function(){ cGo(0); };
+  var pr=document.getElementById("c-prac"); if(pr) pr.onclick=function(){ var u=CL.u; cClose(); runQuiz(shuffle(unitQuiz(u)),"Unit "+(u+1)); };
+}
+function cGo(i){
+  cStopSpeech(); cAskAbort(); CL.i=Math.max(0,Math.min(CL.steps.length-1,i)); if(CL.i===0){ CL.right=0; CL.asked=0; }
+  var s=CL.steps[CL.i]; cRender(); CL.playing=true; document.getElementById("c-play").textContent="Pause";
+  if(s.end){ cSpeak(s.say||"Well done.",function(){}); return; }
+  if(s.ask){ cSpeak(s.say||s.ask.q,function(){}); var box=document.getElementById("c-opts"); var done=false; box.querySelectorAll(".opt").forEach(function(b){ b.onclick=function(){ if(done) return; done=true; var k=+b.dataset.k, ok=k===s.ask.a; CL.asked++; if(ok) CL.right++; box.querySelectorAll(".opt").forEach(function(c,j){ if(j===s.ask.a) c.classList.add("ok"); else if(j===k) c.classList.add("no"); c.disabled=true; }); var fb=document.getElementById("c-fb"); fb.style.display="block"; fb.textContent=ok?s.ask.ok:s.ask.no; cSpeak(ok?s.ask.ok:s.ask.no,function(){ cGo(CL.i+1); }); }; }); return; }
+  if(s.try){ cSpeak(s.say,function(){}); document.getElementById("c-show").onclick=function(){ this.disabled=true; var st=document.getElementById("c-stage"); var d=document.createElement("div"); d.className="ccap"; d.textContent=s.try; st.appendChild(d); cSpeak(s.try,function(){ cGo(CL.i+1); }); }; return; }
+  cSpeak(s.say,function(){ cGo(CL.i+1); });
+}
+function cToggle(){ var b=document.getElementById("c-play"); if(CL.playing){ CL.playing=false; cStopSpeech(); b.textContent="Resume"; } else { cAskAbort(); cResume(); } }
+function openClass(i){
+  var u=units()[i]; if(!u||!u.lesson) return; CL.u=i; CL.steps=u.lesson.concat([{end:true,say:"That is the end of the class. Well done. Now go and practise the quiz for this unit."}]); CL.right=0; CL.asked=0; CL.rate=1;
+  document.getElementById("c-title").textContent="Class · Unit "+(i+1); var sc=document.getElementById("csheet"); sc.classList.add("active"); ntHidePill();
+  var warn=document.getElementById("c-warn"); warn.textContent=cCanSpeak()?"The teacher's voice is your phone's own voice, so how it sounds depends on your phone. Turn the volume up. If the screen locks, the voice stops.":"This browser cannot speak. You will see the lesson as text, step by step.";
+  document.getElementById("c-rate").value="1"; cFillVoices(); cAiProbe(); cGo(0);
+}
+function cClose(){ var sc=document.getElementById("csheet"); if(!sc.classList.contains("active")) return; CL.playing=false; cStopSpeech(); cAskAbort(); sc.classList.remove("active"); }
+document.getElementById("c-x").innerHTML=ic("close",20); document.getElementById("c-x").onclick=cClose;
+document.getElementById("c-play").onclick=cToggle;
+document.getElementById("c-prev").onclick=function(){ cGo(CL.i-1); };
+document.getElementById("c-next").onclick=function(){ cGo(CL.i+1); };
+document.getElementById("c-rate").onchange=function(){ CL.rate=+this.value; if(CL.playing) cGo(CL.i); };
+document.getElementById("c-voice").onchange=function(){ var n=this.value, v=cVoiceList().filter(function(x){ return x.name===n; })[0]; if(v){ CL.voice=v; try{ localStorage.setItem("bcs_voice",n); }catch(e){} if(CL.playing) cGo(CL.i); } };
+document.getElementById("csheet").addEventListener("click",function(e){ if(e.target===this) cClose(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") cClose(); });
+document.addEventListener("visibilitychange",function(){ if(document.hidden&&CL.playing&&document.getElementById("csheet").classList.contains("active")){ CL.playing=false; cStopSpeech(); document.getElementById("c-play").textContent="Resume"; } });
+
+/* ---------- Class mode: interrupt the teacher with a question (needs the laptop AI), then the lesson goes on ---------- */
+CL.ai=false; CL.ask=null; CL.rec=null;
+function cAiProbe(){
+  var b=document.getElementById("c-ask"); b.style.display="none"; CL.ai=false;
+  if(!tutorOK()) return;
+  tPing(function(models){ if(!models||!models.length) return; var names=models.map(function(m){ return m.name; }), saved=null; try{ saved=localStorage.getItem("bcs_tmodel"); }catch(e){}
+    var pick=names.indexOf(saved)>=0?saved:null; if(!pick){ var pf=["qwen3.5:4b","qwen2.5:7b","phi4-mini:latest","llama3.1:8b"]; for(var k=0;k<pf.length&&!pick;k++) if(names.indexOf(pf[k])>=0) pick=pf[k]; }
+    TU.model=pick||names[0]; CL.ai=true; b.style.display="inline-block"; });
+}
+function cAskAbort(){ if(CL.ask){ CL.ask.stop(); CL.ask=null; } if(CL.rec){ try{ CL.rec.stop(); }catch(e){} CL.rec=null; } if(TU.ctrl){ try{ TU.ctrl.abort(); }catch(e){} } }
+function cAskOpen(){
+  if(!CL.ai) return; cAskAbort(); CL.playing=false; cStopSpeech(); document.getElementById("c-play").textContent="Resume";
+  document.getElementById("c-askbox").style.display="block"; var q=document.getElementById("c-q"); q.value=""; q.focus(); document.getElementById("c-ans").style.display="none";
+}
+function cResume(){
+  document.getElementById("c-askbox").style.display="none"; CL.playing=true; document.getElementById("c-play").textContent="Pause";
+  if(CL.text&&CL.done) cSpeak(CL.text,CL.done,CL.k); else cGo(CL.i);
+}
+function cMakeSpeaker(onAllDone){
+  var q=[], busy=false, ended=false, dead=false;
+  function pump(){ if(dead||busy) return; if(!cCanSpeak()||!TU.speak){ q=[]; } if(!q.length){ if(ended){ dead=true; onAllDone(); } return; } busy=true; var u=new SpeechSynthesisUtterance(q.shift()); if(CL.voice){ u.voice=CL.voice; u.lang=CL.voice.lang; } else u.lang="en-IN"; u.rate=CL.rate||1; u.onend=u.onerror=function(){ busy=false; pump(); }; speechSynthesis.speak(u); }
+  return { add:function(t){ if(t&&t.trim()){ q.push(t.trim()); pump(); } }, end:function(){ ended=true; pump(); }, stop:function(){ dead=true; q=[]; if(cCanSpeak()) speechSynthesis.cancel(); } };
+}
+function cAsk(question){
+  question=(question||"").trim(); if(!question||!CL.ai||!TU.model) return;
+  var s=CL.steps[CL.i], heard=(s.say||(s.ask&&s.ask.q)||"").slice(0,400), u=units()[CL.u];
+  var ans=document.getElementById("c-ans"); ans.style.display="block"; ans.textContent="…"; document.getElementById("c-askbox").style.display="none";
+  CL.ask=cMakeSpeaker(function(){ CL.ask=null; cResume(); });
+  var sys=tSystem(u,SD()), user="[The student interrupted the lesson with a question. The sentence being explained was: \""+heard+"\". Answer the question in at most 80 words, in simple English (or simple Nepali if the question is in Nepali), using only the notes. Do not start a new topic. Do not ask a question at the end.]\nQuestion: "+question;
+  var acc="", pend="", vis=0, ctrl=new AbortController(); TU.ctrl=ctrl;
+  fetch(TU.base+"/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:TU.model,stream:true,think:false,messages:[{role:"system",content:sys},{role:"user",content:user}],options:{temperature:0.3,num_ctx:6144}}),signal:ctrl.signal})
+  .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); var rd=r.body.getReader(), dec=new TextDecoder(), buf=""; function pump(){ return rd.read().then(function(x){ if(x.done) return; buf+=dec.decode(x.value,{stream:true}); var lines=buf.split("\n"); buf=lines.pop(); lines.forEach(function(l){ if(!l.trim()) return; try{ var j=JSON.parse(l); if(j.message&&j.message.content){ acc+=j.message.content; var t=tClean(acc); ans.textContent=t.replace(/^\s+/,"")||"…"; pend+=t.slice(vis); vis=t.length; var m; while((m=pend.match(/^[\s\S]*?[.?!\n](\s|$)/))){ pend=pend.slice(m[0].length); if(CL.ask&&!/\?\s*$/.test(m[0])) CL.ask.add(m[0]); } } }catch(e){} }); return pump(); }); } return pump(); })
+  .then(function(){ ans.textContent=tClean(acc).replace(/[^.!\n]*\?\s*$/,"").trim()||ans.textContent; if(CL.ask){ if(pend.trim()&&!/\?\s*$/.test(pend)) CL.ask.add(pend); CL.ask.end(); } }).catch(function(e){ if(e.name==="AbortError") return; ans.textContent="Sorry, I could not reach the AI ("+e.message+"). The lesson goes on."; if(CL.ask){ CL.ask.stop(); CL.ask=null; } setTimeout(cResume,1500); });
+}
+function cMicAsk(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition, btn=document.getElementById("c-qmic"); if(!SR){ document.getElementById("c-ans").style.display="block"; document.getElementById("c-ans").textContent="This browser cannot listen. Use Chrome or Edge on the laptop, or type your question."; return; }
+  if(CL.rec){ CL.rec.stop(); return; } var r=new SR(); CL.rec=r; r.lang=document.getElementById("c-lang").value; r.interimResults=true; btn.textContent="Stop";
+  r.onresult=function(e){ var t=""; for(var i=0;i<e.results.length;i++) t+=e.results[i][0].transcript; document.getElementById("c-q").value=t; if(e.results[e.results.length-1].isFinal){ r.stop(); cAsk(t); } };
+  r.onerror=function(){ }; r.onend=function(){ CL.rec=null; btn.textContent="Speak"; }; r.start();
+}
+document.getElementById("c-ask").onclick=cAskOpen;
+document.getElementById("c-qsend").onclick=function(){ cAsk(document.getElementById("c-q").value); };
+document.getElementById("c-q").addEventListener("keydown",function(e){ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); cAsk(this.value); } });
+document.getElementById("c-qmic").onclick=cMicAsk;
+document.getElementById("c-qcancel").onclick=function(){ cAskAbort(); cResume(); };
+document.addEventListener("keydown",function(e){ if(e.code==="Space"&&document.getElementById("csheet").classList.contains("active")&&CL.ai&&!/INPUT|TEXTAREA|SELECT|BUTTON/.test((e.target||{}).tagName||"")){ e.preventDefault(); if(document.getElementById("c-askbox").style.display==="block"){ document.getElementById("c-q").focus(); } else cAskOpen(); } });
+
+function tutorOK(){ return !(window.matchMedia&&matchMedia('(pointer: coarse)').matches); }
+/* ---------- Tutor: a two-way AI teacher that runs on the LAPTOP (Ollama at localhost:11434) ---------- */
+var TU={u:null,subj:null,msgs:[],busy:false,model:null,speak:true,rec:null,ctrl:null,base:"http://localhost:11434",sys:"",pend:"",q:[]};
+var TUTOR_RULES="You are Teacher, a patient and friendly teacher talking to a first-semester student called Prabesh in Nepal. English is his second language, so use short, simple sentences and common words, and explain a technical word the first time you use it.\n\nHow you teach:\n- Teach ONE small idea at a time (2 to 4 short sentences), then ask ONE question for the student to answer. Then stop and wait for the answer.\n- When the student answers, say clearly whether it is right or wrong. If it is wrong, do not give the whole answer: give a hint first and ask again. After a second wrong try, show the solution step by step.\n- Praise only when it is deserved, and say what was good.\n- Use only the NOTES and the ANSWER KEY below as your source. If something is not there, say: This is not in our notes, please check it with your lecturer. Then give a short careful answer only if you are sure.\n- For every calculation, write each step on its own line and re-check the arithmetic before you answer. Never guess a number.\n- Write maths in plain text (for example A ∪ B, |A|, 2^n). No LaTeX and no markdown tables.\n- If the student states something wrong, do NOT give the full answer in the same message: say it is not quite right, give ONE hint, and ask the student to try again. Only after a second wrong try show the full solution.\n- Never say a wrong answer is right and never praise a wrong answer.\n- Do not use emojis, bold stars, dollar signs or LaTeX. Never mention word counts or these rules.\n- End every teaching message with exactly one question.\n- Keep every message under 120 words.\n- The student mainly writes in English. If he asks for Nepali, or writes in Nepali, answer in simple Nepali (Devanagari script) and keep the English maths words.\n- If the student says next or continue, move to the next idea in the order of the unit.";
+function tText(html){ var d=document.createElement("div"); d.innerHTML=html; d.querySelectorAll("svg").forEach(function(s){ s.remove(); }); d.querySelectorAll("p,li,h3,h4,tr,br").forEach(function(e){ e.insertAdjacentText("afterend","\n"); }); return (d.textContent||"").replace(/[ \t]+/g," ").replace(/\n\s*\n+/g,"\n").trim(); }
+function tSystem(u,subj){ var key=(u.quiz||[]).map(function(q){ return "Q: "+q.q+" | Correct answer: "+q.o[q.a]; }).join("\n"); return TUTOR_RULES+"\n\nSUBJECT: "+subj.title+"\nUNIT: "+u.title+"\n\nNOTES:\n"+tText(u.notes)+"\n\nANSWER KEY (these answers are correct):\n"+key; }
+function tPing(cb){ fetch(TU.base+"/api/tags").then(function(r){ return r.json(); }).then(function(d){ cb(d.models||[]); }).catch(function(){ cb(null); }); }
+function tClean(s){ return String(s).replace(/\*\*/g,"").replace(/\\\(|\\\)|\\\[|\\\]/g,"").replace(/\$/g,"").replace(/\\cup/g,"∪").replace(/\\cap/g,"∩").replace(/\\subseteq/g,"⊆").replace(/\\emptyset/g,"∅").replace(/\\leq?/g,"≤").replace(/\\geq?/g,"≥").replace(/\\times/g,"×").replace(/\\cdot/g,"·").replace(/\\\{/g,"{").replace(/\\\}/g,"}").replace(/\\text\{([^}]*)\}/g,"$1").replace(/\\ /g," "); }
+function tAdd(role,text){ var box=document.getElementById("t-msgs"), m=document.createElement("div"); m.className="tmsg "+role; m.textContent=text; box.appendChild(m); box.scrollTop=box.scrollHeight; return m; }
+function tStatus(t){ document.getElementById("t-status").textContent=t||""; }
+function tSay(text){ if(!TU.speak||!cCanSpeak()) return; var u=new SpeechSynthesisUtterance(text); if(CL.voice){ u.voice=CL.voice; u.lang=CL.voice.lang; } else u.lang="en-IN"; u.rate=CL.rate||1; speechSynthesis.speak(u); }
+function tStopSpeech(){ TU.q=[]; if(cCanSpeak()) speechSynthesis.cancel(); }
+function tFlush(force){ var m; while((m=TU.pend.match(/^[\s\S]*?[.?!\n](\s|$)/))){ var s=m[0]; TU.pend=TU.pend.slice(s.length); if(s.trim()) tSay(s.trim()); } if(force&&TU.pend.trim()){ tSay(TU.pend.trim()); TU.pend=""; } }
+function tSend(text){
+  text=(text||"").trim(); if(!text||TU.busy) return; if(!TU.model){ tStatus("No model is installed in Ollama yet."); return; }
+  tStopSpeech(); TU.busy=true; TU.msgs.push({role:"user",content:text}); tAdd("user",text); var bot=tAdd("bot","…"), acc=""; tStatus("Teacher is thinking…"); TU.pend=""; TU.vis=0; TU.ctrl=new AbortController(); var think=/deepseek-r1|qwq|qwen3:/i.test(TU.model);
+  var hist=TU.msgs.slice(-14), body={model:TU.model,stream:true,think:false,messages:[{role:"system",content:TU.sys}].concat(hist),options:{temperature:0.3,num_ctx:6144}};
+  fetch(TU.base+"/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body),signal:TU.ctrl.signal}).then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); var rd=r.body.getReader(), dec=new TextDecoder(), buf=""; function pump(){ return rd.read().then(function(x){ if(x.done) return; buf+=dec.decode(x.value,{stream:true}); var lines=buf.split("\n"); buf=lines.pop(); lines.forEach(function(l){ if(!l.trim()) return; try{ var j=JSON.parse(l); if(j.message&&j.message.content){ acc+=j.message.content; var vt=think?(acc.indexOf("</think>")>=0?acc.slice(acc.lastIndexOf("</think>")+8):""):acc; TU.pend+=tClean(vt).slice(TU.vis); TU.vis=tClean(vt).length; bot.textContent=tClean(vt).replace(/^\s+/,"")||"…"; document.getElementById("t-msgs").scrollTop=1e9; tFlush(false); } }catch(e){} }); return pump(); }); } return pump(); })
+  .then(function(){ tFlush(true); TU.msgs.push({role:"assistant",content:(bot.textContent==="…"?acc:bot.textContent)}); tStatus(""); }).catch(function(e){ if(e.name!=="AbortError"){ bot.textContent="Sorry, I could not reach the model ("+e.message+")."; tStatus(""); } }).then(function(){ TU.busy=false; });
+}
+function tMic(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR){ tStatus("This browser cannot listen. Use Chrome or Edge on the laptop."); return; }
+  if(TU.rec){ TU.rec.stop(); return; } tStopSpeech(); var r=new SR(); TU.rec=r; r.lang=document.getElementById("t-lang").value; r.interimResults=true; r.maxAlternatives=1; var btn=document.getElementById("t-mic"); btn.textContent="Stop"; tStatus("Listening…");
+  r.onresult=function(e){ var t=""; for(var i=0;i<e.results.length;i++) t+=e.results[i][0].transcript; document.getElementById("t-in").value=t; if(e.results[e.results.length-1].isFinal){ r.stop(); tSend(t); document.getElementById("t-in").value=""; } };
+  r.onerror=function(e){ tStatus("Microphone problem: "+e.error); }; r.onend=function(){ TU.rec=null; btn.textContent="Speak"; if(document.getElementById("t-status").textContent==="Listening…") tStatus(""); }; r.start();
+}
+function openTutor(i){
+  var u=units()[i]; if(!u) return; TU.u=i; TU.subj=SUBJ; TU.sys=tSystem(u,SD()); TU.msgs=[]; document.getElementById("t-msgs").innerHTML=""; document.getElementById("t-title").textContent="Tutor · Unit "+(i+1); document.getElementById("tsheet").classList.add("active"); ntHidePill(); cPickVoice();
+  tStatus("Checking the laptop's AI (Ollama)…"); document.getElementById("t-chips").style.display="none";
+  tPing(function(models){
+    var sel=document.getElementById("t-model");
+    if(models===null){ sel.innerHTML=""; TU.model=null; tAdd("bot","I cannot find the AI on this computer. The tutor works only on your laptop, with Ollama running. Start Ollama, then open this page again on the laptop."); tStatus(""); return; }
+    if(!models.length){ tAdd("bot","Ollama is running, but no model is installed yet."); tStatus(""); return; }
+    var names=models.map(function(m){ return m.name; }), saved=null; try{ saved=localStorage.getItem("bcs_tmodel"); }catch(e){} var pick=names.indexOf(saved)>=0?saved:null; if(!pick){ var pf=["qwen3.5:4b","qwen2.5:7b","phi4-mini:latest","llama3.1:8b"]; for(var k=0;k<pf.length&&!pick;k++) if(names.indexOf(pf[k])>=0) pick=pf[k]; } TU.model=pick||names.filter(function(n){ return !/qwen3/.test(n); })[0]||names[0]; sel.innerHTML=names.map(function(n){ return '<option'+(n===TU.model?" selected":"")+'>'+esc(n)+'</option>'; }).join(""); tStatus("");
+    document.getElementById("t-chips").style.display="flex"; tAdd("bot","Hello Prabesh. I am your teacher for Unit "+(i+1)+": "+u.title+". Tap Start, or ask me anything about this unit.");
+  });
+}
+function tClose(){ var s=document.getElementById("tsheet"); if(!s.classList.contains("active")) return; if(TU.ctrl) try{ TU.ctrl.abort(); }catch(e){} tStopSpeech(); if(TU.rec) try{ TU.rec.stop(); }catch(e){} s.classList.remove("active"); TU.busy=false; }
+document.getElementById("t-x").innerHTML=ic("close",20); document.getElementById("t-x").onclick=tClose;
+document.getElementById("t-send").onclick=function(){ var i=document.getElementById("t-in"); var v=i.value; i.value=""; tSend(v); };
+document.getElementById("t-in").addEventListener("keydown",function(e){ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); document.getElementById("t-send").click(); } });
+document.getElementById("t-mic").onclick=tMic;
+document.getElementById("t-speak").onchange=function(){ TU.speak=this.checked; if(!this.checked) tStopSpeech(); };
+document.getElementById("t-model").onchange=function(){ TU.model=this.value; try{ localStorage.setItem("bcs_tmodel",this.value); }catch(e){} };
+document.querySelectorAll("#t-chips [data-say]").forEach(function(b){ b.onclick=function(){ tSend(b.dataset.say); }; });
+document.getElementById("tsheet").addEventListener("click",function(e){ if(e.target===this) tClose(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") tClose(); });
 
 /* ---------- the pencil: drag it anywhere (mouse or finger), tap it to write a note ---------- */
 var fab=document.getElementById("fab"), fabDrag=null;
@@ -2646,6 +3111,7 @@ restoreFab();
 
 document.getElementById("logo").innerHTML=ic("net",20);
 initTheme();
+SUBJ=load().subj||"cnw"; if(SUBJ==="dmp"&&!subjUnits("dmp").length) SUBJ="cnw";
 refreshStreak();
 go("home");
 </script>
