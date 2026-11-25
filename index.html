@@ -464,7 +464,14 @@ window.CNW.units[0] = {
     { id: "u1q32", q: "A cloud built for one specific organisation only is a", o: ["Private cloud", "Public cloud", "Hybrid cloud", "Open cloud"], a: 0, why: "Cisco lists public, private, hybrid and custom clouds.", w: 2 },
     { id: "u1q33", q: "Which security goal means data has not been altered in transit?", o: ["Integrity", "Confidentiality", "Availability", "Scalability"], a: 0, why: "CIA: confidentiality (only intended readers), integrity (unchanged), availability (reachable when needed).", w: 2 },
     { id: "u1q34", q: "A network where each device is both client and server is", o: ["Peer-to-peer", "Client-server", "A WAN", "An extranet"], a: 0, why: "P2P is easy and cheap but not scalable or well centralised.", w: 2 },
-    { id: "u1q35", q: "Segmentation of messages mainly helps because", o: ["Only lost pieces need resending and many conversations can share the line", "It makes data secret", "It removes headers", "It lowers bandwidth"], a: 0, why: "Smaller pieces are sent in an interleaved way, and only the missing segments are retransmitted.", w: 2 }
+    { id: "u1q35", q: "Segmentation of messages mainly helps because", o: ["Only lost pieces need resending and many conversations can share the line", "It makes data secret", "It removes headers", "It lowers bandwidth"], a: 0, why: "Smaller pieces are sent in an interleaved way, and only the missing segments are retransmitted.", w: 2 },
+    { id: "u1q36", q: "In networking, a protocol is", o: ["A type of cable", "A device that joins two networks", "A set of agreed rules for the format and order of messages, and the actions taken on them", "The speed of a link"], a: 2, why: "A network is devices + links + protocols. A protocol defines the format and order of messages and what is done when they are sent or received.", w: 3 },
+    { id: "u1q37", q: "The internet is best described as", o: ["One big LAN owned by one company", "A network of networks: millions of LANs and WANs joined together", "A single cable around the world", "A private intranet"], a: 1, why: "The internet joins millions of small and big networks. Nobody owns the whole of it; bodies such as IETF and ICANN help keep it organised.", w: 2 },
+    { id: "u1q38", q: "Which pairing of medium and signal is correct?", o: ["Copper cable carries light pulses", "Wi-Fi carries electrical pulses in a wire", "Fibre-optic cable carries radio waves", "Fibre-optic cable carries light pulses"], a: 3, why: "Copper carries electrical pulses, fibre carries light pulses, and wireless (Wi-Fi) uses radio waves.", w: 2 },
+    { id: "u1q39", q: "In the college (Cisco) slides, the TCP/IP model has which layers?", o: ["Physical, data link, network, transport", "Application, presentation, session, transport", "Application, transport, internet, network access", "Application, session, internet, physical"], a: 2, why: "The college slides use 4 TCP/IP layers: application, transport, internet, network access. Many books show 5, so say which one you use.", w: 3 },
+    { id: "u1q40", q: "Which statement about the OSI and TCP/IP models is correct?", o: ["OSI is a reference model; TCP/IP is the model the internet actually uses", "TCP/IP is a reference model; the internet actually uses OSI", "Both models have exactly 7 layers", "OSI has no transport layer"], a: 0, why: "OSI (7 layers) is used to describe and teach networking. TCP/IP is built around real protocols and is what the internet runs on.", w: 3 },
+    { id: "u1q41", q: "A router mainly works at which OSI layer?", o: ["Physical", "Data link", "Transport", "Network"], a: 3, why: "A router reads logical (IP) addresses and chooses the path across networks, which is the job of the network layer (layer 3) (⚠ not in the college slides).", w: 2 },
+    { id: "u1q42", q: "A switch inside a LAN mainly works at which OSI layer?", o: ["Network (layer 3)", "Session (layer 5)", "Data link (layer 2)", "Application (layer 7)"], a: 2, why: "A switch forwards frames using MAC addresses, which is the job of the data link layer (layer 2) (⚠ not in the college slides).", w: 2 },
   ],
   exam: [
     { id: "u1e01", type: "brief", q: "Define a computer network.", pts: ["A set of interconnected computing devices (hosts, routers, switches) linked by wired or wireless media (1)", "that share data and resources by following agreed rules (protocols) (1)"], real: "BS2082 model, Section A" },
@@ -709,7 +716,16 @@ window.CNW.units[1] = {
     { id: "u2q37", q: "In BitTorrent, the list of peers sharing a file is kept by the", o: ["Tracker", "DNS root", "SMTP server", "Router"], a: 0, why: "The tracker lists peers; peers exchange chunks directly.", w: 2 },
     { id: "u2q38", q: "A distributed hash table stores", o: ["(key, value) pairs spread across peers", "Only IP addresses in one server", "Cookies on the server", "Packets in routers"], a: 0, why: "No central index; each peer holds part of the table.", w: 3 },
     { id: "u2q39", q: "What links the blocks of a blockchain together?", o: ["Each block contains the hash of the previous block", "A shared password", "A DNS record", "A MAC address"], a: 0, why: "Changing an old block changes its hash and breaks all later blocks.", w: 2 },
-    { id: "u2q40", q: "Which is an advantage of P2P distribution over a single server for a popular file?", o: ["Capacity grows as more peers join", "It needs a more powerful server", "It is always more secure", "It removes the need for the internet"], a: 0, why: "Each new peer also uploads (⚠ beyond slides).", w: 2 }
+    { id: "u2q40", q: "Which is an advantage of P2P distribution over a single server for a popular file?", o: ["Capacity grows as more peers join", "It needs a more powerful server", "It is always more secure", "It removes the need for the internet"], a: 0, why: "Each new peer also uploads (⚠ beyond slides).", w: 2 },
+    { id: "u2q41", q: "Which HTTP version sends many requests and responses at the same time on one TCP connection (multiplexing)?", o: ["HTTP/1.0", "HTTP/2", "HTTP/3", "HTTP/1.1"], a: 1, why: "HTTP/2 multiplexes many requests on one TCP connection and compresses headers. HTTP/1.1 is persistent but sends requests one after another; HTTP/3 uses QUIC on UDP, not TCP. (⚠ not in the college slides)", w: 3 },
+    { id: "u2q42", q: "Why does multiplexing in HTTP/2 help a page load faster?", o: ["It opens a new connection for every object", "It removes the need for DNS", "Frames of many objects are mixed, so one big object does not make the small ones wait", "It sends the page over UDP"], a: 2, why: "Each message is cut into frames, and frames of many requests and responses share one connection. (⚠ not in the college slides)", w: 2 },
+    { id: "u2q43", q: "A host asks its local DNS server to find the whole answer and send back only the final IP address. This kind of query is", o: ["Iterative", "Broadcast", "Conditional", "Recursive"], a: 3, why: "In a recursive query the asker hands the whole job to the server. In iterative steps each server only says which server to ask next. (⚠ not in the college slides)", w: 3 },
+    { id: "u2q44", q: "In an iterative DNS query, a root or TLD server that does not have the final answer", o: ["Replies with the server to ask next", "Drops the query", "Asks the next server itself", "Sends a DHCPOFFER"], a: 0, why: "Iterative: the root says 'ask the .com server', the TLD says 'ask the cisco.com server', and the local resolver follows the chain. (⚠ not in the college slides)", w: 3 },
+    { id: "u2q45", q: "How long does a local DNS server keep an answer in its cache?", o: ["Until the user closes the browser", "Until the record's TTL runs out", "For exactly one query", "Forever"], a: 1, why: "TTL (time to live) = how many seconds a record may be kept in a cache; after that the server must ask again. (⚠ not in the college slides)", w: 2 },
+    { id: "u2q46", q: "Which chunks does a BitTorrent peer ask for first?", o: ["The biggest chunks", "The chunks the tracker holds", "The rarest chunks among its neighbours", "The first chunks of the file"], a: 2, why: "Rarest first: of the chunks it does not have, a peer requests the ones fewest neighbours have, so rare chunks spread quickly. (⚠ not in the college slides)", w: 2 },
+    { id: "u2q47", q: "Under tit-for-tat in BitTorrent, a peer sends data mainly to", o: ["The tracker", "The peers that send it data fastest", "Only new peers", "Every peer equally"], a: 1, why: "A peer unchokes the peers giving it the best rates; now and then it also unchokes one random peer (optimistic unchoke). (⚠ not in the college slides)", w: 3 },
+    { id: "u2q48", q: "In proof of work, which peer adds the next block to a blockchain?", o: ["The peer with the most currency locked up", "The oldest peer", "A central server", "The peer that first solves a hard computing puzzle"], a: 3, why: "Peers compete to solve a hard puzzle and the winner adds the block. In proof of stake, a bigger stake gives a bigger chance to be chosen. (⚠ not in the college slides)", w: 2 },
+    { id: "u2q49", q: "In proof of stake, a peer has a bigger chance to add the next block if it", o: ["Has locked up more currency", "Has the fastest computer", "Is closest to the tracker", "Has the oldest block"], a: 0, why: "The peer is chosen at random, weighted by its stake; no puzzle race as in proof of work. (⚠ not in the college slides)", w: 2 },
   ],
   exam: [
     { id: "u2e01", type: "brief", q: "What is a socket in process communication?", pts: ["The interface between an application process and the transport layer, through which it sends and receives messages (1)", "Identified by an IP address and a port number (1)"], real: "BS2082 model, Section A" },
@@ -1010,7 +1026,20 @@ Checksum = complement = <b>1011010100111101</b>.</p>
     { id: "u3q42", q: "QUIC runs on top of", o: ["UDP", "TCP", "ICMP", "ARP"], a: 0, why: "QUIC is built on UDP and carries HTTP/3.", w: 3 },
     { id: "u3q43", q: "Which is an advantage of QUIC over TCP + TLS?", o: ["Faster connection set-up and no head-of-line blocking between streams", "Uses no encryption", "Needs no port numbers", "Is connectionless with no reliability at all"], a: 0, why: "Transport and TLS handshakes are combined and streams are independent.", w: 3 },
     { id: "u3q44", q: "In a leaky bucket, if the bucket is full, new packets are", o: ["Discarded", "Sent faster", "Stored forever", "Converted to tokens"], a: 0, why: "Overflow is dropped; output stays at the constant leak rate.", w: 3 },
-    { id: "u3q45", q: "Which algorithm allows controlled bursts?", o: ["Token bucket", "Leaky bucket", "Stop-and-wait", "Go-Back-N"], a: 0, why: "Saved tokens let a host send a burst up to the bucket size.", w: 3 }
+    { id: "u3q45", q: "Which algorithm allows controlled bursts?", o: ["Token bucket", "Leaky bucket", "Stop-and-wait", "Go-Back-N"], a: 0, why: "Saved tokens let a host send a burst up to the bucket size.", w: 3 },
+    { id: "u3q46", q: "A TCP socket at the receiver is identified by", o: ["Destination IP and destination port only", "Source IP, source port, destination IP and destination port", "The MAC address only", "The destination port only"], a: 1, why: "TCP uses all four values, so two clients talking to the same server port get different sockets. A UDP socket uses only destination IP and destination port. (⚠ not in the college slides)", w: 2 },
+    { id: "u3q47", q: "Two different clients send UDP segments to the same server IP and port 53. At the server, the segments go to", o: ["Two different sockets, one per client", "No socket; they are dropped", "The same socket", "A new port chosen by the server"], a: 2, why: "A UDP socket is found by destination IP and destination port only, so both go to one socket. With TCP they would go to two sockets, because the source IP and port differ. (⚠ not in the college slides)", w: 2 },
+    { id: "u3q48", q: "In rdt2.0, a NAK (negative acknowledgment) from the receiver means", o: ["The packet arrived correctly", "The connection is closed", "The receiver window is full", "The packet arrived with an error; please send it again"], a: 3, why: "rdt2.0 uses a checksum plus ACK (received OK) and NAK (received with errors). On a NAK the sender retransmits the packet. (⚠ not in the college slides)", w: 2 },
+    { id: "u3q49", q: "In rdt2.1, why is a sequence number (0 or 1) added to each packet?", o: ["To choose the route", "So the receiver can tell a resent copy from a new packet when an ACK or NAK was corrupted", "To encrypt the data", "To measure the link speed"], a: 1, why: "If an ACK or NAK arrives corrupted, the sender resends to be safe. The receiver sees the same sequence number again, knows it is a duplicate, and does not pass it up twice. (⚠ not in the college slides)", w: 2 },
+    { id: "u3q50", q: "TCP sets its retransmission timeout from", o: ["The size of the UDP header", "The window size only", "The port number", "The measured RTT: estimated RTT plus a safety margin"], a: 3, why: "TCP keeps an average of measured RTTs (EstimatedRTT) and adds a margin of 4 times the RTT variation (DevRTT). Too short a timeout causes needless resends; too long reacts slowly to loss. (⚠ not in the college slides)", w: 2 },
+    { id: "u3q51", q: "A TCP sender's timer runs out before the ACK for a segment arrives. The sender", o: ["Closes the connection", "Sends a FIN", "Retransmits the segment", "Switches to UDP"], a: 2, why: "No ACK before the timer expires means the segment is taken as lost, so TCP sends it again.", w: 2 },
+    { id: "u3q52", q: "The client's SYN has seq = x. The server's SYN+ACK carries", o: ["seq = x, ack = y", "seq = x+1, ack = x+1", "seq = y, ack = y+1", "seq = y, ack = x+1"], a: 3, why: "The server picks its own sequence number y and acknowledges x+1, the next number it expects from the client. The client then replies ACK = y+1.", w: 3 },
+    { id: "u3q53", q: "In a three-way handshake the client's SYN has seq = 100 and the server's SYN+ACK has seq = 300. The ACK number in the client's final ACK is", o: ["101", "300", "301", "100"], a: 2, why: "Final ACK = server's sequence number + 1 = 300 + 1 = 301. (The server's SYN+ACK carried ack = 100 + 1 = 101.)", w: 3 },
+    { id: "u3q54", q: "Which QUIC feature keeps a connection alive when a phone moves from Wi-Fi to mobile data?", o: ["Head-of-line blocking", "Connection migration using a connection ID", "The three-way handshake", "The leaky bucket"], a: 1, why: "The phone's IP address changes, but QUIC names the connection by its connection ID, so the connection continues.", w: 3 },
+    { id: "u3q55", q: "In QUIC, 0-RTT means", o: ["Data can be sent in the first message when reconnecting to a server used before", "No acknowledgments are ever sent", "The RTT of the link is zero", "No encryption is used"], a: 0, why: "A new QUIC connection starts in 1 RTT; when resuming with a known server, data can go with the very first packet (0 RTT).", w: 2 },
+    { id: "u3q56", q: "Quality of service (QoS) means giving each flow", o: ["Enough port numbers", "Enough IP addresses", "Enough bandwidth, with low delay, low jitter and low loss", "Enough cables and hubs"], a: 2, why: "QoS = the network's ability to give each flow the service it needs: bandwidth, delay, jitter and loss.", w: 3 },
+    { id: "u3q57", q: "Which QoS technique decides which queued packet is sent next (FIFO, priority queuing, weighted fair queuing)?", o: ["Overprovisioning", "Buffering", "Admission control", "Packet scheduling"], a: 3, why: "Packet scheduling picks the next packet from the queues. The five techniques: overprovisioning, buffering, traffic shaping, resource reservation and admission control, packet scheduling.", w: 2 },
+    { id: "u3q58", q: "Buffering at the receiver improves QoS by", o: ["Smoothing out jitter before playing", "Adding more routers", "Refusing new flows", "Encrypting the packets"], a: 0, why: "Received data is stored briefly before playing, so uneven arrival times are hidden. Good for streaming, not for live calls.", w: 2 },
   ],
   exam: [
     { id: "u3e01", type: "brief", q: "Define multiplexing and demultiplexing in the transport layer.", pts: ["Multiplexing: gathering data from several application sockets at the sender and adding port-number headers (1)", "Demultiplexing: using the port numbers to deliver arriving segments to the right socket (1)"], real: "BS2082 model, Section A; BS2082 model B, Section A" },
@@ -1614,7 +1643,13 @@ Step 4: send D followed by R: <b>11010110111110</b>. The receiver divides it by 
     { id: "u5q53", q: "Which pair of EtherChannel modes will NOT form a bundle?", o: ["Passive and passive", "Active and passive", "Active and active", "Desirable and auto"], a: 0, why: "Neither side starts negotiation.", w: 3 },
     { id: "u5q54", q: "In spine-leaf architecture, every leaf switch connects to", o: ["Every spine switch", "Only one spine", "Other leaves only", "Only servers"], a: 0, why: "Servers on different leaves are always leaf-spine-leaf apart: predictable latency.", w: 3 },
     { id: "u5q55", q: "VXLAN is an example of", o: ["Network virtualization (overlay)", "A routing protocol", "An email protocol", "A physical cable"], a: 0, why: "Layer-2 frames carried inside UDP/IP, with a 24-bit identifier.", w: 2 },
-    { id: "u5q56", q: "P4 is a language for", o: ["Programming the data plane of switches", "Writing web pages", "Encrypting email", "Naming hosts"], a: 0, why: "It defines how a switch parses and processes packets.", w: 1 }
+    { id: "u5q56", q: "P4 is a language for", o: ["Programming the data plane of switches", "Writing web pages", "Encrypting email", "Naming hosts"], a: 0, why: "It defines how a switch parses and processes packets.", w: 1 },
+    { id: "u5q57", q: "Polling and token passing belong to which family of multiple access protocols?", o: ["Channel partitioning", "Random access", "Taking turns", "Error correction"], a: 2, why: "In taking-turns protocols a node sends only when it is its turn. TDMA, FDMA and CDMA are channel partitioning; ALOHA and CSMA are random access.", w: 3 },
+    { id: "u5q58", q: "In token passing, a node may transmit only when it", o: ["Hears a jam signal", "Holds the token, a special frame passed from node to node", "Wins a random back-off", "Gets its own frequency band"], a: 1, why: "When it has finished, it passes the token to the next node, so there are no collisions (Token Ring 802.5, Token Bus 802.4). In polling, a master node instead invites each node in turn. (⚠ not in the college slides)", w: 2 },
+    { id: "u5q59", q: "In a data centre, a top-of-rack (TOR) switch", o: ["Balances web requests between data centres", "Is the border router to the internet", "Is a cable that joins two racks", "Connects the servers in one rack to the rest of the network"], a: 3, why: "Each rack of servers has its own TOR switch. Above it are tier-2 and tier-1 switches, then access routers and the border router. (⚠ not in the college slides)", w: 2 },
+    { id: "u5q60", q: "In a data centre, a load balancer", o: ["Spreads incoming client requests across many servers", "Blocks layer-2 loops", "Assigns MAC addresses to servers", "Calculates the CRC of each frame"], a: 0, why: "It sends each outside request to a server, choosing by current load, and passes the answer back to the client. (⚠ not in the college slides)", w: 2 },
+    { id: "u5q61", q: "The Internet checksum is used by", o: ["The Ethernet FCS", "ARP only", "The IPv6 header", "The IPv4 header, TCP and UDP"], a: 3, why: "It adds the data words: cheap, but weaker than CRC. Ethernet uses CRC, and IPv6 has no header checksum. (⚠ not in the college slides)", w: 2 },
+    { id: "u5q62", q: "With 8-bit words, the checksum of 10110101 and 01101110 (add, wrap the carry, invert) is", o: ["00100100", "11011011", "00100011", "11011100"], a: 1, why: "10110101 + 01101110 = 1 00100011. Wrap the carry: 00100011 + 1 = 00100100. Invert every bit: 11011011. (⚠ not in the college slides)", w: 2 },
   ],
   exam: [
     { id: "u5e01", type: "brief", q: "State the full forms of CRC and ARP.", pts: ["CRC: Cyclic Redundancy Check (1)", "ARP: Address Resolution Protocol (1)"], real: "BS2082 model, Section A" },
@@ -1866,7 +1901,13 @@ window.CNW.units[5] = {
     { id: "u6q42", q: "DPP, introduced alongside WPA3, is for", o: ["Onboarding IoT devices", "Encrypting email", "Blocking rogue APs", "Routing"], a: 0, why: "Device Provisioning Protocol, certified separately as Wi-Fi Easy Connect.", w: 2 },
     { id: "u6q43", q: "WPA2/WPA3 Enterprise authenticates users through", o: ["A RADIUS server using 802.1X/EAP", "A hub", "ARP", "DHCP"], a: 0, why: "UDP ports 1812 (authentication) and 1813 (accounting).", w: 3 },
     { id: "u6q44", q: "A wireless intrusion detection system mainly", o: ["Monitors the radio spectrum for rogue APs and attacks", "Assigns IP addresses", "Fragments packets", "Encrypts files"], a: 0, why: "A WIPS can also block them.", w: 3 },
-    { id: "u6q45", q: "Protected Management Frames (PMF), required by WPA3, protect against", o: ["Forged management frames such as deauthentication", "Slow DNS", "IP fragmentation", "ARP requests"], a: 0, why: "They stop attackers kicking clients off the network.", w: 2 }
+    { id: "u6q45", q: "Protected Management Frames (PMF), required by WPA3, protect against", o: ["Forged management frames such as deauthentication", "Slow DNS", "IP fragmentation", "ARP requests"], a: 0, why: "They stop attackers kicking clients off the network.", w: 2 },
+    { id: "u6q46", q: "In Wi-Fi 6 (802.11ax), OFDMA lets the access point", o: ["Use the 6 GHz band only", "Split one channel into smaller parts for several devices at the same time", "Encrypt frames with AES", "Turn off unused antennas"], a: 1, why: "OFDMA serves many devices at once, so busy places work better. MU-MIMO adds several antenna streams to several devices. (⚠ not in the college slides)", w: 2 },
+    { id: "u6q47", q: "Which Wi-Fi 6 feature mainly saves battery on phones and IoT devices?", o: ["MU-MIMO", "BSS colouring", "Target wake time", "OFDMA"], a: 2, why: "With target wake time the device and AP agree when it wakes, so it can sleep in between. BSS colouring marks frames so nearby networks on the same channel disturb each other less. (⚠ not in the college slides)", w: 2 },
+    { id: "u6q48", q: "In a 4G or 5G network, the base stations are joined to each other and to the internet by the", o: ["Access point", "SIM card", "Foreign agent", "Core network"], a: 3, why: "The core network connects calls and data, handles user accounts and tracks where each phone is. (⚠ not in the college slides)", w: 2 },
+    { id: "u6q49", q: "In 4G LTE, the network checks that a phone belongs to a real subscriber using secret information stored in its", o: ["SIM card", "MAC address", "SSID", "Care-of address"], a: 0, why: "The SIM holds the subscriber identity and a secret key; the core network uses them to authenticate the phone and set up encryption. (⚠ not in the college slides)", w: 2 },
+    { id: "u6q50", q: "In Mobile IP, how does a mobile device find a foreign agent when it enters a new network?", o: ["It asks the DNS server", "It sends an RTS frame", "Agent discovery: it hears an agent advertisement or sends an agent solicitation", "The home agent visits the new network"], a: 2, why: "Foreign agents advertise themselves; a device can also ask with a solicitation. Then it learns a care-of address. (⚠ not in the college slides)", w: 2 },
+    { id: "u6q51", q: "What is the correct order of the main steps in Mobile IP?", o: ["Tunnelling, registration, agent discovery", "Agent discovery, registration with the home agent, tunnelling", "Registration, tunnelling, agent discovery", "Agent discovery, tunnelling, registration"], a: 1, why: "First find an agent and get a care-of address, then register it with the home agent, then the home agent tunnels packets to it. (⚠ not in the college slides)", w: 3 },
   ],
   exam: [
     { id: "u6e01", type: "brief", q: "What are the main characteristics of wireless channels?", pts: ["Path loss that grows with distance, shadowing and multipath fading (1)", "Interference and noise, variable quality, hidden terminal problem (1)"], real: "BS2082 model, Section A" },
@@ -2118,7 +2159,11 @@ window.CNW.units[6] = {
     { id: "u7q47", q: "The zero trust principle is", o: ["Never trust, always verify", "Trust everything inside the network", "Trust only VPN users", "Trust all encrypted traffic"], a: 0, why: "No implicit trust based on location.", w: 3 },
     { id: "u7q48", q: "Micro-segmentation in zero trust means", o: ["Dividing the network into small isolated zones with their own rules", "Cutting cables", "Using one big VLAN", "Shortening passwords"], a: 0, why: "It limits an attacker's movement.", w: 2 },
     { id: "u7q49", q: "Zero trust grants users", o: ["Least-privilege access, checked continuously", "Full access after login", "Access by IP address only", "No access ever"], a: 0, why: "Verify explicitly, least privilege, assume breach.", w: 3 },
-    { id: "u7q50", q: "Multi-factor authentication combines", o: ["Two or more kinds of proof, e.g. password and a phone code", "Two passwords", "Two firewalls", "Two VLANs"], a: 0, why: "Something you know, have, are.", w: 2 }
+    { id: "u7q50", q: "Multi-factor authentication combines", o: ["Two or more kinds of proof, e.g. password and a phone code", "Two passwords", "Two firewalls", "Two VLANs"], a: 0, why: "Something you know, have, are.", w: 2 },
+    { id: "u7q51", q: "Which IPsec protocol checks integrity and authentication but does NOT encrypt?", o: ["ESP", "IKE", "AH", "TLS"], a: 2, why: "AH (Authentication Header) gives integrity and authentication only. ESP also encrypts. (⚠ not in the college slides)", w: 3 },
+    { id: "u7q52", q: "A site-to-site VPN needs the data kept secret. Which IPsec protocol gives encryption?", o: ["AH", "ESP", "ARP", "ICMP"], a: 1, why: "ESP (Encapsulating Security Payload) gives encryption plus integrity and authentication; AH gives no encryption. (⚠ not in the college slides)", w: 3 },
+    { id: "u7q53", q: "In IPsec tunnel mode,", o: ["Only the TCP header is encrypted", "No new header is added", "The packet is sent without any protection", "The whole original packet is wrapped inside a new packet"], a: 3, why: "Tunnel mode wraps the whole packet in a new one, so it is used for VPNs between two gateways. (⚠ not in the college slides)", w: 3 },
+    { id: "u7q54", q: "IPsec transport mode", o: ["Protects the payload between two hosts and keeps the original IP header", "Wraps the whole packet inside a new packet", "Is used only for Wi-Fi", "Replaces TLS for websites"], a: 0, why: "Transport mode is host to host; tunnel mode (whole packet wrapped) is used for VPNs between gateways. (⚠ not in the college slides)", w: 2 },
   ],
   exam: [
     { id: "u7e01", type: "brief", q: "Name the three components of the CIA triad in network security.", pts: ["Confidentiality (0.5), integrity (0.5), availability (0.5)", "One line of meaning for each (0.5)"], real: "BS2082 model, Section A" },
@@ -2305,7 +2350,11 @@ window.CNW.units[7] = {
     { id: "u8q32", q: "Streaming telemetry differs from SNMP polling because the device", o: ["Pushes data continuously", "Waits to be asked every 5 minutes", "Sends only traps", "Uses plain-text community strings"], a: 0, why: "More detailed and timely.", w: 2 },
     { id: "u8q33", q: "NETCONF/YANG and REST APIs are used for", o: ["Automated device configuration", "Drawing graphs only", "Cable testing", "Playing video"], a: 0, why: "Network automation.", w: 2 },
     { id: "u8q34", q: "Infrastructure as code means", o: ["Keeping network configurations as versioned files that tools apply automatically", "Writing a book", "Building with bricks", "Encrypting the code"], a: 0, why: "Consistent and repeatable changes.", w: 1 },
-    { id: "u8q35", q: "Which is a benefit of network automation?", o: ["Speed, consistency and fewer human errors", "More manual typing", "Slower changes", "No monitoring needed"], a: 0, why: "It also scales to thousands of devices.", w: 3 }
+    { id: "u8q35", q: "Which is a benefit of network automation?", o: ["Speed, consistency and fewer human errors", "More manual typing", "Slower changes", "No monitoring needed"], a: 0, why: "It also scales to thousands of devices.", w: 3 },
+    { id: "u8q36", q: "Network management means", o: ["Only buying new routers and switches", "Monitoring, configuring, fixing, measuring and protecting a network, and recording its usage", "Only writing the network's IP address plan", "Only installing anti-virus on each PC"], a: 1, why: "It is everything done to keep a network running well. FCAPS sorts this work into five areas.", w: 3 },
+    { id: "u8q37", q: "Which is a reason network management is needed?", o: ["A network has too many devices to check by hand", "Networks never fail on their own", "It makes cables cheaper", "It removes the need for IP addresses"], a: 0, why: "Also: downtime stops work and costs money, and problems should be found before users notice them.", w: 2 },
+    { id: "u8q38", q: "In Wireshark, which filter decides which packets are shown on the screen, for example only DNS?", o: ["Capture filter", "Firewall filter", "Display filter", "MAC filter"], a: 2, why: "A capture filter decides which packets are recorded; a display filter decides which recorded packets are shown.", w: 2 },
+    { id: "u8q39", q: "Wireshark can follow one TCP conversation. This means it", o: ["Blocks the conversation", "Encrypts the conversation", "Sends the conversation to an SNMP manager", "Shows that one conversation's packets from start to end"], a: 3, why: "Useful to see a whole exchange, such as one web page request and its reply.", w: 2 },
   ],
   exam: [
     { id: "u8e01", type: "brief", q: "Define SNMP and its role in network management.", pts: ["Simple Network Management Protocol: an application-layer protocol (UDP 161/162) for monitoring and managing network devices (1)", "A manager reads and sets values in agents' MIBs and receives traps (1)"], real: "BS2082 model, Section A; BS2082 model B, Section A" },
@@ -2926,11 +2975,39 @@ window.CNW_VGAPS = {
   7: [ { o: 10, lt: "8.1 and 8.2", label: "What network management is, and the five FCAPS areas: no video here" }, { o: 40, lt: "8.6", label: "Monitoring tools (MRTG, PRTG, syslog, NetFlow, NTP): no video here" }, { o: 60, lt: "8.8", label: "Availability, downtime and the nines: no video here" } ]
 };
 </script>
-<script>/* Quiz-to-lesson-topic map for the Study screen (Computer Networks). Written 2026-11-11.
-   Each question id lists the lesson topic code(s) that TEACH it (checked against data-cnw-lesson4.js topic by topic).
+<script>/* Quiz-to-lesson-topic map for the Study screen (Computer Networks).
+   Each question id lists the lesson topic code(s) that TEACH it (checked against data-cnw-lessonN.js topic by topic).
    A video or lesson step that "goes with lesson topic X" shows a Quiz button with the questions tagged X.
-   Pilot: Unit 4 only. Other units have no map yet, so their steps show no Quiz button. */
+   Unit 4 written 2026-11-11 (pilot). Units 1-3 and 5-8 added 2026-11-25 (Prabesh's go), each checked by a cold reviewer. */
 window.CNW_QTOPIC = {
+  /* Unit 1 */
+  u1q01: ["1.1"], u1q02: ["1.1"], u1q03: ["1.2"], u1q04: ["1.2"], u1q05: ["1.2"],
+  u1q06: ["1.3"], u1q07: ["1.3"], u1q08: ["1.4"], u1q09: ["1.4"], u1q10: ["1.4"],
+  u1q11: ["1.6"], u1q12: ["1.6"], u1q13: ["1.6"], u1q14: ["1.6"], u1q15: ["1.5"],
+  u1q16: ["1.5"], u1q17: ["1.5"], u1q18: ["1.5", "1.10"], u1q19: ["1.5"], u1q20: ["1.6"],
+  u1q21: ["1.4"], u1q22: ["1.7"], u1q23: ["1.7"], u1q24: ["1.8"], u1q25: ["1.8"],
+  u1q26: ["1.8"], u1q27: ["1.7"], u1q28: ["1.9"], u1q29: ["1.9"], u1q30: ["1.9"],
+  u1q31: ["1.10"], u1q32: ["1.9"], u1q33: ["1.10"], u1q34: ["1.2"], u1q35: ["1.8"],
+  /* Unit 2 */
+  u2q01: ["2.1"], u2q02: ["2.1"], u2q03: ["2.1"], u2q04: ["2.1"], u2q05: ["2.1"], u2q06: ["2.1"], u2q07: ["2.1"], u2q08: ["2.1"],
+  u2q09: ["2.2"], u2q10: ["2.2"], u2q11: ["2.2"], u2q12: ["2.2"],
+  u2q13: ["2.3", "2.2"], u2q14: ["2.3"], u2q15: ["2.3", "2.2"], u2q16: ["2.3", "2.2"],
+  u2q17: ["2.4"], u2q18: ["2.4"], u2q19: ["2.4"], u2q20: ["2.4"],
+  u2q21: ["2.5"], u2q22: ["2.5"], u2q23: ["2.5"], u2q24: ["2.5"],
+  u2q25: ["2.6"], u2q26: ["2.6"], u2q27: ["2.6"], u2q28: ["2.6"], u2q29: ["2.6"], u2q30: ["2.6"], u2q31: ["2.6"],
+  u2q32: ["2.7"], u2q33: ["2.7"], u2q34: ["2.7"],
+  u2q35: ["2.8"], u2q36: ["2.8"], u2q37: ["2.8"], u2q38: ["2.8"], u2q39: ["2.8"], u2q40: ["2.1", "2.8"],
+  /* Unit 3 */
+  u3q01: ["3.1"], u3q02: ["3.1"], u3q03: ["3.1"], u3q04: ["3.1"], u3q05: ["3.1"],
+  u3q06: ["3.1"], u3q07: ["3.1"], u3q08: ["3.1"], u3q09: ["3.1"], u3q10: ["3.1"],
+  u3q11: ["3.2"], u3q12: ["3.2"], u3q13: ["3.2"], u3q14: ["3.2"], u3q15: ["3.2"], u3q16: ["3.2"],
+  u3q17: ["3.3"], u3q18: ["3.3"], u3q19: ["3.3"],
+  u3q20: ["3.4"], u3q21: ["3.3", "3.5"], u3q22: ["3.5"], u3q23: ["3.5"], u3q24: ["3.5"], u3q25: ["3.4"],
+  u3q26: ["3.4"], u3q27: ["3.4"], u3q28: ["3.4"], u3q29: ["3.4"], u3q30: ["3.4"],
+  u3q31: ["3.5"], u3q32: ["3.6"], u3q33: ["3.6"], u3q34: ["3.6"], u3q35: ["3.6"], u3q36: ["3.6"], u3q37: ["3.6"],
+  u3q38: ["3.6", "3.7"], u3q39: ["3.6", "3.7"], u3q40: ["3.7"], u3q41: ["3.7"], u3q42: ["3.7"], u3q43: ["3.7"],
+  u3q44: ["3.8"], u3q45: ["3.8"],
+  /* Unit 4 */
   u4q01: ["4.1"], u4q02: ["4.1"], u4q03: ["4.1"], u4q04: ["4.1"],
   u4q05: ["4.2"], u4q55: ["4.2"], u4q56: ["4.2"], u4q57: ["4.2"],
   u4q06: ["4.3"], u4q07: ["4.3", "4.10"], u4q08: ["4.3"], u4q09: ["4.3"], u4q10: ["4.3"], u4q11: ["4.3", "4.5"],
@@ -2942,7 +3019,52 @@ window.CNW_QTOPIC = {
   u4q38: ["4.9"], u4q39: ["4.9"], u4q58: ["4.9"],
   u4q40: ["4.10"], u4q41: ["4.10"], u4q42: ["4.10"], u4q43: ["4.10"], u4q44: ["4.10"],
   u4q45: ["4.11"], u4q46: ["4.11"], u4q47: ["4.11"], u4q48: ["4.11"], u4q49: ["4.11"], u4q54: ["4.11"],
-  u4q50: ["4.12"], u4q51: ["4.12"], u4q52: ["4.12"], u4q53: ["4.12"]
+  u4q50: ["4.12"], u4q51: ["4.12"], u4q52: ["4.12"], u4q53: ["4.12"],
+  /* Unit 5 */
+  u5q01: ["5.1"], u5q02: ["5.1"], u5q03: ["5.1"],
+  u5q04: ["5.2"], u5q05: ["5.2", "5.5"], u5q06: ["5.2"], u5q07: ["5.2"], u5q08: ["5.2"], u5q09: ["5.2"], u5q10: ["5.2"],
+  u5q11: ["5.3"], u5q12: ["5.3"], u5q13: ["5.3"], u5q14: ["5.3"], u5q15: ["5.3"], u5q16: ["5.3"], u5q17: ["5.3"], u5q18: ["5.3"],
+  u5q19: ["5.1"], u5q20: ["5.1"], u5q21: ["5.1"], u5q22: ["5.1"],
+  u5q23: ["5.4"], u5q24: ["5.4"], u5q25: ["5.4"], u5q26: ["5.4"],
+  u5q27: ["5.5"], u5q28: ["5.5"], u5q29: ["5.5"], u5q30: ["5.5"],
+  u5q31: ["5.6"], u5q32: ["5.6"], u5q33: ["5.6"], u5q34: ["5.6"], u5q35: ["5.6"], u5q36: ["5.6"], u5q37: ["5.6"], u5q38: ["5.6"],
+  u5q39: ["5.7"], u5q40: ["5.7"], u5q41: ["5.7"], u5q42: ["5.7"], u5q43: ["5.7"], u5q44: ["5.7"], u5q45: ["5.7"], u5q46: ["5.7"],
+  u5q47: ["5.8"], u5q48: ["5.8"], u5q49: ["5.8"], u5q50: ["5.8"], u5q51: ["5.8"], u5q52: ["5.8"], u5q53: ["5.8"],
+  u5q54: ["5.9"], u5q55: ["5.9"], u5q56: ["5.9"],
+  /* Unit 6 */
+  u6q01: ["6.1"], u6q02: ["6.1"], u6q03: ["6.3"], u6q04: ["6.3"], u6q05: ["6.3"], u6q06: ["6.3"], u6q07: ["6.3"], u6q08: ["6.3"],
+  u6q09: ["6.1"], u6q10: ["6.1"], u6q11: ["6.1"], u6q12: ["6.2"], u6q13: ["6.2"], u6q14: ["6.1", "6.5"], u6q15: ["6.5"], u6q16: ["6.5"],
+  u6q17: ["6.4"], u6q18: ["6.4"], u6q19: ["6.4"], u6q20: ["6.4"], u6q21: ["6.4"], u6q22: ["6.5"], u6q23: ["6.5"], u6q24: ["6.4"], u6q25: ["6.4"],
+  u6q26: ["6.6"], u6q27: ["6.6"], u6q28: ["6.6"],
+  u6q29: ["6.7"], u6q30: ["6.7"], u6q31: ["6.7"], u6q32: ["6.7"], u6q33: ["6.7"], u6q34: ["6.7"],
+  u6q35: ["6.8"], u6q36: ["6.8"], u6q37: ["6.8"], u6q38: ["6.8"], u6q39: ["6.8"], u6q40: ["6.8"], u6q41: ["6.8"], u6q42: ["6.8"], u6q43: ["6.8"], u6q44: ["6.8"], u6q45: ["6.8"],
+  /* Unit 7 */
+  u7q01: ["7.1"], u7q02: ["7.1"], u7q03: ["7.1"], u7q04: ["7.4"], u7q05: ["7.1"],
+  u7q06: ["7.1"], u7q07: ["7.1"], u7q08: ["7.1"], u7q09: ["7.1"], u7q10: ["7.1"],
+  u7q11: ["7.1"], u7q12: ["7.1"], u7q13: ["7.2"], u7q14: ["7.2"], u7q15: ["7.2"],
+  u7q16: ["7.2"], u7q17: ["7.2"], u7q18: ["7.3"], u7q19: ["7.3"], u7q20: ["7.4"],
+  u7q21: ["7.3"], u7q22: ["7.3"], u7q23: ["7.3"], u7q24: ["7.3"], u7q25: ["7.3"],
+  u7q26: ["7.3"], u7q27: ["7.4"], u7q28: ["7.4"], u7q29: ["7.4"], u7q30: ["7.5"],
+  u7q31: ["7.5"], u7q32: ["7.5"], u7q33: ["7.5"], u7q34: ["7.5"], u7q35: ["7.5"],
+  u7q36: ["7.4"], u7q37: ["7.6"], u7q38: ["7.6"], u7q39: ["7.6"], u7q40: ["7.6"],
+  u7q41: ["7.6"], u7q42: ["7.6"], u7q43: ["7.6"], u7q44: ["7.6"], u7q45: ["7.7"],
+  u7q46: ["7.7"], u7q47: ["7.7"], u7q48: ["7.7"], u7q49: ["7.7"], u7q50: ["7.1"],
+  /* Unit 8 */
+  u8q01: ["8.3"], u8q02: ["8.3"], u8q03: ["8.3", "8.4"], u8q04: ["8.3"], u8q05: ["8.3"],
+  u8q06: ["8.3"], u8q07: ["8.3"], u8q08: ["8.4"], u8q09: ["8.5"], u8q10: ["8.5"],
+  u8q11: ["8.2"], u8q12: ["8.2"], u8q13: ["8.6"], u8q14: ["8.6"], u8q15: ["8.6"],
+  u8q16: ["8.6"], u8q17: ["8.6"], u8q18: ["8.6"], u8q19: ["8.6"], u8q20: ["8.7"],
+  u8q21: ["8.7"], u8q22: ["8.8"], u8q23: ["8.8"], u8q24: ["8.8"], u8q25: ["8.7"],
+  u8q26: ["8.7"], u8q27: ["8.9"], u8q28: ["8.9"], u8q29: ["8.9"], u8q30: ["8.10"],
+  u8q31: ["8.10"], u8q32: ["8.11"], u8q33: ["8.11"], u8q34: ["8.11"], u8q35: ["8.11"],
+  /* New questions added 2026-11-25 for points a clip teaches that no older question tested */
+  u1q36: ["1.1"], u1q37: ["1.3"], u1q38: ["1.1", "1.3"], u1q39: ["1.7"], u1q40: ["1.7"], u1q41: ["1.7"], u1q42: ["1.7"],
+  u2q41: ["2.3"], u2q42: ["2.3"], u2q43: ["2.6"], u2q44: ["2.6"], u2q45: ["2.6"], u2q46: ["2.8"], u2q47: ["2.8"], u2q48: ["2.8"], u2q49: ["2.8"],
+  u3q46: ["3.1"], u3q47: ["3.1"], u3q48: ["3.3"], u3q49: ["3.3"], u3q50: ["3.5"], u3q51: ["3.5"], u3q52: ["3.4"], u3q53: ["3.4"], u3q54: ["3.7"], u3q55: ["3.7"], u3q56: ["3.8"], u3q57: ["3.8"], u3q58: ["3.8"],
+  u5q57: ["5.3"], u5q58: ["5.3"], u5q59: ["5.9"], u5q60: ["5.9"], u5q61: ["5.2"], u5q62: ["5.2"],
+  u6q46: ["6.3"], u6q47: ["6.3"], u6q48: ["6.6"], u6q49: ["6.6"], u6q50: ["6.7"], u6q51: ["6.7"],
+  u7q51: ["7.7"], u7q52: ["7.7"], u7q53: ["7.7"], u7q54: ["7.7"],
+  u8q36: ["8.1"], u8q37: ["8.1"], u8q38: ["8.6"], u8q39: ["8.6"]
 };
 </script>
 <script>/* Discrete Mathematics and Probability (BCSNT 6023; the public course list calls it DSM-114) - Unit 1: Introduction to Discrete Structures
